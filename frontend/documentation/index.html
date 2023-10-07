@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Medic app - Documentation</title>
+    <meta name="author" content="" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato"
+      rel="stylesheet"
+    />
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="img/favicon.ico" />
+
+    <!-- Plagins CSS -->
+    <link rel="stylesheet" href="css/bootstrap.css" />
+
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/vs2015.css" />
+    <script src="js/highlight.pack.js"></script>
+    <script>
+      hljs.initHighlightingOnLoad();
+    </script>
+
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="page-wrap">
+      <div class="main-menu">
+        <nav class="navbar navbar-default">
+          <div class="navbar-header">
+            <div class="navbar-header-wrap">
+              <img src="img/logo.png" width="140" height="33" alt="Logo" />
+            </div>
+          </div>
+          <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li><a href="#introduction">Introduction</a></li>
+              <li><a href="#started">Getting started</a></li>
+              <li><a href="#customization">Customization</a></li>
+              <li><a href="#routing">Routing and main menu</a></li>
+              <li><a href="#redux">Redux</a></li>
+              <li><a href="#components">UI components</a></li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+
+      <div class="content-wrap">
+        <div class="container-fluid">
+          <section id="introduction" class="section">
+            <h2 class="section-title">Introduction</h2>
+
+            <p>
+              <strong>Medic app</strong> is an React admin template, which is
+              based on the React 18.0+, Redux, Ant Design, build using
+              craco and ready to use REST API.
+            </p>
+            <p>
+              <strong>Medic app</strong> use unique UI components, created
+              special for React application, which allows it to be easily
+              customize and build your own app quickly.
+            </p>
+            <p>
+              Medic app built on <strong> Redux</strong> - it is state
+              management for React applications. Store is a controlled state
+              container designed to help write performant, consistent
+              applications on top of React.
+            </p>
+
+            <p>
+              Also Medic app uses React with typescript to help you maintain
+              your project and provide static type analysis on compilation
+              level.
+            </p>
+            <p>
+              All styles are fully develop with <strong>SCSS</strong> and easy
+              to understand and customize.
+            </p>
+
+            <h3>Technologies</h3>
+            <ul>
+              <li>React</li>
+              <li>React redux</li>
+              <li>React router dom</li>
+              <li>Ant Design</li>
+              <li>Bootstrap</li>
+              <li>Npm</li>
+              <li>Sass</li>
+              <li>CSS3 Animations</li>
+              <li>Typescript</li>
+              <li>Google fonts</li>
+            </ul>
+
+            <h3>Core features</h3>
+            <ul>
+              <li>Unlimited navbar colors</li>
+              <li>3 different layouts</li>
+              <li>Data tables</li>
+              <li>Vertical/horizontal navbar</li>
+              <li>Fully Responsive Layout</li>
+              <li>Light/dark sidebar</li>
+              <li>Light/dark topbar</li>
+              <li>Easy to customize</li>
+              <li>3 icon packs</li>
+              <li>And many more…</li>
+            </ul>
+
+            <h3>All pages</h3>
+            <ul>
+              <li>
+                UI Kit
+                <ul>
+                  <li>
+                    Components
+                    <ul>
+                      <li>Alerts</li>
+                      <li>Autocompletes</li>
+                      <li>Badges</li>
+                      <li>Buttons</li>
+                      <li>Cards</li>
+                      <li>Checkboxes</li>
+                      <li>Contacts</li>
+                      <li>Inputs</li>
+                      <li>Modal windows</li>
+                      <li>Radio buttons</li>
+                      <li>Ratings</li>
+                      <li>Selects</li>
+                      <li>Switchers</li>
+                      <li>Textareas</li>
+                      <li>Timelines</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Icons
+                    <ul>
+                      <li>Icons options</li>
+                      <li>Icofont</li>
+                      <li>Antd icons</li>
+                    </ul>
+                  </li>
+                  <li>Typography</li>
+                  <li>
+                    Tables
+                  </li>
+                  <li>
+                    Forms
+                    <ul>
+                      <li>Form elements</li>
+                      <li>Form layouts</li>
+                      <li>Form validation</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Charts
+                    <ul>
+                      <li>Recharts</li>
+                      <li>Chart.js</li>
+                      <li>React echarts</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Maps
+                    <ul>
+                      <li>Google map</li>
+                      <li>Vector map</li>
+                      <li>World map</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Apps
+                <ul>
+                  <li>
+                    Service pages
+                    <ul>
+                      <li>Invoices</li>
+                      <li>Invoice</li>
+                      <li>Pricing</li>
+                      <li>Edit account</li>
+                      <li>User profile</li>
+                      <li>Events timeline</li>
+                      <li>Events calendar</li>
+                    </ul>
+                  </li>
+                  <li>
+                    Sessions
+                    <ul>
+                      <li>Sign in</li>
+                      <li>Sign up</li>
+                      <li>404</li>
+                      <li>500</li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </section>
+          <!-- .section -->
+
+          <section id="started" class="section">
+            <h2 class="section-title">Getting started</h2>
+
+            <p>
+              This template is built with <i>React</i> and requires
+              <i>Node(v18.9.0)</i> and <i>NPM(v8.19.1)</i> to be installed.
+            </p>
+
+            <h3>Installing prerequisites</h3>
+            <p>
+              <strong>Node.js and NPM:</strong> You can download Node.js from
+              <a href="https://nodejs.org">https://nodejs.org</a>. NPM comes
+              bundled with Node.js
+            </p>
+
+            <h3>Installing npm packages</h3>
+            <p>
+              Before start you'll need to install required packages and
+              dependencies. Open folder with theme in terminal and run
+              <code>npm install</code>.
+            </p>
+            <p>
+              Then run <code>npm start</code> to start dev server. By default it
+              will run at
+              <a href="http://localhost:3000/">http://localhost:3000/</a>.
+            </p>
+
+            <h3>Deployment</h3>
+
+            <p>
+              Before deploying application, code need to be minified and
+              optimized. For these purposes you can use
+              <code>npm run build</code> or if you using yarn
+              <code>yarn build</code>. When completed code will be stored to
+              build folder, and will be ready for deployment. For more
+              information about deployment see
+              <a href="https://github.com/dilanx/craco">
+                craco deployment guide
+              </a>
+            </p>
+          </section>
+          <!-- .section -->
+
+          <section id="customization" class="section">
+            <h2 class="section-title">Customization</h2>
+
+            <h3>Main app's settings</h3>
+            <p>
+              You can change main app's settings in
+              <code>src/redux/settings/DefaultSettings.ts</code>.
+            </p>
+
+            <h3>Sass settings</h3>
+            <p>
+              All style files can be found at <code>src/assets/sass</code>. For
+              changing styles of the app you can go to
+              <code>_variables.scss</code>,it contains all color schemas and
+              main parameters of the app. Main scss file is located in
+              <code>src/assets/sass/style.scss</code>.
+            </p>
+
+            <h3>Ant design theme</h3>
+            <p>
+              Also this template contain theme for ant design components. You
+              can find it at <code>config-override.js</code> at the root of the
+              project. There within <code>modifyVars</code> field you can change
+              existing variables, or and new. For more info about customization
+              check
+              <a href="https://ant.design/docs/react/customize-theme"
+                >official docs</a
+              >.
+            </p>
+          </section>
+          <!-- .section -->
+
+          <section id="routing" class="section">
+            <h2 class="section-title">Routing and main menu</h2>
+
+            <h3>Routing</h3>
+            <p>
+              All routes located at <code>routing</code> folder, placed at root
+              of the project. It already contain separate routes for different
+              layouts: default routes for vertical and horizontal layout,
+              errorRoutes for error layout and public routes for public layout.
+              <br />If you want add new route, select one of the defiened
+              arrays, and add route there. Example:
+              <br />
+              <code>
+                ... <br />
+                { path: '/dashboard', component: PageDashboard } <br />
+                ...
+              </code>
+              <br />
+              For adding new layout, just import layout component into and add
+              it to <code>routes</code> array, and specify path on which it must
+              be used, also specify children routes array that can be reachout
+              within layout component. Example provided below:
+            </p>
+
+            <p></p>
+            <p>
+              Firstly create routers array, that you want to be bound to your
+              layout:
+            </p>
+            <pre>
+<code class="typescript">
+const YOUR_ROUTES: Routes = [
+ { path: '404', component: PageNotFoundComponent},
+ { path: '500', component: PageInternalErrorComponent}
+];
+</code>
+</pre>
+            <p>
+              And then add this array of routes into App.tsx Switch by passing this array into <code>Routes</code> helper component.
+              Additionaly you can specify layout for this routes
+            </p>
+            <pre>
+<code class="typescript">
+
+import { Routes, Route } from 'react-router-dom';
+
+&lt;Routes&gt;
+  &lt;Route path='/public/*' element={&lt;SessionRoutes />} />
+
+  &lt;Route path='/horizontal/*' element={&lt;HorizontalLayout>&lt;DefaultRoutes layout='horizontal' />&lt;/HorizontalLayout>} />
+
+  &lt;Route path='/vertical/*' element={&lt;VerticalLayout>&lt;DefaultRoutes layout='vertical' />&lt;/VerticalLayout>} />
+&lt;/Switch&gt;
+</code>
+</pre>
+
+            <p><code>Routes</code> component is defined in App.tsx and not provided by <code>react-router-dom</code></p>
+            <p>You can find more about routing and using <code>react-router-dom</code> at <a href="https://reactrouter.com/web/guides/quick-start">official docs</a></p>
+
+            <br /><br />
+            <h4>Main menu and navigations</h4>
+            <p>
+              Main menu configuration file located in
+              <code>public/data/menu.json</code>. You can customize main menu
+              from here.
+            </p>
+            <p>
+              Menu item interface can be found at
+              <code>src/app/interfaces/main-menu.ts</code>
+            </p>
+            <br />
+            <p>Main menu item contains next parameters:</p>
+            <table class="table table-bordered">
+              <tr>
+                <th>Parameter</th>
+                <th>Description</th>
+              </tr>
+              <tr>
+                <td><b>Title</b></td>
+                <td>Title of menu item (parameter is required)</td>
+              </tr>
+              <tr>
+                <td><b>Routing</b></td>
+                <td>Routing path of item</td>
+              </tr>
+              <tr>
+                <td><b>Icon</b></td>
+                <td>Class name of items icon</td>
+              </tr>
+              <tr>
+                <td><b>Active</b></td>
+                <td>State of menu item</td>
+              </tr>
+              <tr>
+                <td><b>Sub</b></td>
+                <td>Array of subitems of the item</td>
+              </tr>
+            </table>
+
+            <p>Menu item with 3 sub items</p>
+            <pre>
+<code class="json">
+{
+ "title": "Dashboard",
+ "icon" : "icofont-dashboard-web",
+ "sub"  :
+{
+  "title": "Dashboard 1",
+  "routing" : "dashboard1"
+},
+{
+  "title": "Dashboard 2",
+  "routing" : "dashboard2"
+},
+{
+  "title": "Dashboard 3",
+  "routing" : "dashboard3"
+}</code>
+</pre>
+
+            <p>Menu item withount sub items</p>
+            <pre>
+ <code class="json">
+{
+  "title" : "Users",
+  "icon"  : "icofont-ui-user",
+  "routing" : "users"
+}</code>
+</pre>
+            <p>
+              Also you can create your own link for naviagattion via NavLink
+              component. It allows you to define an active class and styles
+              according to router and works in a harmony with router.
+            </p>
+            <pre>
+ <code class="typescript">
+import { NavLink } from "react-router-dom";
+&lt;NavLink to="/app/dashboards"&gt;Dashboards&lt;/NavLink&gt;
+</code>
+</pre>
+          </section>
+          <!-- .section -->
+          <section id="redux" class="section">
+            <h2 class="section-title">Redux</h2>
+
+            <p>Information shared across the app via Redux.</p>
+            <p>As an example, app settings, layout or page state.</p>
+            <p>
+              This is shared via Redux. All the Redux related code is located
+              under redux folder categorized by types: actions, reducers and
+              types.
+            </p>
+            <p>
+              To adding new data to redux state you need to create new actions
+              and reducers.
+            </p>
+            <p>
+              Also if you want use complex data typex, you will need to create
+              related types to this reducer.
+            </p>
+
+            <p>
+              To use component with redux you need to wrap it with redux HOC
+              <code>connect</code> that will pass redux state and dispatchers to
+              component, or use redux hooks to dispatch actions and select data
+              from store.
+            </p>
+
+            <p>
+              More info about redux hooks can be found at
+              <a href="https://react-redux.js.org/api/hooks">
+                Redux official docs
+              </a>
+            </p>
+            <pre>
+ <code class="typescript">
+// Sample action type
+export interface ResetSettingsAction {
+  type: typeof RESET_SETTINGS;
+}
+
+// Sample action     
+export const resetSettings = (): SettingsTypes.ResetSettingsAction => ({
+  type: SettingsTypes.RESET_SETTINGS
+});
+
+// Sample reducer
+export const settingsReducer = (
+  state: IAppSettings = initialState,
+  action: SettingsActionTypes
+): IAppSettings => {
+  switch (action.type) {
+     ...other actions
+    case RESET_SETTINGS:
+      return { ...initialState };
+    default:
+      return { ...state };
+  }
+};
+
+//  Sample mapStateToProps function
+const mapStateToProps = (state: AppState) => ({
+  settings: state.settings
+});
+
+//  Sample mapDispatchToProps function
+const mapDispatchToProps = dispatch => ({
+  onSettingsReset: () => dispatch('RESET_SETTINGS')
+});
+
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(MyComponent);
+
+</code>
+</pre>
+            <p>
+              If you want pass additional props to redux component. You can pass
+              them as normal props. Components will receive them as second
+              argument of mapDispatchToProps or mapStateToProps functions.
+              Example:
+            </p>
+
+            <pre>
+<code class="typescript">
+// Pass props to redux component    
+&lt;Component data={someData} /&gt;    
+    
+// In the component    
+const mapStateToProps = (state, ownProps) => {
+  return {
+    prop: ownProps.data
+  };
+};
+</code>
+</pre>
+            <p>
+              More can be found at react-redux
+              <a href="https://react-redux.js.org/introduction/quick-start">
+                official documentation
+              </a>
+            </p>
+
+            <h3>Pages</h3>
+
+            <p>
+              Pages state used to define breadcrumbs, title and menage loading
+              neaded data for the page.
+            </p>
+
+            <p>
+              For adding page functionality to component you can use
+              <code>usePageData</code> or <code>useFetchPageData</code> custom
+              hooks
+            </p>
+
+            <h4><code>usePageData</code></h4>
+
+            <p>
+              <code>usePageData</code> hook accept object the implements <code>IPageData</code> interface and set passed data as current page state.
+              <br> The interface provided below
+            </p>
+
+<pre>
+<code class="typescript">
+  export interface IPageData {
+    title?: string;
+    loaded?: boolean;
+    breadcrumbs?: IBreadcrumb[];
+    fullFilled?: boolean;
+  }
+  
+  export interface IBreadcrumb {
+    title: string;
+    route?: string;
+  }
+</code>
+</pre>
+
+            <h4><code>useFetchPageData</code></h4>
+
+            <p>
+               <code>useFetchPageData</code> Used to obtain the necessary information and set the page status according to the retrieval process.
+               Also this hoo will automatically set <code>fullFilled</code> state to true after date will be obtained.
+            </p>
+
+            <p>
+              <code>useFetchPageData</code> signature looks like this
+            </p>
+
+
+<pre>
+<code class="typescript">
+  function useFetchPageData<T>(
+    url: string,
+    initialState: T = null,
+    callback?: (T) => any
+  ): [T, (data: T) => void] {
+    ...
+  }  
+</code>
+</pre>
+
+             <p>
+               <code>url</code> is url to perform GET request to
+             </p>
+             
+             <p>
+              <code>initialState</code> is initialData that will be provided
+            </p> 
+
+            <p>
+              <code>callback</code> is optional parametr that can be passed to perform function on succesfull data retrieval, retrieved data will be provided as argument to this function
+            </p>
+
+            <p>Bellow provided demo of using this hooks for page with data fetching</p>
+            <pre>
+<code class="typescript">
+  const pageData: IPageData = {
+    title: 'Demo page',
+    fullFilled: false,
+    breadcrumbs: [
+      {
+        title: 'Home',
+        route: 'home'
+      },
+      {
+        title: 'Demo Page'
+      }
+    ]
+  };
+
+  const dataUrl = '/api/data';
+  const initialState = [];
+
+  const DemopPage = () => {
+    usePageData(pageData);
+    const [data, setData] = useFetchPageData<IAppointment[]>(
+      dataUrl,
+      initialState
+    );
+   
+    return (
+      &lt;>
+       {data}
+      &lt;/>
+    );
+  };
+</code>
+</pre>
+          </section>
+
+          <!-- redux section  -->
+
+          <section id="components">
+            <h2 class="section-title">Ui components</h2>
+
+            <p>
+              This theme uses Ant Design components.
+            </p>
+
+            <p>
+              Before using ant components you need to import it to file where
+              you want to use it from <code>ant</code>. Example:
+            </p>
+
+            <pre>
+<code class="typescript">
+import { Alert, Avatar, Button } from 'antd';
+</code>
+</pre>
+            <p>
+              To find out more and for components documentation got to
+              <a href="https://ant.design/docs/react/getting-started">
+                official Ant Design documentation
+              </a>
+
+              <br />
+            </p>
+
+            <h3>Icons</h3>
+
+            <p>
+              This template uses antd icons v4, as this is recomended and
+              reduces bundle size. More about icons you can find at
+              <a href="https://ant.design/components/icon/#List-of-icons"
+                >official doc</a
+              >
+            </p>
+
+            <p>
+              But <code>Antd Icons</code> demo page uses compatible version of
+              icons for demo purposes. <br />
+              If you do not need it you can run
+              <code>npm uninstall @ant-design/compatible</code> or
+              <code>yarn remove @ant-design/compatible</code>
+
+              to remove compatible version of icons
+            </p>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!--[if (!IE)|(gt IE 8)]><!-->
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <!--<![endif]-->
+
+    <!--[if lte IE 8]>
+      <script src="js/jquery-1.9.1.min.js"></script>
+    <![endif]-->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>

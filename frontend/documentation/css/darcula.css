@@ -1,0 +1,79 @@
+/*
+
+Darcula color scheme from the JetBrains family of IDEs
+
+*/
+
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+}
+
+.hljs {
+  color: #534b4b;
+}
+
+.hljs-strong,
+.hljs-emphasis {
+  color: #303030;
+}
+
+.hljs-bullet,
+.hljs-quote,
+.hljs-link,
+.hljs-number,
+.hljs-regexp,
+.hljs-literal {
+  color: #284b66;
+}
+
+.hljs-code,
+.hljs-selector-class {
+  color: #91c922;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-section,
+
+
+.hljs-variable {
+  color: #4b69ee;
+}
+.hljs-name,
+.hljs-attribute,
+.hljs-selector-tag {
+	color: #dd1919;
+}
+
+.hljs-params {
+	color: #000000;
+}
+
+.hljs-string {
+  color: #5e8846;
+}
+
+.hljs-subst,
+.hljs-type,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-symbol,
+.hljs-selector-id,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-addition {
+  color: #55ec4f;
+}
+
+.hljs-comment,
+.hljs-deletion,
+.hljs-meta {
+  color: #7f7f7f;
+}

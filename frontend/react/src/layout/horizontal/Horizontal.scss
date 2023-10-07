@@ -1,0 +1,64 @@
+@import '../../assets/sass/variables';
+
+.layout.horizontal {
+  .app-container {
+    .navbar.horizontal {
+      &-vertical {
+        background-color: #fbfbfb;
+      }
+
+      .app-search {
+        @media #{$max767} {
+          display: none;
+        }
+      }
+
+      .navbar-wrap {
+        .logo {
+          padding: 0;
+
+          @media #{$min992} {
+            padding-left: 0;
+            padding-right: 0;
+          }
+
+          @media #{$max991} {
+            display: none;
+          }
+        }
+      }
+    }
+    &.scrolled {
+      .navbar {
+        &.horizontal-vertical {
+          @media #{$min992} {
+            box-shadow: 0 2px 5px rgba(#000, 0.05);
+            z-index: 997;
+          }
+        }
+        &.horizontal {
+          @media #{$max991} {
+            box-shadow: 0 2px 5px rgba(#000, 0.05);
+            z-index: 997;
+          }
+        }
+      }
+    }
+  }
+
+  .app-search {
+    @media #{$max543} {
+      display: none;
+    }
+  }
+  .navbar-mobile-header {
+    display: none;
+
+    @media #{$max991} {
+      display: block;
+    }
+  }
+}
+> div.logo {
+  padding: 0;
+}

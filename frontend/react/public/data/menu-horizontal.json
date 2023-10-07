@@ -1,0 +1,225 @@
+[
+  {
+    "title": "Dashboard",
+    "routing": "default-dashboard"
+  },
+  {
+    "title": "Medicine",
+    "sub": [
+      {
+        "title": "Appointments",
+        "routing": "appointments"
+      },
+      {
+        "title": "Doctors",
+        "routing": "doctors"
+      },
+      {
+        "title": "Departments",
+        "routing": "departments"
+      },
+      {
+        "title": "Patients",
+        "routing": "patients"
+      },
+      {
+        "title": "Payments",
+        "routing": "payments"
+      }
+    ]
+  },
+  {
+    "title": "Components",
+    "sub": [
+      {
+        "title": "Alerts",
+        "routing": "alerts"
+      },
+      {
+        "title": "Autocompletes",
+        "routing": "autocompletes"
+      },
+      {
+        "title": "Badges",
+        "routing": "badges"
+      },
+      {
+        "title": "Buttons",
+        "routing": "buttons"
+      },
+      {
+        "title": "Cards",
+        "routing": "cards"
+      },
+      {
+        "title": "Checkboxes",
+        "routing": "checkboxes"
+      },
+      {
+        "title": "Contacts",
+        "routing": "contacts"
+      },
+      {
+        "title": "Inputs",
+        "routing": "inputs"
+      },
+      {
+        "title": "Modal windows",
+        "routing": "modal-windows"
+      },
+      {
+        "title": "Radio buttons",
+        "routing": "radio-buttons"
+      },
+      {
+        "title": "Ratings",
+        "routing": "ratings"
+      },
+      {
+        "title": "Selects",
+        "routing": "selects"
+      },
+      {
+        "title": "Switcher",
+        "routing": "switchers"
+      },
+      {
+        "title": "Textareas",
+        "routing": "textareas"
+      },
+      {
+        "title": "Typography",
+        "routing": "typography"
+      },
+      {
+        "title": "Vertical timeline",
+        "routing": "v-timeline"
+      }
+    ]
+  },
+  {
+    "title": "Icons",
+    "sub": [
+      {
+        "title": "Icons options",
+        "routing": "icons-options"
+      },
+      {
+        "title": "Antd icons",
+        "routing": "antd-icons"
+      },
+      {
+        "title": "Icofont",
+        "routing": "icofont-icons"
+      }
+    ]
+  },
+  {
+    "title": "Tables",
+    "routing": "tables"
+  },
+  {
+    "title": "Forms",
+    "sub": [
+      {
+        "title": "Elements",
+        "routing": "form-elements"
+      },
+      {
+        "title": "Layout",
+        "routing": "form-layouts"
+      },
+      {
+        "title": "Validation",
+        "routing": "form-validation"
+      }
+    ]
+  },
+  {
+    "title": "Charts",
+    "sub": [
+      {
+        "title": "Echarts",
+        "routing": "echarts"
+      },
+      {
+        "title": "Recharts",
+        "routing": "recharts"
+      },
+      {
+        "title": "ChartJs",
+        "routing": "chart-js"
+      }
+    ]
+  },
+  {
+    "title": "Maps",
+    "sub": [
+      {
+        "title": "Google map",
+        "routing": "google-map"
+      },
+      {
+        "title": "Vector map",
+        "routing": "vector-map"
+      },
+      {
+        "title": "World map",
+        "routing": "world-map"
+      }
+    ]
+  },
+  {
+    "title": "Service pages",
+    "sub": [
+      {
+        "title": "Sign in",
+        "routing": "sign-in",
+        "layout": "public"
+      },
+      {
+        "title": "Sign up",
+        "routing": "sign-up",
+        "layout": "public"
+      },
+      {
+        "title": "404",
+        "routing": "page-404",
+        "layout": "public"
+      },
+      {
+        "title": "500",
+        "routing": "page-500",
+        "layout": "public"
+      },
+      {
+        "title": "Invoice",
+        "routing": "invoice"
+      },
+      {
+        "title": "Invoices",
+        "routing": "invoices"
+      },
+      {
+        "title": "Pricing",
+        "routing": "pricing"
+      },
+      {
+        "title": "Edit account",
+        "routing": "edit-account"
+      },
+      {
+        "title": "User profile",
+        "routing": "user-profile"
+      },
+      {
+        "title": "Events timeline",
+        "routing": "events-timeline"
+      },
+      {
+        "title": "Events calendar",
+        "routing": "events-calendar"
+      }
+    ]
+  }
+]

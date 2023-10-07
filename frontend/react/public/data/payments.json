@@ -1,0 +1,202 @@
+[
+  {
+    "billNo": "132",
+    "billDate": "2023-05-25T14:48:00.000Z",
+    "patient": "Priya Patel",
+    "doctor": "Juan Freeman",
+    "charges": "155$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "160$"
+  },
+  {
+    "billNo": "131",
+    "billDate": "2023-05-24T14:48:00.000Z",
+    "patient": "Mayank Jani",
+    "doctor": "Christina Thomas",
+    "charges": "121$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "125$"
+  },
+  {
+    "billNo": "130",
+    "billDate": "2023-05-23T14:48:00.000Z",
+    "patient": "Jenish Shah",
+    "doctor": "Juan Freeman",
+    "charges": "70$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "75$"
+  },
+  {
+    "billNo": "129",
+    "billDate": "2023-05-22T14:48:00.000Z",
+    "patient": "Jayna Sharma",
+    "doctor": "Jessica Patterson",
+    "charges": "45$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "48$"
+  },
+  {
+    "billNo": "128",
+    "billDate": "2023-05-21T14:48:00.000Z",
+    "patient": "Sonali Malik",
+    "doctor": "Lori Perkins",
+    "charges": "120$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "124$"
+  },
+  {
+    "billNo": "133",
+    "billDate": "2023-05-20T14:48:00.000Z",
+    "patient": "Mayank Jani",
+    "doctor": "Jessica Patterson",
+    "charges": "25$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "27$"
+  },
+  {
+    "billNo": "134",
+    "billDate": "2023-05-19T14:48:00.000Z",
+    "patient": "Pooja Patel",
+    "doctor": "Juan Freeman",
+    "charges": "320$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "340$"
+  },
+  {
+    "billNo": "127",
+    "billDate": "2023-05-18T14:48:00.000Z",
+    "patient": "Pooja Patel",
+    "doctor": "Christina Thomas",
+    "charges": "124$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "130$"
+  },
+  {
+    "billNo": "126",
+    "billDate": "2023-05-17T14:48:00.000Z",
+    "patient": "Jacob Ryan",
+    "doctor": "Lori Perkins",
+    "charges": "200$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "217$"
+  },
+  {
+    "billNo": "125",
+    "billDate": "2023-05-16T14:48:00.000Z",
+    "patient": "Megha Trivedi",
+    "doctor": "Lori Perkins",
+    "charges": "125$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "129$"
+  },
+  {
+    "billNo": "124",
+    "billDate": "2023-05-15T14:48:00.000Z",
+    "patient": "Pooja Patel",
+    "doctor": "John Deo",
+    "charges": "123$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "128$"
+  },
+  {
+    "billNo": "123",
+    "billDate": "2023-05-14T14:48:00.000Z",
+    "patient": "Sofia Smitt",
+    "doctor": "Jessica Patterson",
+    "charges": "100$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "110$"
+  },
+  {
+    "billNo": "122",
+    "billDate": "2023-05-13T14:48:00.000Z",
+    "patient": "Gregor Mann",
+    "doctor": "Jessica Patterson",
+    "charges": "50$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "55$"
+  },
+  {
+    "billNo": "121",
+    "billDate": "2023-05-12T14:48:00.000Z",
+    "patient": "Megha Trivedi",
+    "doctor": "Christina Thomas",
+    "charges": "30$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "30$"
+  },
+  {
+    "billNo": "120",
+    "billDate": "2023-05-11T14:48:00.000Z",
+    "patient": "Tom Callahan",
+    "doctor": "John Deo",
+    "charges": "42$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "46$"
+  },
+  {
+    "billNo": "119",
+    "billDate": "2023-05-10T14:48:00.000Z",
+    "patient": "Sasha Dey",
+    "doctor": "Lori Perkins",
+    "charges": "17$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "20$"
+  },
+  {
+    "billNo": "118",
+    "billDate": "2023-05-09T14:48:00.000Z",
+    "patient": "Sasha Dey",
+    "doctor": "Christina Thomas",
+    "charges": "26$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "29$"
+  },
+  {
+    "billNo": "117",
+    "billDate": "2023-05-08T14:48:00.000Z",
+    "patient": "Peter Outs",
+    "doctor": "Christina Thomas",
+    "charges": "26$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "30$"
+  },
+  {
+    "billNo": "116",
+    "billDate": "2023-05-08T14:48:00.000Z",
+    "patient": "Pooja Patel",
+    "doctor": "Jessica Patterson",
+    "charges": "132$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "136$"
+  },
+  {
+    "billNo": "115",
+    "billDate": "2023-05-07T14:48:00.000Z",
+    "patient": "Jacob Ryan",
+    "doctor": "Juan Freeman",
+    "charges": "70$",
+    "tax": "10%",
+    "discount": "5$",
+    "total": "77$"
+  }
+]

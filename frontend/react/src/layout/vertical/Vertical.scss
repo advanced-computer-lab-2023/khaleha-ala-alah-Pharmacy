@@ -1,0 +1,68 @@
+@import '../../assets/sass/variables';
+
+.layout.vertical {
+  .app-container {
+    padding-left: $vertical-navbar-width;
+    @media #{$max991} {
+      padding-left: 0;
+    }
+
+    .app-search {
+      @media #{$max543} {
+        display: none;
+      }
+    }
+
+    .navbar.horizontal {
+      .navbar-skeleton {
+        .sk-logo {
+          display: none !important;
+        }
+      }
+    }
+
+    .footer {
+      left: $vertical-navbar-width;
+      @media #{$max991} {
+        left: 0;
+      }
+    }
+
+    &.scrolled {
+      .navbar.horizontal {
+        box-shadow: 4px 3px 4px rgba(#000, 0.05);
+        z-index: 997;
+      }
+    }
+  }
+
+  .assistant-menu {
+    margin-top: auto;
+
+    .menu-item .item-link {
+      color: #000;
+      opacity: 0.3;
+      transition: opacity 0.2s ease-in-out;
+
+      .link-icon {
+        opacity: 1;
+      }
+
+      &:hover {
+        color: #000;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.menu-overlay {
+  cursor: pointer;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  left: $vertical-navbar-width;
+  bottom: $module-rem * 6;
+  top: 0;
+  z-index: 999;
+}

@@ -1,0 +1,11 @@
+@import '../variables';
+@import 'input';
+
+.ant-picker {
+  @include input();
+  @include input-padding();
+
+  .ant-picker-clear {
+    background: var(--input-bg-color);
+  }
+}

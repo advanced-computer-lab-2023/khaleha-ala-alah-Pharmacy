@@ -1,0 +1,28 @@
+@import '../variables';
+
+.ant-form-item {
+  margin-bottom: $module-rem * 2;
+
+  .ant-form-item-explain {
+    min-height: $module-rem * 2 !important;
+  }
+  .ant-form-item-explain,
+  .ant-form-item-extra {
+    line-height: 1.3;
+  }
+}
+
+.ant-form-horizontal {
+  .ant-form-item-label {
+    @media only screen and (max-width: 576px) {
+      display: flex;
+      justify-content: flex-start;
+    }
+  }
+
+  .ant-form-item-label > label {
+    @media only screen and (min-width: 576px) {
+      padding-top: 5px;
+    }
+  }
+}

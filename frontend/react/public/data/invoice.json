@@ -1,0 +1,30 @@
+[
+  {
+    "num": 1,
+    "groupName": "Brochure Design",
+    "quantity": 12,
+    "cost": 152,
+    "total": false
+  },
+  {
+    "num": 2,
+    "groupName": "Brand Identity",
+    "quantity": 2,
+    "cost": 560,
+    "total": false
+  },
+  {
+    "num": 3,
+    "groupName": "Group name",
+    "quantity": 5,
+    "cost": 59,
+    "total": false
+  },
+  {
+    "num": "",
+    "groupName": "total",
+    "quantity": "",
+    "cost": "total",
+    "total": true
+  }
+]
