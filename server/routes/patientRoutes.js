@@ -10,10 +10,10 @@ const patientController = require("./../controllers/patientController");
 //     .get(patientController.getAllPatients)
 //     .post(patientController.createPatient);
 
-router.get('/mydoctors',CheckAuth, patientController.getMyDoctors);
+router.get('/mydoctors',CheckAuth, patientController.getMypharmacists);
 router.get("/:id", patientController.getPatients);
 router.patch("/add-family-members", CheckAuth ,patientController.addFamilyMembers);
-router.get('/presecriptions', CheckAuth, patientController.getPerscriptions);
+//router.get('/presecriptions', CheckAuth, patientController.getPerscriptions);
 
 
 module.exports = router;
