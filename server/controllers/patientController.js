@@ -1,7 +1,7 @@
 const Patient = require("../models/users/patientModel");
-const Doctors = require("../models/users/doctorModel");
-const Appointments = require("./../models/appointmentModel");
-const Prescriptions = require("./../models/presecriptionsModel.js");
+const pharmacist = require("../models/users/pharmacist");
+//const Appointments = require("./../models/appointmentModel");
+//const Prescriptions = require("./../models/presecriptionsModel.js");
 
 //examples
 
@@ -10,18 +10,18 @@ const Prescriptions = require("./../models/presecriptionsModel.js");
 
 // get all patients
 
-exports.getMyDoctors = async function (req, res) {
+exports.getMypharmacists = async function (req, res) {
   try {
     const patient = req.user._id;
-    const doctorIds = await Appointments.distinct("DoctorID", {
+    const pharmacistIds = await Appointments.distinct("pharmacistID", {
       PatientID: patient,
     });
-    const doctors = await Doctors.find({ userID: { $in: doctorIds } });
-    const doctorNames = doctors.map((doctor) => {
-      doctor.name, doctor.speciality;
+    const pharmacists = await pharmacists.find({ userID: { $in: pharmacistIds } });
+    const pharmacistNames = pharmacists.map((pharmacist) => {
+      pharmacist.name, pharmacist.speciality;
     });
     res.status(200).json({
-      doctorNames,
+      pharmacistNames,
     });
   } catch (err) {
     res.status(500).json({
@@ -118,48 +118,48 @@ exports.addFamilyMembers = async function (req, res) {
     });
   }
 };
-exports.getPerscriptions = async function (req, res) {
-  try {
-    const prescriptions = await Patient.find({
-      PatientID: req.user._id,
-    });
-    const allDoctors = await Doctors.find();
-    const doctors = [];
+// exports.getPerscriptions = async function (req, res) {
+//   try {
+//     const prescriptions = await Patient.find({
+//       PatientID: req.user._id,
+//     });
+//     const allpharmacists = await pharmacists.find();
+//     const pharmacists = [];
 
-    for (let i = 0; i < allDoctors.length; i++) {
-      for (let j = 0; j < doctorsID.length; j++) {
-        if (allDoctors[i]._id == doctorsID[j].DoctorID) {
-          doctors.push(allDoctors[i]);
-          break;
-        }
-      }
-    }
-    res.status(200).json({
-      status: "success",
-      results: prescriptions.length,
-      data: {
-        prescriptions,
-      },
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: "error",
-      message: "this route is not defined yet",
-    });
-  }
-};
-exports.getPatientPrescribtions = async function (req, res) {
-  try {
-    const presecriptions = await Prescriptions.find({
-      PatientID: req.user._id,
-    });
-    res.status(200).json({
-      presecriptions,
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: "error",
-      message: "this route is not defined yet",
-    });
-  }
-};
+//     for (let i = 0; i < allpharmacists.length; i++) {
+//       for (let j = 0; j < pharmacistsID.length; j++) {
+//         if (allpharmacists[i]._id == pharmacistsID[j].pharmacistID) {
+//           pharmacists.push(allpharmacists[i]);
+//           break;
+//         }
+//       }
+//     }
+//     res.status(200).json({
+//       status: "success",
+//       results: prescriptions.length,
+//       data: {
+//         prescriptions,
+//       },
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       status: "error",
+//       message: "this route is not defined yet",
+//     });
+//   }
+// };
+// exports.getPatientPrescribtions = async function (req, res) {
+//   try {
+//     const presecriptions = await Prescriptions.find({
+//       PatientID: req.user._id,
+//     });
+//     res.status(200).json({
+//       presecriptions,
+//     });
+//   } catch (err) {
+//     res.status(500).json({
+//       status: "error",
+//       message: "this route is not defined yet",
+//     });
+//   }
+// };

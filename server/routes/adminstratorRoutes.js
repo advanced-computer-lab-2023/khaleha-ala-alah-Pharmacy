@@ -7,8 +7,8 @@ router
   .route("/")
   .get(adminController.getAllAdmins)
   .post(adminController.addAdmin)
-  .delete(adminController.delAdminDoctorPatient);
+  .delete(adminController.delAdminpharmacistPatient);
 
-router.route("/pendingDoctors").get(adminController.viewPendingDoctors);
+router.route("/pendingDoctors").get(adminController.viewPendingpharmacists);
 
 module.exports = router;

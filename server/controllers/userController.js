@@ -1,7 +1,7 @@
 const userModel = require('../models/users/user');
 const patientModel = require('../models/users/patientModel');
 const userVerificationModel = require('../models/userVerification');
-const doctorModel = require('../models/users/doctorModel');
+const pharmacistModel = require('../models/users/pharmacist');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validateName,validateEmail,validatePassword,validateMobileNumber,validateGender,validateDateOfBirth,validateRole}= require('../utilities/validations');
@@ -105,7 +105,7 @@ exports.registerUser = async (req, res) => {
         });
         await user.save();
 
-        // Create patient or doctor
+        // Create patient or pharmacist
         if (role === 'patient') {
           const {dateOfBirth,gender,mobileNumber,emergencyName,emergencyNumber}=req.body;
           validateGender(gender);validateMobileNumber(mobileNumber);
@@ -129,9 +129,9 @@ exports.registerUser = async (req, res) => {
             await userModel.deleteOne({_id:user._id});
             return res.status(400).json({error : "Invalid data"});
           }
-        }else if(role === 'doctor'){
+        }else if(role === 'pharmacist'){
           const{dateOfBirth,hourlyRate,hospital,speciality,educationalBackground}=req.body;
-          const doctor = new doctorModel({
+          const pharmacist = new pharmacistModel({
             userID: user._id,
             username,
             name,
@@ -144,7 +144,7 @@ exports.registerUser = async (req, res) => {
             status: 'pending',
           });
           try {
-            await doctor.save();
+            await pharmacist.save();
           } catch (error) {
             await userModel.deleteOne({_id:user._id});
             return res.status(400).json({error : "Invalid data"});
@@ -174,15 +174,15 @@ exports.login = async (req, res) => {
       if(!validPassword){
           return res.status(400).json({error : "Invalid password"});
       }
-      //check if user is doctor and not approved yet
-      if(user.role === 'doctor' && !user.doctorApproved){
+      //check if user is pharmacist and not approved yet
+      if(user.role === 'pharmacist' && !user.pharmacistApproved){
         
-        let doctor=await doctorModel.findOne({userID:user._id});
+        let pharmacist=await pharmacistModel.findOne({userID:user._id});
         
-        if(doctor.status === 'pending'){
-            return res.status(400).json({error : "Doctor not approved yet"});
-        }else if(doctor.status === 'rejected'){
-            return res.status(400).json({error : "Doctor rejected"});
+        if(pharmacist.status === 'pending'){
+            return res.status(400).json({error : "pharmacist not approved yet"});
+        }else if(pharmacist.status === 'rejected'){
+            return res.status(400).json({error : "pharmacist rejected"});
         }
 
       }
@@ -191,9 +191,9 @@ exports.login = async (req, res) => {
 
       //check if user is not verified send OTP
       if(!user.verified){
-        if(user.role === 'doctor'){
-          let doctor=await doctorModel.findOne({userID:user._id});
-          email=doctor.email;
+        if(user.role === 'pharmacist'){
+          let pharmacist=await pharmacistModel.findOne({userID:user._id});
+          email=pharmacist.email;
         }else if (user.role === 'patient'){
           let patient=await patientModel.findOne({userID:user._id});
           email=patient.email;
