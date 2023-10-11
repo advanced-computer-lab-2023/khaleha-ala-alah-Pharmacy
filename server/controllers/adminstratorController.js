@@ -2,7 +2,41 @@ const Admin = require("../models/users/adminModel");
 const Patient = require("../models/users/patientModel"); // Replace with the appropriate model
 const pharmacist = require("../models/users/pharmacist");
 const User = require("../models/users/user");
+const Medicine = require("../models/medicine"); // Import the Medicine model
 // const faker = require("faker");
+
+exports.getAvailableMedicines = async (req, res) => {
+    try {
+        // Find medicines where availableQuantity is greater than 0
+        const availableMedicines = await Medicine.find({ availableQuantity: { $gt : 0 } })
+            .select('price description pictureUrl');
+
+        res.status(200).json(availableMedicines);
+    } catch (error) {
+        res.status(500).json({ error: 'Error getting available medicines' });
+    }
+};
+
+
+exports.getPharmacistDetails = async (req, res) => {
+    try {
+        const { pharmacistId } = req.params; // Get the pharmacist ID from the route parameters
+
+        // Find the pharmacist by ID
+        const pharmacist = await pharmacist.findById(pharmacistId);
+
+        if (!pharmacist) {
+            return res.status(404).json({ error: 'Pharmacist not found' });
+        }
+
+        res.status(200).json(pharmacist);
+    } catch (error) {
+        res.status(500).json({ error: 'Error getting pharmacist details' });
+    }
+};
+
+
+
 exports.getAllAdmins = async function (req, res) {
   try {
     const admins = await Admin.find();
