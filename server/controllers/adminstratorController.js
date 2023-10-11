@@ -6,36 +6,34 @@ const Medicine = require("../models/medicine"); // Import the Medicine model
 // const faker = require("faker");
 
 exports.getAvailableMedicines = async (req, res) => {
-    try {
-        // Find medicines where availableQuantity is greater than 0
-        const availableMedicines = await Medicine.find({ availableQuantity: { $gt : 0 } })
-            .select('price description pictureUrl');
+  try {
+    // Find medicines where availableQuantity is greater than 0
+    const availableMedicines = await Medicine.find({
+      availableQuantity: { $gt: 0 },
+    }).select("price description pictureUrl");
 
-        res.status(200).json(availableMedicines);
-    } catch (error) {
-        res.status(500).json({ error: 'Error getting available medicines' });
-    }
+    res.status(200).json(availableMedicines);
+  } catch (error) {
+    res.status(500).json({ error: "Error getting available medicines" });
+  }
 };
-
 
 exports.getPharmacistDetails = async (req, res) => {
-    try {
-        const { pharmacistId } = req.params; // Get the pharmacist ID from the route parameters
+  try {
+    const { pharmacistId } = req.params; // Get the pharmacist ID from the route parameters
 
-        // Find the pharmacist by ID
-        const pharmacist = await pharmacist.findById(pharmacistId);
+    // Find the pharmacist by ID
+    const pharmacist = await pharmacist.findById(pharmacistId);
 
-        if (!pharmacist) {
-            return res.status(404).json({ error: 'Pharmacist not found' });
-        }
-
-        res.status(200).json(pharmacist);
-    } catch (error) {
-        res.status(500).json({ error: 'Error getting pharmacist details' });
+    if (!pharmacist) {
+      return res.status(404).json({ error: "Pharmacist not found" });
     }
+
+    res.status(200).json(pharmacist);
+  } catch (error) {
+    res.status(500).json({ error: "Error getting pharmacist details" });
+  }
 };
-
-
 
 exports.getAllAdmins = async function (req, res) {
   try {
@@ -55,7 +53,6 @@ exports.getAllAdmins = async function (req, res) {
   }
 };
 // Create a new admin
-
 exports.addAdmin = async (req, res) => {
   try {
     const { username, password } = req.body;
@@ -105,7 +102,7 @@ exports.delAdminpharmacistPatient = async (req, res) => {
       console.log("admin");
       const result = await Admin.deleteOne({ username: name });
 
-      console.log(result + "hahahhahah" + object);
+      //   console.log(result + "hahahhahah" + object);
       deletedCount = result.deletedCount;
     } else if (role === "pharmacist") {
       // Delete a pharmacist
@@ -130,27 +127,29 @@ exports.delAdminpharmacistPatient = async (req, res) => {
     return res.status(500).json({ error: "Internal server error." });
   }
 };
-exports.viewPendingpharmacists = async (req, res) => {
+exports.viewPendingPharmacists = async (req, res) => {
   try {
-    const pendingpharmacists = await pharmacist.find({ status: "pending" }).select({
-      Password: 0,
-      confirmPassword: 0,
-      _id: 0,
-      __v: 0,
-      userID: 0,
-    });
-    console.log(pendingpharmacists);
+    const pendingPharmacists = await pharmacist
+      .find({ status: "pending" })
+      .select({
+        Password: 0,
+        confirmPassword: 0,
+        _id: 0,
+        __v: 0,
+        userID: 0,
+      });
+    // console.log(pendingPharmacists);
     res.status(200).json({
       status: "success",
-      results: pendingpharmacists.length,
+      results: pendingPharmacists.length,
       data: {
-        pendingpharmacists,
+        pendingPharmacists,
       },
     });
   } catch (err) {
     res.status(500).json({
       status: "error",
-      message: "NO PENDING pharmacistS",
+      message: "NO PENDING PHARMACISTS",
     });
   }
 };
@@ -158,25 +157,31 @@ exports.viewPendingpharmacists = async (req, res) => {
 //approve and reject pharmacist
 exports.approvepharmacist = async (req, res) => {
   try {
-    const{type}=req.headers;
-    if(type!=="approve" && type!=="reject"){
+    const { type } = req.headers;
+    if (type !== "approve" && type !== "reject") {
       return res.status(400).json({ error: "Invalid type specified." });
     }
     const { username } = req.body;
-    let pharmacist=await pharmacist.findOne({ username: username });
-    if(!pharmacist){
+    let pharmacist = await pharmacist.findOne({ username: username });
+    if (!pharmacist) {
       return res.status(404).json({ error: "pharmacist not found." });
     }
-    type==="approve"?pharmacist.status="accepted":pharmacist.status="rejected";
+    type === "approve"
+      ? (pharmacist.status = "accepted")
+      : (pharmacist.status = "rejected");
     await pharmacist.save();
-    pharmacistID=pharmacist.userID;
-    pharmacist=await User.findOne({ _id: pharmacistID });
-    type==="approve"?pharmacist.pharmacistApproved=true:pharmacist.pharmacistApproved=false;
+    pharmacistID = pharmacist.userID;
+    pharmacist = await User.findOne({ _id: pharmacistID });
+    type === "approve"
+      ? (pharmacist.pharmacistApproved = true)
+      : (pharmacist.pharmacistApproved = false);
     await pharmacist.save();
-    return res.status(200).json({ message: `pharmacist approved successfully.` });
+    return res
+      .status(200)
+      .json({ message: `pharmacist approved successfully.` });
   } catch (error) {
     return res.status(500).json({ error: "Internal server error." });
   }
-}
+};
 
 // ...

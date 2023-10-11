@@ -9,13 +9,15 @@ router
   .post(adminController.addAdmin)
   .delete(adminController.delAdminpharmacistPatient);
 
-router.route("/pendingDoctors").get(adminController.viewPendingpharmacists);
+router.route("/pendingPharmacists").get(adminController.viewPendingPharmacists);
 
-
-router.get('/available-medicines', adminController.getAvailableMedicines);
+router.get("/available-medicines", adminController.getAvailableMedicines);
 
 // Get pharmacist details by ID
-router.get('/:pharmacistId/PharmacistDetails', adminController.getPharmacistDetails);
+router.get(
+  "/:pharmacistId/PharmacistDetails",
+  adminController.getPharmacistDetails
+);
 
 module.exports = router;
 
