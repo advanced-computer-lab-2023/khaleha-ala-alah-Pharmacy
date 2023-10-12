@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="admin.css" />
+    <title>Administrator Interface</title>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <button class="toggle-profile-button" onclick="toggleProfileMenu()">
+        Toggle Profile Menu
+      </button>
+      <a href="#" class="navbar-right">Home</a>
+      <a href="#" class="navbar-right">About Us</a>
+    </div>
+
+    <!-- Profile Side Menu -->
+    <div class="profile-menu" id="profileMenu">
+      <a href="#">Edit My Profile</a>
+      <a href="#">Log Out</a>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sidebar-buttons">
+        <a href="#" id="adminManagementButton" onclick="toggleAdminButtons()"
+          >Administrator Management</a
+        >
+        <div
+          class="adminManagementButton"
+          id="adminButtons"
+          style="display: none"
+        >
+          <a href="#" id="showAdminsButton"> Show All Administrators</a>
+          <a href="#" id="addAdminbutton" onclick="toggleAddAdminButtons()"
+            >Add New Administrator</a
+          >
+          <a href="#" id="removeAdmin">Remove Administrator</a>
+        </div>
+        
+        <a href="#" id="showPatientsButton">Patients Managment</a>
+        <a href="#" id="showDoctorsButton">Doctors Management</a>
+        <a href="#" id="showUnverifiedDoctors">Verify Doctors</a>
+        <a href="adminViewPatients.html" id="viewPatientsInfo">Patients Information</a>
+        <a href="adminViewPharmacists.html" id="viewPharmacistsInfo">Pharmacists Information</a>
+
+    </div>
+    </div>
+
+    <div class="addAdmin" id="addAdminButton" style="display: none">
+      <label for="username">Username:</label>
+      <input
+        type="text"
+        id="username"
+        name="username"
+        placeholder="Enter your username"
+        required
+      />
+      <br /><br />
+      <label for="password">Password:</label>
+      <input
+        type="password"
+        id="password"
+        name="password"
+        placeholder="Enter your password"
+        required
+      />
+      <br /><br />
+      <input type="submit" value="Submit" />
+    </div>
+
+    <div id="patientListContainer"></div>
+    <div id="doctorListContainer"></div>
+    <div id="adminListContainer"></div>
+    <div id="removeadminListContainer"></div>
+    <div id="unverifiedDoctorListContainer"></div>
+
+    <script>
+      function toggleProfileMenu() {
+        var menu = document.getElementById("profileMenu");
+        menu.classList.toggle("show");
+      }
+      function toggleAdminButtons() {
+        var adminButtons = document.getElementById("adminButtons");
+        if (
+          adminButtons.style.display === "none" ||
+          adminButtons.style.display === ""
+        ) {
+          adminButtons.style.display = "block";
+        } else {
+          adminButtons.style.display = "none";
+        }
+      }
+      function toggleAddAdminButtons() {
+        var addAdminButton = document.getElementById("addAdminButton");
+        const remadminListContainer = document.getElementById(
+          "removeadminListContainer"
+        );
+        const adminListContainer =
+          document.getElementById("adminListContainer");
+        if (
+          addAdminButton.style.display === "none" ||
+          addAdminButton.style.display === ""
+        ) {
+          adminListContainer.style.display = "none";
+          remadminListContainer.style.display = "none";
+          addAdminButton.style.display = "block";
+        }
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const showAdminsButton = document.getElementById("showAdminsButton");
+        const adminListContainer =
+          document.getElementById("adminListContainer");
+
+        // Dummy list of admin names for testing
+        const dummyAdminNames = ["Admin 1", "Admin 2", "Admin 3", "Admin 4"];
+
+        showAdminsButton.addEventListener("click", () => {
+          // Check if the admin list container is already visible
+          const isContainerVisible =
+            adminListContainer.style.display !== "none";
+
+          // If hidden, display the admin list and populate it
+          var addAdminButton = document.getElementById("addAdminButton");
+          addAdminButton.style.display = "none";
+          const remadminListContainer = document.getElementById(
+            "removeadminListContainer"
+          );
+          remadminListContainer.style.display = "none";
+          adminListContainer.innerHTML = "";
+
+          dummyAdminNames.forEach((adminName) => {
+            const adminRow = document.createElement("div");
+            adminRow.className = "admin-row";
+            adminRow.textContent = adminName;
+            adminListContainer.appendChild(adminRow);
+          });
+
+          adminListContainer.style.display = "block";
+        });
+      });
+      document.addEventListener("DOMContentLoaded", () => {
+        const removeAdminsButton = document.getElementById("removeAdmin");
+        const remadminListContainer = document.getElementById(
+          "removeadminListContainer"
+        );
+        remadminListContainer.style.display !== "none";
+
+        // Dummy list of admin names for testing
+        const dummyAdminNames = ["Admin 1", "Admin 2", "Admin 3", "Admin 4"];
+
+        removeAdminsButton.addEventListener("click", () => {
+          // Check if the admin list container is already visible
+          const isContainerVisible =
+            remadminListContainer.style.display !== "none";
+
+          // If hidden, display the admin list and populate it
+          var addAdminButton = document.getElementById("addAdminButton");
+          addAdminButton.style.display = "none";
+          adminListContainer.innerHTML = "";
+          adminListContainer.style.display = "none";
+
+          remadminListContainer.innerHTML = "";
+
+          dummyAdminNames.forEach((adminName) => {
+            const adminRow = document.createElement("div");
+            adminRow.className = "rem-admin-row";
+
+            // Create a remove button for each admin row
+            const removeButton = document.createElement("button");
+            removeButton.className = "remove-button";
+            removeButton.textContent = "Remove";
+
+            // Add a click event listener to the remove button
+            removeButton.addEventListener("click", () => {
+              // Remove the parent row when the remove button is clicked
+              remadminListContainer.removeChild(adminRow);
+            });
+
+            adminRow.textContent = adminName;
+
+            // Append the remove button to the admin row
+            adminRow.appendChild(removeButton);
+
+            remadminListContainer.appendChild(adminRow);
+          });
+
+          remadminListContainer.style.display = "block";
+        });
+      });
+      const addedPackages = {}; // To keep track of added packages
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const showPatientsButton =
+          document.getElementById("showPatientsButton");
+        const patientListContainer = document.getElementById(
+          "patientListContainer"
+        );
+        patientListContainer.style.display !== "none";
+
+        // Dummy list of admin names for testing
+        const dummyPatientNames = [
+          "Patient 1",
+          "Patient 2",
+          "Patient 3",
+          "Patient 4",
+        ];
+
+        showPatientsButton.addEventListener("click", () => {
+          // Check if the admin list container is already visible
+          const isContainerVisible =
+            patientListContainer.style.display !== "none";
+
+          // If hidden, display the admin list and populate it
+          var addAdminButton = document.getElementById("addAdminButton");
+          addAdminButton.style.display = "none";
+          adminListContainer.style.display = "none";
+
+          patientListContainer.innerHTML = "";
+
+          dummyPatientNames.forEach((patientName) => {
+            const patientRow = document.createElement("div");
+            patientRow.className = "rem-patient-row";
+
+            // Create a remove button for each admin row
+            const removeButton = document.createElement("button");
+            removeButton.className = "remove-button";
+            removeButton.textContent = "Remove";
+
+            // Add a click event listener to the remove button
+            removeButton.addEventListener("click", () => {
+              // Remove the parent row when the remove button is clicked
+              patientListContainer.removeChild(patientRow);
+            });
+
+            patientRow.textContent = patientName;
+
+            // Append the remove button to the admin row
+            patientRow.appendChild(removeButton);
+
+            patientListContainer.appendChild(patientRow);
+          });
+
+          patientListContainer.style.display = "block";
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const showDoctorsButton = document.getElementById("showDoctorsButton");
+        const doctorListContainer = document.getElementById(
+          "doctorListContainer"
+        );
+        doctorListContainer.style.display !== "none";
+
+        // Dummy list of admin names for testing
+        const dummyDoctorNames = [
+          "Doctor 1",
+          "Doctor 2",
+          "Doctor 3",
+          "Doctor 4",
+        ];
+
+        showDoctorsButton.addEventListener("click", () => {
+          // Check if the admin list container is already visible
+          const isContainerVisible =
+            doctorListContainer.style.display !== "none";
+
+          // If hidden, display the admin list and populate it
+          var addAdminButton = document.getElementById("addAdminButton");
+          addAdminButton.style.display = "none";
+          adminListContainer.style.display = "none";
+
+          doctorListContainer.innerHTML = "";
+
+          dummyDoctorNames.forEach((doctorName) => {
+            const doctorRow = document.createElement("div");
+            doctorRow.className = "rem-doctor-row";
+
+            // Create a remove button for each admin row
+            const removeButton = document.createElement("button");
+            removeButton.className = "remove-button";
+            removeButton.textContent = "Remove";
+
+            // Add a click event listener to the remove button
+            removeButton.addEventListener("click", () => {
+              // Remove the parent row when the remove button is clicked
+              doctorListContainer.removeChild(doctorRow);
+            });
+
+            doctorRow.textContent = doctorName;
+
+            // Append the remove button to the admin row
+            doctorRow.appendChild(removeButton);
+
+            doctorListContainer.appendChild(doctorRow);
+          });
+
+          doctorListContainer.style.display = "block";
+        });
+      });
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const showUnverifiedDoctorsButton = document.getElementById(
+          "showUnverifiedDoctors"
+        );
+        const unverifiedDoctorListContainer = document.getElementById(
+          "unverifiedDoctorListContainer"
+        );
+
+        showUnverifiedDoctorsButton.addEventListener("click", () => {
+          // Simulated list of unverified doctors
+          const unverifiedDoctors = [
+            { name: "Doctor 1" },
+            { name: "Doctor 2" },
+            { name: "Doctor 3" },
+            { name: "Doctor 4" },
+            { name: "Doctor 5" },
+            { name: "Doctor 6" },
+            { name: "Doctor 7" },
+          ];
+
+          // Clear the container before populating it
+          unverifiedDoctorListContainer.innerHTML = "";
+
+          unverifiedDoctors.forEach((doctor, index) => {
+            const doctorPanel = document.createElement("div");
+            doctorPanel.className = "doctor-panel";
+
+            const nameElement = document.createElement("p");
+            nameElement.textContent = doctor.name;
+
+            const acceptButton = document.createElement("button");
+            acceptButton.textContent = "Accept";
+            acceptButton.addEventListener("click", () => {
+              acceptDoctor(index);
+            });
+
+            const rejectButton = document.createElement("button");
+            rejectButton.textContent = "Reject";
+            rejectButton.addEventListener("click", () => {
+              rejectDoctor(index);
+            });
+
+            doctorPanel.appendChild(nameElement);
+            doctorPanel.appendChild(acceptButton);
+            doctorPanel.appendChild(rejectButton);
+
+            unverifiedDoctorListContainer.appendChild(doctorPanel);
+          });
+        });
+
+        function acceptDoctor(index) {
+          // Remove the doctor panel
+          const doctorPanel =
+            document.getElementsByClassName("doctor-panel")[index];
+          if (doctorPanel) {
+            unverifiedDoctorListContainer.removeChild(doctorPanel);
+            alert("Doctor has been accepted.");
+          }
+        }
+
+        function rejectDoctor(index) {
+          // Remove the doctor panel
+          const doctorPanel =
+            document.getElementsByClassName("doctor-panel")[index];
+          if (doctorPanel) {
+            unverifiedDoctorListContainer.removeChild(doctorPanel);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
