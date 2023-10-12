@@ -25,4 +25,5 @@ app.use('/pharmacists' , pharmacistRouter);
 app.use("/patients", patientRouter);
 app.use("/users", require("./routes/userRoute"));
 
+
 module.exports = app;

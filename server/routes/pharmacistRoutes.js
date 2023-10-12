@@ -4,8 +4,11 @@ const router = express.Router();
 const pharmacistController = require('../controllers/pharmacistControllers');
 
 // router 
-router.post('/addMedicine', pharmacistController.addMedicine);
-router.get('/:medicineId/medicine-details', pharmacistController.getMedicineDetails);
-router.put('/:medicineId/edit-medicine', pharmacistController.updateMedicine);
 
+router.post('/addMedicine', pharmacistController.addMedicine);
+
+router.get('/:medicineId/medicine-details', pharmacistController.getMedicineDetails);
+
+router.put('/:medicineId/edit-medicine', pharmacistController.updateMedicine);
+router.get("/medicines", pharmacistController.searchMedicine);
 module.exports = router;
