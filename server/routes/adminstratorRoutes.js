@@ -12,7 +12,7 @@ router
 router.route("/pendingPharmacists").get(adminController.viewPendingPharmacists);
 
 router.get("/available-medicines", adminController.getAvailableMedicines);
-
+router.get("/medicines", adminController.searchMedicine);
 // Get pharmacist details by ID
 router.get(
   "/:pharmacistId/PharmacistDetails",
