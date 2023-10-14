@@ -88,6 +88,7 @@ const MedicineSearch = () => {
                 value={updatedPrice}
                 onChange={(e) => setUpdatedPrice(e.target.value)}
               />
+              
               <button onClick={handleUpdateMedicine}>Save Changes</button>
             </div>
           ) : (
