@@ -30,6 +30,11 @@ const medicineSchema = new mongoose.Schema({
         type: [String],
         required: true,
     },
+    medicalUse:{
+        type: String,
+        required: true,
+    
+    }
     // You can add more fields as needed
 });
 

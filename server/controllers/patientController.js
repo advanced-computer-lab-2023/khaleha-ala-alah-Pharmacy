@@ -9,7 +9,7 @@ const pharmacist = require("../models/users/pharmacist");
 // get patient and create patient written here to test add family members
 
 // get all patients
-
+const medicine = require("../models/medicine");
 exports.getMypharmacists = async function (req, res) {
   try {
     const patient = req.user._id;
@@ -80,6 +80,29 @@ exports.createPatient = async function (req, res) {
       status: "error",
       message: "this route is not defined yet",
     });
+  }
+};
+
+exports.filterMedicine = async (req, res) => {
+  try {
+    const uniqueMedicalUses = await medicine.distinct('medicalUse');
+    res.status(200).json({ uniqueMedicalUses });
+  } catch (error) {
+    console.error('Error fetching unique medical uses:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+exports.searchMedicineByName = async function (req, res) {
+  try {
+    const prefix = req.query.prefix; // Access the 'prefix' from the request body
+
+    const medicines = await medicine.find({
+      name: { $regex: new RegExp(`^${prefix}`, 'i') }, // 'i' for case-insensitive
+    });
+
+    res.status(200).json({ medicines });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 

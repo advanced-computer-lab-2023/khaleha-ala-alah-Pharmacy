@@ -5,14 +5,14 @@ const patientController = require("./../controllers/patientController");
 
 
 
-// router
-//     .route('/')
-//     .get(patientController.getAllPatients)
-//     .post(patientController.createPatient);
-
+ router.route('/').get(patientController.getAllPatients);
+  //  .post(patientController.createPatient);
+router.get('/filterMedicine', patientController.filterMedicine);
+router.get('/searchmedicine', patientController.searchMedicineByName);
 router.get('/mydoctors',CheckAuth, patientController.getMypharmacists);
 router.get("/:id", patientController.getPatients);
 router.patch("/add-family-members", CheckAuth ,patientController.addFamilyMembers);
+
 //router.get('/presecriptions', CheckAuth, patientController.getPerscriptions);
 
 

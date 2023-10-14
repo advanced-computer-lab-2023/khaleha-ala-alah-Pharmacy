@@ -8,13 +8,28 @@ const Medicine = require("../models/medicine"); // Import the Medicine model
 exports.getAvailableMedicines = async (req, res) => {
     try {
         // Find medicines where availableQuantity is greater than 0
-        const availableMedicines = await Medicine.find({ availableQuantity: { $gt : 0 } })
-            .select('price description pictureUrl');
+        const availableMedicines = await Medicine.find()
+            .select('availableQuantity sales name price description pictureUrl');
 
         res.status(200).json(availableMedicines);
     } catch (error) {
         res.status(500).json({ error: 'Error getting available medicines' });
     }
+};
+exports.getMedicinesByMedicalUse = async (req, res) => {
+  try {
+    const { medicalUse } = req.query; // Get the selected medical use from the query parameters
+
+    // Find medicines where availableQuantity is greater than 0 and match the selected medical use
+    const availableMedicines = await Medicine.find({
+   
+      medicalUse: medicalUse, // Filter by the selected medical use
+    }).select('availableQuantity medicalUse sales name price description pictureUrl');
+
+    res.status(200).json(availableMedicines);
+  } catch (error) {
+    res.status(500).json({ error: 'Error getting available medicines' });
+  }
 };
 
 
@@ -90,8 +105,8 @@ exports.addAdmin = async (req, res) => {
 // remove patient/admin/pharmacist from system
 
 exports.delAdminpharmacistPatient = async (req, res) => {
-  var { role, name } = req.body;
-  name = name.trim();
+  const { role, name } = req.body;
+
   console.log(name);
   try {
     let deletedCount;
