@@ -9,7 +9,7 @@ const PatientList_info = () => {
     const fetchPatients = async () => {
       try {
         const response = await axios.get('http://localhost:4000/patients');
-        setPatients(response.data.patients);
+        setPatients(response.data.data.patients);
       } catch (error) {
         console.error('Error fetching patients:', error);
       }
