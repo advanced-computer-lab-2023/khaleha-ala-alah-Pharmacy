@@ -1,5 +1,6 @@
 const Patient = require("../models/users/patientModel");
 const pharmacist = require("../models/users/pharmacist");
+const Medicine = require('./../models/medicine');
 //const Appointments = require("./../models/appointmentModel");
 //const Prescriptions = require("./../models/presecriptionsModel.js");
 
@@ -141,6 +142,17 @@ exports.addFamilyMembers = async function (req, res) {
     });
   }
 };
+// search for medicine based on name
+exports.searchMedicine = async (req, res) => {
+  try {
+    const { name } = req.query;
+    const regex = new RegExp(`^${name}`, 'i'); // Create a case-insensitive regex for prefix search
+    const medicines = await Medicine.find({ name: { $regex: regex } });
+    res.status(200).json({ medicines });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+}
 // exports.getPerscriptions = async function (req, res) {
 //   try {
 //     const prescriptions = await Patient.find({

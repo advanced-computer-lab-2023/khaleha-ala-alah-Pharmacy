@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="adminViewPatients.css" />
+    <title>Administrator Interface</title>
+
+    <script>
+      function displayDataInTable(dataArray) {
+        const tableBody = document.getElementById("table-body");
+
+        // Clear any existing rows in the table
+        tableBody.innerHTML = "";
+
+        // Loop through the dataArray and create a new row for each item
+        dataArray.forEach((item) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+            <td>${item.name}</td>
+            <td>${item.username}</td>
+            <td>${item.mobileNumber}</td>
+            <td>${item.relation}</td>
+            <td>${item.birthdate}</td>
+        `;
+          tableBody.appendChild(row);
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+      <button class="toggle-profile-button" onclick="toggleProfileMenu()">
+        Toggle Profile Menu
+      </button>
+      <a href="#" class="navbar-right">Home</a>
+      <a href="#" class="navbar-right">About Us</a>
+    </div>
+
+    <!-- Profile Side Menu -->
+    <div class="profile-menu" id="profileMenu">
+      <a href="#">Edit My Profile</a>
+      <a href="#">Log Out</a>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Other sidebar content here -->
+    
+      <!-- Back button to "admin.html" -->
+      <a href="admin.html" id="backToAdmin">Back to Admin</a>
+    </div>
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Mobile Number</th>
+            <th>Relation</th>
+            <th>Birthdate</th>
+          </tr>
+        </thead>
+        <tbody id="table-body"></tbody>
+      </table>
+    </div>
+
+    <script>
+      function toggleProfileMenu() {
+        var menu = document.getElementById("profileMenu");
+        menu.classList.toggle("show");
+      }
+    </script>
+    <script>
+        // Sample data array
+        const data = [
+            { name: 'John Doe', username: 'johndoe123', mobileNumber: '123-456-7890', relation: 'Friend', birthdate: '1990-01-15' },
+            { name: 'Jane Smith', username: 'janesmith456', mobileNumber: '987-654-3210', relation: 'Family', birthdate: '1985-05-20' },
+            // Add more data items as needed
+        ];
+    
+        // Call the function to display the data in the table
+        displayDataInTable(data);
+    </script>
+    
+  </body>
+</html>
