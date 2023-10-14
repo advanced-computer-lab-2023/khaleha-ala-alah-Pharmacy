@@ -10,5 +10,10 @@ router.post('/addMedicine', pharmacistController.addMedicine);
 router.get('/:medicineId/medicine-details', pharmacistController.getMedicineDetails);
 
 router.put('/:medicineId/edit-medicine', pharmacistController.updateMedicine);
+router.get('/allpharmacists', pharmacistController.allpharmacists);
+
+
+
 router.get("/medicines", pharmacistController.searchMedicine);
+
 module.exports = router;

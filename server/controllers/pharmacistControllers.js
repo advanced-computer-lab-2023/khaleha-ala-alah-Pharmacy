@@ -1,6 +1,10 @@
 const Medicine = require('../models/medicine'); // Import the Medicine model
  // Import the Medicine model
 // Import the Medicine model
+
+const pharmacist = require('../models/users/pharmacist'); // Import the Medicine model
+
+
 // search for medicine based on name
 const searchMedicine = async (req, res) => {
     try {
@@ -12,6 +16,7 @@ const searchMedicine = async (req, res) => {
       res.status(500).json({ error: err.message });
     }
 }
+
 const getMedicineDetails = async (req, res) => {
     try {
         const { medicineId } = req.params; // Get the medicine ID from the route parameters
@@ -65,6 +70,13 @@ const updateMedicine = async (req, res) => {
 };
 
 
+const allpharmacists = async (req, res) => {
+  try {
+    const pharmacists = await pharmacist.find();
+    res.json(pharmacists);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching pharmacists' });
+  }}
 
 const addMedicine = async (req, res) => {
     try {
@@ -76,6 +88,7 @@ const addMedicine = async (req, res) => {
             description,
             availableQuantity,
             activeIngredients,
+            medicalUse,
         } = req.body;
 
         // Create a new medicine document
@@ -86,6 +99,7 @@ const addMedicine = async (req, res) => {
             description,
             availableQuantity,
             activeIngredients,
+            medicalUse
         });
 
         // Save the new medicine to the database
@@ -98,4 +112,8 @@ const addMedicine = async (req, res) => {
 };
 
 
-module.exports = { addMedicine ,updateMedicine , getMedicineDetails, searchMedicine};
+module.exports = { addMedicine ,updateMedicine , getMedicineDetails,allpharmacists,searchMedicine};
+=======
+
+
+
