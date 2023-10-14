@@ -13,20 +13,13 @@ import PharmacistList_info from './Components/Viewpharmasistinfo';
 import PatientList_info from './Components/patientbasicInfo';
 import MainApp from './Components/MainApp';
 
-import AddAdminphramacy from './Components/addAdminpharmacy';
-import DeleteUser from './Components/deleteAdminDoctorPatiient';
-import PendingDoctors from './Components/viewPendingDoctors';
-import HealthPackages from './Components/packages';
-import DoctorProfileUpdate from './Components/editDoctorProfile';
-import DoctorAppointments from './Components/Appointmentsdoctor';
-import Prescriptions from './Components/patientdoctorhealth';
-import DoctorPatients from './Components/viewallmypatients';
+
 
 
 function App() {
   return (
 
-<DoctorPatients/>
+<MainApp/>
 
 
   );
