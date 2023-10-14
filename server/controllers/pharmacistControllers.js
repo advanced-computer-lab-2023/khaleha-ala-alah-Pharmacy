@@ -1,21 +1,7 @@
 const Medicine = require('../models/medicine'); // Import the Medicine model
  // Import the Medicine model
 // Import the Medicine model
-
 const pharmacist = require('../models/users/pharmacist'); // Import the Medicine model
-
-
-// search for medicine based on name
-const searchMedicine = async (req, res) => {
-    try {
-      const { name } = req.query;
-      const regex = new RegExp(`^${name}`, 'i'); // Create a case-insensitive regex for prefix search
-      const medicines = await Medicine.find({ name: { $regex: regex } });
-      res.status(200).json({ medicines });
-    } catch (err) {
-      res.status(500).json({ error: err.message });
-    }
-}
 
 const getMedicineDetails = async (req, res) => {
     try {
@@ -111,9 +97,4 @@ const addMedicine = async (req, res) => {
     }
 };
 
-
-module.exports = { addMedicine ,updateMedicine , getMedicineDetails,allpharmacists,searchMedicine};
-=======
-
-
-
+module.exports = { addMedicine ,updateMedicine , getMedicineDetails,allpharmacists};
