@@ -130,15 +130,15 @@ exports.registerUser = async (req, res) => {
             return res.status(400).json({error : "Invalid data"});
           }
         }else if(role === 'pharmacist'){
-          const{dateOfBirth,hourlyRate,hospital,speciality,educationalBackground}=req.body;
+          const{dateOfBirth,hourlyRate,affiliation,speciality,educationalBackground}=req.body;
           const pharmacist = new pharmacistModel({
             userID: user._id,
             username,
             name,
             email,
-            dateOfBirth,
+            DOB:dateOfBirth,
             hourlyRate,
-            hospital,
+            affiliation,
             speciality,
             educationalBackground,
             status: 'pending',
@@ -146,6 +146,7 @@ exports.registerUser = async (req, res) => {
           try {
             await pharmacist.save();
           } catch (error) {
+            console.log(error);
             await userModel.deleteOne({_id:user._id});
             return res.status(400).json({error : "Invalid data"});
           }

@@ -2,31 +2,16 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const validator = require("validator");
 
+// Define the pharmacist schema
 const pharmacistSchema = new Schema(
   {
-    username: {
+    userID: {
       type: String,
       required: true,
       unique: true,
     },
-    hourlyRate: {
-      type: Number,
-      required: true,
-    },
-    password: {
-      type: String,
-      required: true,
-      validate: {
-        validator: (value) => validator.isLength(value, { min: 8 }),
-        message: "Password must contain at least 8 characters.",
-      },
-    },
     name: {
       type: String,
-      required: true,
-    },
-    DOB: {
-      type: Date,
       required: true,
     },
     email: {
@@ -37,9 +22,31 @@ const pharmacistSchema = new Schema(
         message: "Invalid email address.",
       },
     },
-    gender: {
+    
+    hourlyRate: {
+      type: Number,
+      required: true,
+    },
+  
+    username: {
       type: String,
-      enum: ["Male", "Female", "Other"],
+      required: true,
+      unique: true,
+    },
+    birthdate: {
+      type: Date,
+      required: false,
+    },
+    affiliation: {
+      type: String,
+      required: true,
+    },
+    educationalBackground: {
+      type: String,
+      required: true,
+    },
+    speciality: {
+      type: String,
       required: true,
     },
     status: {
@@ -51,16 +58,7 @@ const pharmacistSchema = new Schema(
   { timestamps: true }
 );
 
-// Create a virtual for confirmPassword that won't be stored in the database
-pharmacistSchema
-  .virtual("confirmPassword")
-  .get(function () {
-    return this._confirmPassword;
-  })
-  .set(function (value) {
-    this._confirmPassword = value;
-  });
+// Export the pharmacist model
+const pharmacist = mongoose.model("pharmacist", pharmacistSchema);
 
-const Pharmacist = mongoose.model("Pharmacist", pharmacistSchema);
-
-module.exports = Pharmacist;
+module.exports = pharmacist;
