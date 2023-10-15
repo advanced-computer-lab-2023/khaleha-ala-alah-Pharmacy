@@ -10,6 +10,7 @@ import AddMedicine from './addMedicine';
 import UpdateMedicine from './medicineEdit';
 import PharmacistList_info from './Viewpharmasistinfo';
 import PatientList_info from './patientbasicInfo';
+import PatientRegister from './patientRegister';
 
 class MainApp extends Component {
   constructor() {
@@ -39,6 +40,7 @@ class MainApp extends Component {
         <button onClick={() => this.renderComponent(<UpdateMedicine />)}>Edit Medicine</button>
         <button onClick={() => this.renderComponent(<PharmacistList_info />)}>View Pharmacist Info</button>
         <button onClick={() => this.renderComponent(<PatientList_info />)}>Patient Basic Info</button>
+        <button onClick={() => this.renderComponent(<PatientRegister />)}>Patient Register</button>
 
         <div className="component-container">
           {currentComponent}
