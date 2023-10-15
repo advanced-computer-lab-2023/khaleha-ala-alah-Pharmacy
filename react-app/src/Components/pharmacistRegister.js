@@ -1,13 +1,9 @@
 import React, { useState } from "react";
 import { message } from "antd";
-import { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuth } from "../AuthContext";
-import "./patientRegister.css";
 
-export const DoctorRegister = () => {
-  const { role } = useAuth();
+
+ const PharmacistRegister = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -17,28 +13,6 @@ export const DoctorRegister = () => {
   const [affiliation, setAffiliation] = useState("");
   const [speciality, setSpeciality] = useState("");
   const [educationalBackground, setEducationalBackground] = useState("");
-  const [selectedDay, setSelectedDay] = useState("");
-  const [selectedhour, setSelectedhour] = useState("");
-  const [fixedSlots, setFixedSlots] = useState([]);
-  const navigate = useNavigate();
-
-
-  const handleAddSlot = () => {
-    if (!selectedDay || !selectedhour) {
-      message.error("Please select a day and hour for the slot");
-      return;
-    }
-    const newSlot = { day: selectedDay, hour: selectedhour };
-    setFixedSlots([...fixedSlots, newSlot]);
-    setSelectedDay("");
-    setSelectedhour("");
-  };
-
-  const handleRemoveSlot = (index) => {
-    const updatedSlots = [...fixedSlots];
-    updatedSlots.splice(index, 1);
-    setFixedSlots(updatedSlots);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,8 +25,7 @@ export const DoctorRegister = () => {
       !hourlyRate ||
       !affiliation ||
       !speciality ||
-      !educationalBackground ||
-      fixedSlots.length === 0
+      !educationalBackground 
     ) {
       message.error("Please fill all the fields and add at least one slot");
       return;
@@ -67,19 +40,17 @@ export const DoctorRegister = () => {
       affiliation: affiliation,
       speciality: speciality,
       educationalBackground: educationalBackground,
-      fixedSlots: fixedSlots,
     };
     await axios
       .post("http://localhost:4000/users/register", data, {
         headers: {
-          role: "doctor",
+          role: "pharmacist",
         },
       })
       .then(async (res) => {
         const token = res.data.token;
         await localStorage.setItem("token", token);
         message.success("Registration Successful");
-        window.location.replace("/verifyUser");
       })
       .catch((err) => {
         console.log(err);
@@ -184,71 +155,18 @@ export const DoctorRegister = () => {
                   placeholder="educationalBackground"
                 />
               </div>
-              <div className="input-box">
-                <label htmlFor="day" className="details">
-                  Select Day
-                </label>
-                <select
-                  id="day"
-                  name="day"
-                  value={selectedDay}
-                  onChange={(e) => setSelectedDay(e.target.value)}
-                  className="select"
-                >
-                  <option value="">Select day</option>
-                  <option value="Monday">Monday</option>
-                  <option value="Tuesday">Tuesday</option>
-                  {/* Add more day options as needed */}
-                </select>
-              </div>
-              <div className="input-box">
-                <label htmlFor="hour" className="details">
-                  Select hour
-                </label>
-                <select
-                  id="hour"
-                  name="hour"
-                  value={selectedhour}
-                  onChange={(e) => setSelectedhour(e.target.value)}
-                  className="select"
-                >
-                  <option value="">Select hour</option>
-                  <option value="09:00 AM">09:00 AM</option>
-                  <option value="10:00 AM">10:00 AM</option>
-                  {/* Add more hour options as needed */}
-                </select>
-              </div>
-              <div className="slot-buttons">
-                <button
-                  type="button"
-                  className="add-slot-button"
-                  onClick={handleAddSlot}
-                >
-                  Add Slot
-                </button>
-              </div>
-              <div className="fixed-slots">
-                {fixedSlots.map((slot, index) => (
-                  <div key={index} className="fixed-slot">
-                    <span>{slot.day} - {slot.hour}</span>
-                    <button
-                      type="button"
-                      className="remove-slot-button"
-                      onClick={() => handleRemoveSlot(index)}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                ))}
-              </div>
+              
             </div>
+             
+              
             <div className="button">
               <input type="submit" value="Register" />
             </div>
           </form>
         </div>
-        <Link to="/login">Already have an account</Link>
       </div>
     </div>
   );
 };
+
+export default PharmacistRegister;
