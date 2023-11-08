@@ -210,6 +210,100 @@ exports.login = async (req, res) => {
       res.status(500).json({ error: err.message });
   }
 }
+//change password
+exports.changePassword = async (req, res) => {
+  try {
+    const { username,oldPassword, newPassword } = req.body;
+    //validate password
+    validatePassword(newPassword);
+    //check if user exists
+    let user = await userModel.findOne({username});
+    if (!user) {
+      return res.status(400).json({ error: "User does not exists" });
+    }
+    //validate old password
+    const validPassword = await bcrypt.compare(oldPassword, user.password);
+    if (!validPassword) {
+      return res.status(400).json({ error: "Wrong password" });
+    }
+    //hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    //update password
+    user.password = hashedPassword;
+    await user.save();
+    return res.status(200).json({ message: "Password changed successfully" });
+  } catch (err) {
+    return res.status(500).json({ error: "internal server error" });
+  }
+};
+//forget password
+exports.forgotPassword = async (req, res) => {
+  try {
+    const { username } = req.body;
+    //check if user exists
+    let user = await userModel.findOne({ username });
+    if (!user) {
+      return res.status(400).json({ error: "User does not exists" });
+    }
+    //check if user is verified
+    if (!user.verified) {
+      return res.status(400).json({ error: "User not verified yet" });
+    }
+    //get user email
+    const role = user.role;
+    let userEmail;
+    if (role === "doctor") {
+      let doctor = await doctorModel.findOne({ userID: user._id });
+      userEmail = doctor.email;
+    } else if (role === "patient") {
+      let patient = await patientModel.findOne({ userID: user._id });
+      userEmail = patient.email;
+    }
+    //save userID and token in resetPassword collection
+    const uniqueToken = generateResetPasswordToken();
+    const resetPassword = new resetPasswordModel({
+      userId: user._id,
+      token: uniqueToken,
+    });
+    await resetPassword.save();
+    //send mail
+    await this.sendResetPasswordMail({ email: userEmail, token: uniqueToken });
+    return res.status(200).json({ message: "Mail sent successfully" });
+  } catch (err) {
+    return res.status(500).json({ error: "internal server error" });
+  }
+};
+
+//reset password
+exports.resetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+    //validate password
+    validatePassword(newPassword);
+    //check if token exists
+    let ticket = await resetPasswordModel.findOne({ token });
+    if (!ticket) {
+      return res.status(400).json({ error: "Invalid token" });
+    }
+    //get user
+    const user = await userModel.findOne({ _id: ticket.userId });
+    if (!user) {
+      return res.status(400).json({ error: "User does not exists" });
+    }
+    //hash new password
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    //update password
+    user.password = hashedPassword;
+    await user.save();
+    //delete ticket
+    await resetPasswordModel.deleteOne({ userId: ticket.userId });
+    return res.status(200).json({ message: "Password changed successfully" });
+  } catch (err) {
+    return res.status(500).json({ error: "internal server error" });
+  }
+};
 
 
 
