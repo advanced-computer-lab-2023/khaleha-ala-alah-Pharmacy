@@ -12,6 +12,7 @@ import UpdateMedicine from './Components/medicineEdit';
 import PharmacistList_info from './Components/Viewpharmasistinfo';
 import PatientList_info from './Components/patientbasicInfo';
 import MainApp from './Components/MainApp';
+import  Login  from './Components/login';
 
 
 
@@ -19,7 +20,7 @@ import MainApp from './Components/MainApp';
 function App() {
   return (
 
-<MainApp/>
+<Login/>
 
 
   );
