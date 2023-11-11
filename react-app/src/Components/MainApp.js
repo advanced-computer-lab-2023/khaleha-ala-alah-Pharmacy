@@ -12,6 +12,7 @@ import PharmacistList_info from './Viewpharmasistinfo';
 import PatientList_info from './patientbasicInfo';
 import PatientRegister from './patientRegister';
 import PharmacistRegister from './pharmacistRegister';
+import OrdersPage from "./ordersPage.jsx";
 
 class MainApp extends Component {
   constructor() {
@@ -43,6 +44,7 @@ class MainApp extends Component {
         <button onClick={() => this.renderComponent(<PatientList_info />)}>Patient Basic Info</button>
         <button onClick={() => this.renderComponent(<PatientRegister />)}>Patient Register</button>
         <button onClick={() => this.renderComponent(<PharmacistRegister />)}>Pharmacist Register</button>
+        <button onClick={() => this.renderComponent(<OrdersPage />)}>View Orders</button>
 
         <div className="component-container">
           {currentComponent}

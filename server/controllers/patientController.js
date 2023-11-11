@@ -477,3 +477,97 @@ exports.checkout = async function (req, res) {
 //     });
 //   }
 // };
+
+exports.getOrderDetails = async function (req, res) {
+  try {
+    const order = await Order.findById(req.query.id);
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        order,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "this route is not defined yet",
+    });
+  }
+};
+
+exports.cancelOrder = async function (req, res) {
+  try {
+    const order = await Order.findById(req.query.id);
+    order.status = "Cancelled";
+    await order.save();
+
+    res.status(204).json({
+      status: "success",
+      data: order,
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "this route is not defined yet",
+    });
+  }
+};
+
+exports.getMyOrders = async function (req, res) {
+  try {
+    let user = "652b512450d1b797fa0a42f1";
+    const orders = await Order.find({ user: user });
+    let result = [];
+    for (let i = 0; i < orders.length; i++) {
+      let order = orders[i];
+      let items = [];
+      for (let j = 0; j < order.items.length; j++) {
+        let item = order.items[j];
+        let medicine = await Medicine.findById(item.medicine);
+        items.push({
+          medicine: medicine,
+        });
+      }
+      result.push({
+        order: order,
+        items: items,
+      });
+    }
+
+    res.status(200).json({
+      status: "success",
+      results: orders.length,
+      data: {
+        result,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "this route is not defined yet",
+    });
+  }
+};
+
+exports.getOrderMedicine = async function (req, res) {
+  try {
+    const order = await Order.findById(req.query.id);
+    const medicine = [];
+    for (let i = 0; i < order.items.length; i++) {
+      const med = await Medicine.findById(order.items[i].medicine);
+      medicine.push(med);
+    }
+    res.status(200).json({
+      status: "success",
+      data: {
+        medicine,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "this route is not defined yet",
+    });
+  }
+};

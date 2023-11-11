@@ -7,6 +7,10 @@ router.route("/").get(patientController.getAllPatients);
 //  .post(patientController.createPatient);
 router.get("/filterMedicine", patientController.filterMedicine);
 router.get("/searchmedicine", patientController.searchMedicineByName);
+router.get("/myOrders", patientController.getMyOrders);
+router.get("/myorderDetails/", CheckAuth, patientController.getOrderDetails);
+router.patch("/cancel-order", patientController.cancelOrder);
+router.get("/getOrderMedicine", patientController.getOrderMedicine);
 router.get("/mydoctors", CheckAuth, patientController.getMypharmacists);
 router.get("/:id", patientController.getPatients);
 router.patch(

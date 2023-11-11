@@ -28,12 +28,12 @@ const orderSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  /*status: {
+  status: {
     type: String,
     enum: ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"],
     default: "Pending",
     required: true,
-  },*/
+  },
 });
 
 const Order = mongoose.model("Order", orderSchema);

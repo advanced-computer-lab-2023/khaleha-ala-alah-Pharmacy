@@ -1,0 +1,42 @@
+.order-card {
+  border: 1px solid #1f7a8c;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.medicine-image {
+  width: 60px; /* Adjust size as needed */
+  height: 60px;
+  border-radius: 10px;
+  margin-right: 10px;
+}
+
+.medicine-details {
+  flex-grow: 1;
+}
+
+.order-summary {
+  border-top: 1px solid #bfd9f7;
+  padding-top: 10px;
+  color: #022b3a;
+}
+.cancel-button {
+  padding: 10px;
+  background-color: #1f7a8c;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.cancel-button:hover {
+  background-color: #022b3a;
+}
