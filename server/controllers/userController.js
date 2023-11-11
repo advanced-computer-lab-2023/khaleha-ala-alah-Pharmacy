@@ -253,9 +253,9 @@ exports.forgotPassword = async (req, res) => {
     //get user email
     const role = user.role;
     let userEmail;
-    if (role === "doctor") {
-      let doctor = await doctorModel.findOne({ userID: user._id });
-      userEmail = doctor.email;
+    if (role === "pharmacist") {
+      let pharmacist = await pharmacistModel.findOne({ userID: user._id });
+      userEmail = pharmacist.email;
     } else if (role === "patient") {
       let patient = await patientModel.findOne({ userID: user._id });
       userEmail = patient.email;
@@ -321,8 +321,8 @@ exports.validateToken = async (req, res) => {
       if (!user.verified) {
         return res.status(400).json({ error: "User not verified yet" });
       }
-      if (user.role === "doctor" && !user.doctorApproved) {
-        return res.status(400).json({ error: "Doctor not approved yet" });
+      if (user.role === "pharmacist" && !user.pharmacistApproved) {
+        return res.status(400).json({ error: "Pharmacist not approved yet" });
       }
       return res.status(200).json({ role: decoded.role });
     } catch (error) {

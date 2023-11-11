@@ -4,13 +4,16 @@ import axios from 'axios';
 const AuthContext = createContext();
 
 export const useAuth = () => {
+console.log( useContext(AuthContext))
   return useContext(AuthContext);
+
 };
 
 export const AuthProvider = ({ children }) => {
   const [role, setRole] = useState(null); 
-  
+        
     useEffect(() => {
+
       const fetchData = async () => {
         const token = localStorage.getItem('token');
         if (token) {
