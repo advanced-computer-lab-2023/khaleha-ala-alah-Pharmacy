@@ -2,6 +2,7 @@ const { CheckAuth } = require("../middlewares/auth");
 const express = require("express");
 const router = express.Router();
 const patientController = require("./../controllers/patientController");
+const paymentController = require("../controllers/paymentController")
 
 router.route("/").get(patientController.getAllPatients);
 //  .post(patientController.createPatient);
@@ -19,7 +20,7 @@ router.patch(
   patientController.addFamilyMembers
 );
 
-router.post('/save-stripe-token', CheckAuth,payForPackage);
+router.post('/save-stripe-token', CheckAuth, paymentController.payForPackage);
 router.post("/add-to-cart", patientController.addToCart);
 router.get("/view-cart-items/:patientId", patientController.viewCartItems);
 //router for the removeItemFromCart

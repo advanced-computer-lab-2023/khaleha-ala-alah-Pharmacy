@@ -1,7 +1,7 @@
 // paymentController.js
 
 const stripe = require('stripe')('sk_test_51LYdhJF0BL68bZ9bfVjm76TFd8cTNgTPZUrMm7DkqxgepAVPqHy93uazjC8D6pEUEABwy9Jw7vnvKlN3xBLUzPHm00t42jtI1V');
-const payForPackage = async (req, res) => {
+exports.payForPackage = async (req, res) => {
   const { token, amount } = req.body;
   console.log(amount);
   console.log(req.body.token.email);
@@ -35,4 +35,4 @@ const payForPackage = async (req, res) => {
 };
 
 
-module.exports = payForPackage;
+
