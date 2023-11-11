@@ -8,7 +8,7 @@ import "./login.css";
 import logoImage from "../Images/logooo.png"; // Adjust the path accordingly
 
  const Login = () => {
-  const { role } = useAuth();
+  const {role} = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
