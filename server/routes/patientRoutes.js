@@ -18,6 +18,8 @@ router.patch(
   CheckAuth,
   patientController.addFamilyMembers
 );
+
+router.post('/save-stripe-token', CheckAuth,payForPackage);
 router.post("/add-to-cart", patientController.addToCart);
 router.get("/view-cart-items/:patientId", patientController.viewCartItems);
 //router for the removeItemFromCart
