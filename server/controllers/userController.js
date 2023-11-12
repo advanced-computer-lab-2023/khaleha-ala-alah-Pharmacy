@@ -9,8 +9,8 @@ const nodeMailer = require('nodemailer');
 
 
 //generate token
-const generateToken = (_id) => {
-    return jwt.sign({ _id }, process.env.JWT_SECRET, {
+const generateToken = (_id,role) => {
+    return jwt.sign({ _id,role }, process.env.JWT_SECRET, {
         expiresIn: '1d',
     });
 }
@@ -189,7 +189,6 @@ exports.login = async (req, res) => {
       }
       //generate token
       const token = generateToken(user._id, user.role);
-
       //check if user is not verified send OTP
       if(!user.verified){
         if(user.role === 'pharmacist'){
@@ -305,6 +304,7 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+//validate token
 exports.validateToken = async (req, res) => {
   try {
     const token = req.headers.authorization.split(" ")[1];
@@ -321,9 +321,10 @@ exports.validateToken = async (req, res) => {
       if (!user.verified) {
         return res.status(400).json({ error: "User not verified yet" });
       }
-      if (user.role === "pharmacist" && !user.pharmacistApproved) {
-        return res.status(400).json({ error: "Pharmacist not approved yet" });
+      if (user.role === "pharmacist" && !user.doctorApproved) {
+        return res.status(400).json({ error: "pharmacist not approved yet" });
       }
+      console.log("role: " + decoded.role);
       return res.status(200).json({ role: decoded.role });
     } catch (error) {
       return res.status(400).json({ error: "Invalid token" });

@@ -23,11 +23,13 @@ export const AuthProvider = ({ children }) => {
                 authorization: `Bearer ${token}`
               }
             });
+            console.log("res    "+res.data.role);
             setRole(res.data.role);
+            console.log("okkkkk     "+res.data.role);
           } catch (error) {
             if(error.response.data.error === "User not verified yet"){
               setRole("notVerified");
-            }else if(error.response.data.error === "pharmacist not approved yet"){
+            }else if(error.response.data.error === "Pharmacist not approved yet"){
               setRole("notApproved");
             }else{
               setRole("");
@@ -39,7 +41,7 @@ export const AuthProvider = ({ children }) => {
       };
       fetchData();
     }, []);
-    
+       
 
   return (
     <AuthContext.Provider value={{ role }}>
