@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./login.css";
-import logoImage from "../Images/logooo.png"; // Adjust the path accordingly
+import logoImage from "../Images/logo-home.png"; // Adjust the path accordingly
 
  const Login = () => {
   const {role} = useAuth();
@@ -22,7 +22,7 @@ import logoImage from "../Images/logooo.png"; // Adjust the path accordingly
           navigate("/patientHome");
           break;
         case "pharmacist":
-          navigate("/doctorHome");
+          navigate("/PharmacistHome");
           break;
         case "admin":
           navigate("/adminHome");
@@ -69,7 +69,7 @@ import logoImage from "../Images/logooo.png"; // Adjust the path accordingly
         if (role === "patient") {
           window.location.replace("/patientHome");
         } else if (role === "pharmacist") {
-          window.location.replace("/doctorHome");
+          window.location.replace("/PharmacistHome");
         } else if (role === "admin") {
           window.location.replace("/adminHome");
         }
@@ -123,7 +123,7 @@ import logoImage from "../Images/logooo.png"; // Adjust the path accordingly
           <Link to="/patientRegister">Register as a patient</Link>
         </div>
         <div className="doctorRegister">
-          <Link to="/DoctorRegister">Register as a doctor</Link>
+          <Link to="/PharmacistRegister">Register as a pharmacist</Link>
         </div>
         <div className="forgotPassword">
           <Link to="/forgotPassword">Forgot Password</Link>

@@ -40,7 +40,7 @@ function App() {
 
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/PatientRegister" element={<PatientRegister />} />
-        <Route path="/DoctorRegister" element={<PharmacistRegister />} />
+        <Route path="/PharmacistRegister" element={<PharmacistRegister />} />
         <Route path="/resetPassword/:token" element={<ResetPassword />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
 
@@ -60,7 +60,7 @@ function App() {
           {/* doctor routes */}
           {role === "pharmacist" && (
             <>
-              <Route path="/doctorhome" element={<PharmacistList_info  />} />
+              <Route path="/PharmacistHome" element={<PharmacistList_info  />} />
       
          
              

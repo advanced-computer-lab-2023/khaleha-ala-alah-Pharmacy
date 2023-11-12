@@ -1,0 +1,31 @@
+/* PatientRegister.css */
+
+.register {
+    background-image: url('../Images/logo-home-2.jpg');
+    /* Set the path to your background image */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.8);
+    /* Set the background color with some transparency */
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.content {
+    max-width: 400px;
+}
+
+/* Add any additional styling based on your preferences */

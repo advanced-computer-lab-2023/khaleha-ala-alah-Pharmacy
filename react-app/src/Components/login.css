@@ -18,7 +18,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-image: url('../Images/loginpage.jpg'); /* Use the imported image */
+    background-image: url('../Images/logo-home-2.jpg'); /* Use the imported image */
     background-size: cover; /* Cover the entire screen */
     background-position: center;
     filter: blur(5px); /* Apply blur effect to the background */

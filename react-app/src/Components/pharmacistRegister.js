@@ -1,9 +1,11 @@
+// PharmacistRegister.jsx
+
 import React, { useState } from "react";
 import { message } from "antd";
 import axios from "axios";
+import './PharmacistRegister.css'; // Import your external CSS file if you have one
 
-
- const PharmacistRegister = () => {
+const PharmacistRegister = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -59,8 +61,8 @@ import axios from "axios";
   };
 
   return (
-    <div className="register">
-      <div className="container">
+    <div className="register-container">
+      <div className="register-form">
         <div className="title">Registration</div>
         <div className="content">
           <form onSubmit={handleSubmit}>
@@ -97,13 +99,13 @@ import axios from "axios";
                 />
               </div>
               <div className="input-box">
-                <span className="details">hourly rate</span>
+                <span className="details">Hourly Rate</span>
                 <input
                   type="text"
                   name="hourlyRate"
                   value={hourlyRate}
                   onChange={(e) => setHourlyRate(e.target.value)}
-                  placeholder="hourly rate"
+                  placeholder="Hourly Rate"
                 />
               </div>
               <div className="input-box">
@@ -126,41 +128,38 @@ import axios from "axios";
                 />
               </div>
               <div className="input-box">
-                <span className="details">affiliation</span>
+                <span className="details">Affiliation</span>
                 <input
-                  type="affiliation"
+                  type="text"
                   value={affiliation}
                   onChange={(e) => setAffiliation(e.target.value)}
                   name="affiliation"
-                  placeholder="affiliation"
+                  placeholder="Affiliation"
                 />
               </div>
               <div className="input-box">
-                <span className="details">speciality</span>
+                <span className="details">Speciality</span>
                 <input
-                  type="speciality"
+                  type="text"
                   value={speciality}
                   onChange={(e) => setSpeciality(e.target.value)}
                   name="speciality"
-                  placeholder="speciality"
+                  placeholder="Speciality"
                 />
               </div>
               <div className="input-box">
-                <span className="details">educationalBackground</span>
+                <span className="details">Educational Background</span>
                 <input
-                  type="educationalBackground"
+                  type="text"
                   value={educationalBackground}
                   onChange={(e) => setEducationalBackground(e.target.value)}
                   name="educationalBackground"
-                  placeholder="educationalBackground"
+                  placeholder="Educational Background"
                 />
               </div>
-              
             </div>
-             
-              
             <div className="button">
-              <input type="submit" value="Register" />
+              <input type="submit"  />
             </div>
           </form>
         </div>
