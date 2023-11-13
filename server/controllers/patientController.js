@@ -1,6 +1,6 @@
 const Patient = require("../models/users/patientModel");
 const Cart = require("../models/Cart"); // Import the Cart model
-const Medicine = require("../models/medicine");
+const medicine = require("../models/medicine");
 const Order = require("../models/order");
 const pharmacist = require("../models/users/pharmacist");
 //const Appointments = require("./../models/appointmentModel");

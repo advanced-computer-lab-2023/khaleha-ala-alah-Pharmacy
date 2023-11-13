@@ -22,7 +22,7 @@ import logoImage from "../Images/logo-home.png"; // Adjust the path accordingly
           navigate("/patientHome");
           break;
         case "pharmacist":
-          navigate("/PharmacistHome");
+          navigate("/pharmacistHome");
           break;
         case "admin":
           navigate("/adminHome");
@@ -69,7 +69,7 @@ import logoImage from "../Images/logo-home.png"; // Adjust the path accordingly
         if (role === "patient") {
           window.location.replace("/patientHome");
         } else if (role === "pharmacist") {
-          window.location.replace("/PharmacistHome");
+          window.location.replace("/pharmacistHome");
         } else if (role === "admin") {
           window.location.replace("/adminHome");
         }

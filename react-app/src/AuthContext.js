@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const useAuth = () => {
 console.log( useContext(AuthContext))
+
   return useContext(AuthContext);
 
 };
