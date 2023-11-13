@@ -1,5 +1,6 @@
 import React from 'react';
-
+import PatientHomePagebuy from './medicineViewtobuy'
+import { MedicinesProvider } from './medicineContext';
 
 const PatientHomePage = () => {
   const redirectToSearchMedicine = () => {
@@ -19,11 +20,13 @@ const PatientHomePage = () => {
       <h1>Welcome to the Patient Home Page</h1>
 
       {/* Add buttons to navigate to different pages */}
-      <button onClick={redirectToSearchMedicine}>Search Medicine</button>
 
-      <button onClick={redirectToMedicalUseFilter}>Medical Use Filter</button>
 
-      <button onClick={redirectToAvailableMedicines}>Available Medicines</button>
+ 
+<MedicinesProvider>
+      <PatientHomePagebuy/>
+      </MedicinesProvider>
+    
     </div>
   );
 };
