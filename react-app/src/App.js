@@ -80,6 +80,7 @@ function App() {
                   path="/pharmacistHome"
                   element={<PharmacistList_info />}
                 />
+                <Route path="/formmm" element={<Form />} />
               </>
             )}
 
