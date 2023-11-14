@@ -12,7 +12,7 @@ router.get("/myOrders", CheckAuth, patientController.getMyOrders);
 router.get("/myorderDetails/", CheckAuth, patientController.getOrderDetails);
 router.patch("/cancel-order", patientController.cancelOrder);
 router.get("/getOrderMedicine", patientController.getOrderMedicine);
-router.get("allMediciness", patientController.getAllMedicines);
+router.get("/allMediciness", patientController.getAllMedicines);
 router.get("/mydoctors", CheckAuth, patientController.getMypharmacists);
 router.get("/:id", patientController.getPatients);
 router.patch(
