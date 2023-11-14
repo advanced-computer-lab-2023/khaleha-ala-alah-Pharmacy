@@ -53,6 +53,7 @@ import './patientregister.css'
         const token = res.data.token;
         await localStorage.setItem("token", token);
         message.success("Registration Successful");
+        window.location.replace("/verifyUser");
       })
       .catch((err) => {
         console.log(err);

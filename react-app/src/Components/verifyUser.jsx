@@ -28,8 +28,8 @@ export const VerifyUser = () => {
             const role = res.data.role;
             if(role==="patient"){
                 window.location.replace("/patientHome");
-              }else if(role==="doctor"){
-                window.location.replace("/doctorHome");
+              }else if(role==="pharmacist"){
+                window.location.replace("/pharmacistHome");
               }else if(role==="admin"){
                 window.location.replace("/adminHome");
               }
