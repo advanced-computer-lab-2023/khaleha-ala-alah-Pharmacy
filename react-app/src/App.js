@@ -36,6 +36,7 @@ import CartPage from "./Components/cart";
 import StripePaymentButton from "./Components/Checkout";
 import AddressList from "./Components/address";
 import WalletAmount from "./Components/Wallet";
+import Form from "./Components/uploadMedicinesImage";
 
 function App() {
   const { role } = useAuth();
@@ -85,6 +86,7 @@ function App() {
               <>
                 <Route path="/adminHome" element={<AdminHome />} />
                 <Route path="/addAdmin" element={<AddUser />} />
+                <Route path="/formmm" element={<Form />} />
               </>
             )}
 
