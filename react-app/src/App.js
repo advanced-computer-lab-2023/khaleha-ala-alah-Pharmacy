@@ -56,7 +56,7 @@ function App() {
           <Route path="/search-medicine" element={<MedicineSearch />} />
           <Route path="/medical-use-filter" element={<MedicineFilter />} />
           <Route path="/available-medicines" element={<AvailableMedicines />} />
-          <Route path="/changePassword" element={<ChangePasswordForm />}/>
+          <Route path="/changePassword" element={<ChangePasswordForm />} />
 
           <Route path="/viewPendingDoctors" element={<ViewPending />} />
           <Route path="/" element={<Navigate to="/login" />} />
@@ -88,6 +88,7 @@ function App() {
               <>
                 <Route path="/adminHome" element={<AdminHome />} />
                 <Route path="/addAdmin" element={<AddUser />} />
+                <Route path="/formmm" element={<Form />} />
               </>
             )}
 
