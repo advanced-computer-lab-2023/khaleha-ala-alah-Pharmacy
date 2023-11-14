@@ -16,6 +16,14 @@ const PharmacistList_info = () => {
       <button
         onClick={() => {
           localStorage.clear();
+          window.location.href = "/changePassword";
+        }}
+      >
+        Change Password
+      </button>
+      <button
+        onClick={() => {
+          localStorage.clear();
           window.location.href = "/login";
         }}
       >

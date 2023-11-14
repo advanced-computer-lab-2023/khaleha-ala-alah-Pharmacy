@@ -49,6 +49,10 @@ const PatientHomePagebuy = () => {
       <Link to="/orders">
         <button>My Orders</button>
       </Link>
+      
+      <Link to="/changePassword">
+        <button>Change Password</button>
+      </Link>
       <button
         onClick={() => {
           localStorage.clear();

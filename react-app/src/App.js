@@ -35,6 +35,7 @@ import CartPage from "./Components/cart";
 import StripePaymentButton from "./Components/Checkout";
 import AddressList from "./Components/address";
 import WalletAmount from "./Components/Wallet";
+import ChangePasswordForm from "./Components/changePassword";
 
 function App() {
   const { role } = useAuth();
@@ -54,6 +55,7 @@ function App() {
           <Route path="/search-medicine" element={<MedicineSearch />} />
           <Route path="/medical-use-filter" element={<MedicineFilter />} />
           <Route path="/available-medicines" element={<AvailableMedicines />} />
+          <Route path="/changePassword" element={<ChangePasswordForm />}/>
 
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/PatientRegister" element={<PatientRegister />} />
