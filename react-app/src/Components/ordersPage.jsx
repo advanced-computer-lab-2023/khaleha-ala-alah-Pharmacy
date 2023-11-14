@@ -4,8 +4,8 @@ import "./OrdersPage.css"; // Import CSS for styling
 import FeedbackMessage from "./feedbackMessage";
 import ConfirmationDialog from "./ConfirmationDialog";
 
-const OrdersPage = ({userID}) => {
-    userID = "652b512450d1b797fa0a42ef";
+const OrdersPage = ({ userID }) => {
+  userID = "652b512450d1b797fa0a42ef";
   const [myOrders, setMyOrders] = useState([]);
   let [message, setMessage] = useState("");
   let [messageType, setMessageType] = useState("");
@@ -17,7 +17,15 @@ const OrdersPage = ({userID}) => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch(`http://localhost:4000/patients/myOrders/${userID}`);
+        const response = await fetch(
+          `http://localhost:4000/patients/myOrders`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json", // Specify the content type if needed
+            },
+          }
+        );
         if (!response.ok) {
           throw new Error(`Failed to fetch orders. Status: ${response.status}`);
         }
@@ -25,7 +33,7 @@ const OrdersPage = ({userID}) => {
         setMyOrders(data.data.result);
       } catch (error) {
         console.error("Error fetching orders:", error);
-        setError(error.message || 'Error fetching orders');
+        setError(error.message || "Error fetching orders");
       } finally {
         setIsLoading(false);
       }
@@ -33,7 +41,6 @@ const OrdersPage = ({userID}) => {
 
     fetchOrders();
   }, []);
-
 
   const handleCancelOrderConfirm = async (order) => {
     console.log(order);

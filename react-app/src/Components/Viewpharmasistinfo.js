@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const PharmacistList_info = () => {
   const [pharmacists, setPharmacists] = useState([]);
@@ -8,10 +8,12 @@ const PharmacistList_info = () => {
   useEffect(() => {
     const fetchPharmacists = async () => {
       try {
-        const response = await axios.get('http://localhost:4000/pharmacists/allpharmacists');
+        const response = await axios.get(
+          "http://localhost:4000/pharmacists/allpharmacists"
+        );
         setPharmacists(response.data);
       } catch (error) {
-        console.error('Error fetching pharmacists:', error);
+        console.error("Error fetching pharmacists:", error);
       }
     };
 
@@ -25,9 +27,21 @@ const PharmacistList_info = () => {
   return (
     <div>
       <h1>Pharmacists</h1>
+
+      <button
+        onClick={() => {
+          localStorage.clear();
+          window.location.href = "/login";
+        }}
+      >
+        Log Out
+      </button>
       <ul>
         {pharmacists.map((pharmacist) => (
-          <li key={pharmacist._id} onClick={() => handlePharmacistClick(pharmacist)}>
+          <li
+            key={pharmacist._id}
+            onClick={() => handlePharmacistClick(pharmacist)}
+          >
             {pharmacist.name}
           </li>
         ))}

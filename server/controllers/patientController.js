@@ -70,9 +70,7 @@ exports.getPatients = async function (req, res) {
   }
 };
 
-const Address = require('../models/addresses'); // Import your Address model
-
-
+const Address = require("../models/addresses"); // Import your Address model
 
 // Add address for a specific user
 exports.addAddress = async (req, res) => {
@@ -88,7 +86,7 @@ exports.addAddress = async (req, res) => {
       userAddress = await Address.create({ userId, addresses: [address] });
     } else {
       // If the address is found, log the current state and push the new address to the addresses array
-      console.log('Existing userAddress:', userAddress);
+      console.log("Existing userAddress:", userAddress);
       userAddress.addresses = userAddress.addresses || [];
       userAddress.addresses.push(address);
       await userAddress.save();
@@ -99,27 +97,28 @@ exports.addAddress = async (req, res) => {
 
     if (!patient) {
       // If the patient is not found, create a new one with the address
-     
     } else {
       // If the patient is found, log the current state and push the new address to the addresses array
-      console.log('Existing patient:', patient);
+      console.log("Existing patient:", patient);
       patient.addresses = patient.addresses || [];
       patient.addresses.push(userAddress);
       await patient.save();
     }
 
-    return res.status(200).json({ message: 'Address added successfully', patient });
+    return res
+      .status(200)
+      .json({ message: "Address added successfully", patient });
   } catch (error) {
-    console.error('Error adding address:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    console.error("Error adding address:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
-const Wallet = require('../models/wallet');
+const Wallet = require("../models/wallet");
 exports.getAmountInWallet = async (req, res) => {
   try {
-    const userID = req.params.userID.trim(); 
-  
+    const userID = req.params.userID.trim();
+
     const userWallet = await Wallet.findOne({ userID });
 
     if (userWallet) {
@@ -130,11 +129,17 @@ exports.getAmountInWallet = async (req, res) => {
       res.json({ success: true, amountInWallet });
     } else {
       // Send an error response if user wallet not found
-      res.status(404).json({ success: false, message: 'User wallet not found' });
+      res
+        .status(404)
+        .json({ success: false, message: "User wallet not found" });
     }
   } catch (error) {
     // Send an error response
-    res.status(500).json({ success: false, message: 'Error retrieving amount from wallet', error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Error retrieving amount from wallet",
+      error: error.message,
+    });
   }
 };
 // Function to add amount to the wallet or create a new wallet if not available
@@ -152,10 +157,14 @@ exports.addAmountToWallet = async (req, res) => {
     await userWallet.addAmount(amount);
 
     // Send a success response
-    res.json({ success: true, message: 'Amount added to wallet successfully' });
+    res.json({ success: true, message: "Amount added to wallet successfully" });
   } catch (error) {
     // Send an error response
-    res.status(500).json({ success: false, message: 'Error adding amount to wallet', error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Error adding amount to wallet",
+      error: error.message,
+    });
   }
 };
 
@@ -170,19 +179,25 @@ exports.removeAmountFromWallet = async (req, res) => {
       await userWallet.removeAmount(amount);
 
       // Send a success response
-      res.json({ success: true, message: 'Amount removed from wallet successfully' });
+      res.json({
+        success: true,
+        message: "Amount removed from wallet successfully",
+      });
     } else {
       // Send an error response if user wallet not found
-      res.status(404).json({ success: false, message: 'User wallet not found' });
+      res
+        .status(404)
+        .json({ success: false, message: "User wallet not found" });
     }
   } catch (error) {
     // Send an error response
-    res.status(500).json({ success: false, message: 'Error removing amount from wallet', error: error.message });
+    res.status(500).json({
+      success: false,
+      message: "Error removing amount from wallet",
+      error: error.message,
+    });
   }
 };
-
-
-
 
 // Delete an address based on its index for a specific user
 exports.deleteAddress = async (req, res) => {
@@ -193,7 +208,7 @@ exports.deleteAddress = async (req, res) => {
     const userAddress = await Address.findOne({ userId });
 
     if (!userAddress) {
-      return res.status(404).json({ message: 'User address not found' });
+      return res.status(404).json({ message: "User address not found" });
     }
 
     // Ensure that the addresses array is initialized
@@ -201,7 +216,7 @@ exports.deleteAddress = async (req, res) => {
 
     // Check if the address index is valid
     if (addressIndex < 0 || addressIndex >= userAddress.addresses.length) {
-      return res.status(400).json({ message: 'Invalid address index' });
+      return res.status(400).json({ message: "Invalid address index" });
     }
 
     // Remove the address at the specified index
@@ -212,7 +227,7 @@ exports.deleteAddress = async (req, res) => {
     const patient = await Patient.findOne({ userID: userId });
 
     if (!patient) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(404).json({ message: "User not found" });
     }
 
     // Ensure that the addresses array is initialized
@@ -222,16 +237,14 @@ exports.deleteAddress = async (req, res) => {
     patient.addresses.splice(addressIndex, 1);
     await patient.save();
 
-    return res.status(200).json({ message: 'Address deleted successfully', patient });
+    return res
+      .status(200)
+      .json({ message: "Address deleted successfully", patient });
   } catch (error) {
-    console.error('Error deleting address:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    console.error("Error deleting address:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
-
-
-
-
 
 // Get all addresses for a specific user
 exports.getAllAddresses = async (req, res) => {
@@ -242,18 +255,17 @@ exports.getAllAddresses = async (req, res) => {
     const addressesResult = await Address.findOne({ userId });
 
     if (!addressesResult) {
-      return res.status(404).json({ message: 'User addresses not found' });
+      return res.status(404).json({ message: "User addresses not found" });
     }
 
     const addresses = addressesResult.addresses || [];
 
     return res.status(200).json({ addresses });
   } catch (error) {
-    console.error('Error getting addresses:', error);
-    return res.status(500).json({ message: 'Internal server error' });
+    console.error("Error getting addresses:", error);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
-
 
 exports.createPatient = async function (req, res) {
   try {
@@ -583,7 +595,6 @@ exports.changeItemQuantity = async function (req, res) {
   }
 };
 
-
 exports.checkout = async function (req, res) {
   const patientId = req.params.patientId.trim();
 
@@ -601,7 +612,7 @@ exports.checkout = async function (req, res) {
     }, 0);
 
     // Create an array to store order items
-    const orderItems = cartItems.map(cartItem => ({
+    const orderItems = cartItems.map((cartItem) => ({
       medicine: cartItem.id,
       quantity: cartItem.quantity,
       totalPrice: cartItem.price * cartItem.quantity,
@@ -707,11 +718,11 @@ exports.cancelOrder = async function (req, res) {
   }
 };
 
-
 exports.getMyOrders = async function (req, res) {
   try {
-    const userID = req.params.userID.trim(); // Assuming you extract the userID from the request parameters
+    const userID = req.user._id; // Assuming you extract the userID from the request parameters
 
+    console.log("ALLOOOO");
     // Fetch orders for the specific userID
     const orders = await Order.find({ userID: userID });
 

@@ -10,20 +10,21 @@ const OrderCard = ({ order, handleCancelOrder }) => {
 
   return (
     <div className="order-card">
-{order.items.map((item, index) => (
-  <div key={index} className="order-item">
-    <img
-      src={item.medicine.pictureUrl}
-      alt={item.medicine.name}
-      className="medicine-image"
-    />
-    <div className="medicine-details">
-      <h5>{item.medicine.name}</h5>
-      <p>Quantity: {item.quantity} x</p>
-      <p>Price: ${item.totalPrice}</p>
-    </div>
-  </div>
-))}
+      {order.items.map((item, index) => (
+        <div key={index} className="order-item">
+          <img
+            width="100px"
+            height="100px"
+            src={item.medicine.pictureUrl}
+            alt={item.medicine.name}
+          />
+          <div className="medicine-details">
+            <h5>{item.medicine.name}</h5>
+            <p>Quantity: {item.quantity} x</p>
+            <p>Price: ${item.totalPrice}</p>
+          </div>
+        </div>
+      ))}
 
       <div className="order-summary">
         <p>Total Amount: ${order.totalAmount}</p>
