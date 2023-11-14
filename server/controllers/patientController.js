@@ -787,3 +787,42 @@ exports.getOrderMedicine = async function (req, res) {
     });
   }
 };
+
+exports.getAllMedicines = async function (req, res) {
+  try {
+    const medicines = await Medicine.find();
+    res.status(200).json({
+      status: "success",
+      results: medicines.length,
+      data: {
+        medicines,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching medicines.",
+    });
+  }
+};
+
+exports.setMedicinePhoto = async function (req, res) {
+  try {
+    console.log(req.body);
+    const medicine = await Medicine.findById(req.body.medicineId);
+    medicine.pictureUrl = "http://localhost:4000/uploads/" + req.profileFile;
+    await medicine.save();
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        medicine,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while setting medicine photo.",
+    });
+  }
+};
