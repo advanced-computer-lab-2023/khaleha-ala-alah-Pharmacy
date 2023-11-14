@@ -15,6 +15,7 @@ import PharmacistList_info from "./Components/Viewpharmasistinfo";
 import PatientList_info from "./Components/patientbasicInfo";
 import MainApp from "./Components/MainApp";
 import AdminHome from "./Components/adminHome";
+import ViewPending from "./Components/viewPendingPharmacist";
 // Change this line
 import Login from "./Components/login";
 import OrdersPage from "./Components/ordersPage";
@@ -54,7 +55,7 @@ function App() {
           <Route path="/search-medicine" element={<MedicineSearch />} />
           <Route path="/medical-use-filter" element={<MedicineFilter />} />
           <Route path="/available-medicines" element={<AvailableMedicines />} />
-
+          <Route path="/viewPendingDoctors" element={<ViewPending />} />
           <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/PatientRegister" element={<PatientRegister />} />
           <Route path="/PharmacistRegister" element={<PharmacistRegister />} />
