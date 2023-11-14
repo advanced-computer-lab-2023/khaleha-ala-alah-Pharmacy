@@ -1,32 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useMedicines } from './medicineContext';
 
 const MedicineSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-  const [selectedMedicine, setSelectedMedicine] = useState(null);
+  const { medicines, updateMedicines } = useMedicines();
 
-  // Define a delay before making the API request
-
-
-  const handleSearch = async () => {
+  const fetchMedicines = async () => {
     try {
-      const response = await axios.get(`http://localhost:4000/patients/searchmedicine?prefix=${searchTerm}`
-    // Send the search term as a query parameter
-      );
-      setSearchResults(response.data.medicines);
+      // Fetch all available medicines from the API
+      const response = await axios.get('http://localhost:4000/admins/available-medicines');
+      // Filter the medicines to only include those with quantity > 0
+      const filteredMedicines = response.data.filter((medicine) => medicine.availableQuantity > 0);
+
+      // Check if the searchTerm is empty, if yes, update context with all medicines
+      if (searchTerm === '') {
+        updateMedicines(filteredMedicines);
+      } else {
+        // Filter medicines based on the search term from the context
+        const filtered = filteredMedicines.filter((medicine) =>
+          medicine.name.toLowerCase().includes(searchTerm.toLowerCase())
+        );
+        // Update the context with the filtered medicines
+        updateMedicines(filtered);
+      }
     } catch (error) {
-      console.error('Error searching for medicines:', error);
+      console.error('Error fetching available medicines:', error);
     }
   };
 
-
-
-  const handleMedicineClick = async (medicine) => {
-    setSelectedMedicine(medicine);
+  const handleSearch = async () => {
+    // Fetch medicines only if the search term has changed
+    if (searchTerm !== '') {
+      fetchMedicines();
+    }
   };
 
-
+  const handleResetSearch = async () => {
+    // Reset the search term and fetch all medicines
+    setSearchTerm('');
+    fetchMedicines();
+  };
 
   return (
     <div>
@@ -38,28 +52,9 @@ const MedicineSearch = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
       <button onClick={handleSearch}>Search</button>
-      <ul>
-        {(searchResults).map((medicine) => (
-          <li
-            key={medicine._id}
-            onClick={() => handleMedicineClick(medicine)}
-          >
-            {medicine.name}
-          </li>
-        ))}
-      </ul>
-      {selectedMedicine && (
-        <div>
-          <h2>Medicine Details</h2>
-          <p>Name: {selectedMedicine.name}</p>
-          <p>Price: {selectedMedicine.price}</p>
-          <p>Quantity: {selectedMedicine.availableQuantity}</p>
-          <p>Sales: {selectedMedicine.sales}</p>
-          <p>Description: {selectedMedicine.description}</p>
-          <p>Picture URL: {selectedMedicine.pictureUrl}</p>
-          {/* Add more medicine details here */}
-        </div>
-      )}
+      <button onClick={handleResetSearch}>Reset Search</button>
+
+     
     </div>
   );
 };

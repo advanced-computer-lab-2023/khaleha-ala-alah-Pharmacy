@@ -9,7 +9,7 @@ exports.getAvailableMedicines = async (req, res) => {
     try {
         // Find medicines where availableQuantity is greater than 0
         const availableMedicines = await Medicine.find()
-            .select('availableQuantity sales name price description pictureUrl');
+            .select('availableQuantity sales name price description pictureUrl medicalUse');
 
         res.status(200).json(availableMedicines);
     } catch (error) {
@@ -173,22 +173,26 @@ exports.viewPendingpharmacists = async (req, res) => {
 //approve and reject pharmacist
 exports.approvepharmacist = async (req, res) => {
   try {
+    console.log("aafsdfd");
     const{type}=req.headers;
+    console.log(type + '<<<<<<<<<<<<<<<');
     if(type!=="approve" && type!=="reject"){
       return res.status(400).json({ error: "Invalid type specified." });
     }
     const { username } = req.body;
-    let pharmacist=await pharmacist.findOne({ username: username });
-    if(!pharmacist){
+    console.log("aloooooooooooooooooooooooooooooooooooooo")
+    let Pharmacist=await pharmacist.findOne({ username: username });
+    if(!Pharmacist){
       return res.status(404).json({ error: "pharmacist not found." });
     }
-    type==="approve"?pharmacist.status="accepted":pharmacist.status="rejected";
-    await pharmacist.save();
-    pharmacistID=pharmacist.userID;
-    pharmacist=await User.findOne({ _id: pharmacistID });
-    type==="approve"?pharmacist.pharmacistApproved=true:pharmacist.pharmacistApproved=false;
-    await pharmacist.save();
-    return res.status(200).json({ message: `pharmacist approved successfully.` });
+    console.log("iofwaoipfwoihf<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+    type==="approve"?Pharmacist.status="accepted":Pharmacist.status="rejected";
+    await Pharmacist.save();
+    // pharmacistID=Pharmacist.userID;
+    pharma=await User.findOne({ _id: Pharmacist.userID });
+    type==="approve"?pharma.pharmacistApproved=true:pharma.pharmacistApproved=false;
+    await pharma.save();
+    return res.status(200).json({ message: `pharmacist ${type} successfully.` });
   } catch (error) {
     return res.status(500).json({ error: "Internal server error." });
   }

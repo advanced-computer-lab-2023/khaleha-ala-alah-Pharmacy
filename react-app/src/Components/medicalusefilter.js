@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { useMedicines } from './medicineContext';
 
 const MedicineFilter = () => {
   const [medicalUses, setMedicalUses] = useState([]);
@@ -7,30 +7,34 @@ const MedicineFilter = () => {
   const [relatedMedicines, setRelatedMedicines] = useState([]);
   const [selectedMedicine, setSelectedMedicine] = useState(null);
 
-  // Fetch unique medical uses from the server
+  const { medicines, updateMedicines } = useMedicines();
+ 
+
+
+  // Extract unique medical uses from the context data
   useEffect(() => {
-    axios.get('http://localhost:4000/patients/filterMedicine') // Replace with your server endpoint
-      .then((response) => {
-        setMedicalUses(response.data.uniqueMedicalUses);
-      })
-      .catch((error) => {
-        console.error('Error fetching medical uses:', error);
-      });
-  }, []);
+    const uniqueMedicalUses = [...new Set(medicines.map((medicine) => medicine.medicalUse))];
+    setMedicalUses(uniqueMedicalUses);
+  }, [medicines]);
 
   // Handle the click on a medical use
   const handleMedicalUseClick = (medicalUse) => {
     setSelectedMedicalUse(medicalUse);
 
-    // Fetch related medicines by medical use
-    axios.get(`http://localhost:4000/admins/allmedicinesdyuse?medicalUse=${medicalUse}`) // Replace with your server endpoint
-      .then((response) => {
-        setRelatedMedicines(response.data);
-        setSelectedMedicine(null); // Clear the selected medicine when a medical use is clicked
-      })
-      .catch((error) => {
-        console.error('Error fetching related medicines:', error);
-      });
+    // Filter medicines by selected medical use
+    const filteredMedicines = medicines.filter((medicine) => medicine.medicalUse === medicalUse);
+    setRelatedMedicines(filteredMedicines);
+    setSelectedMedicine(null); // Clear the selected medicine when a medical use is clicked
+
+    // Update the medicine context with filtered medicines
+    updateMedicines(filteredMedicines);
+  };
+
+  // Handle the click on the "Show All Medicines" button
+  const handleShowAllMedicines = () => {
+    setSelectedMedicalUse(null); // Reset selected medical use
+    setRelatedMedicines([]); // Clear the filtered medicines
+    updateMedicines(medicines); // Update the medicine context with all available medicines
   };
 
   // Handle the click on a medicine
@@ -42,15 +46,16 @@ const MedicineFilter = () => {
     <div>
       <h1>Medicine Filter</h1>
       <div className="medical-use-list">
-        {medicalUses.map((medicalUse) => (
-          <div
-            key={medicalUse}
-            onClick={() => handleMedicalUseClick(medicalUse)}
-            className={`medical-use-item ${medicalUse === selectedMedicalUse ? 'active' : ''}`}
-          >
-            {medicalUse}
-          </div>
-        ))}
+        {/* Render a dropdown with medical uses */}
+        <select onChange={(e) => handleMedicalUseClick(e.target.value)}>
+          <option value="">Select Medical Use</option>
+          {medicalUses.map((medicalUse) => (
+            <option key={medicalUse} value={medicalUse}>
+              {medicalUse}
+            </option>
+          ))}
+        </select>
+     
       </div>
       <div className="related-medicines">
         {selectedMedicalUse && (
