@@ -10,6 +10,7 @@ const pharmacistHome = () => {
     <div>
       <h1>Pharmacist Home</h1>
 
+
       <button
         onClick={() => {
           localStorage.clear();
@@ -18,7 +19,11 @@ const pharmacistHome = () => {
       >
         Log Out
       </button>
+      
+
     </div>
+
+
 </>
          
   );

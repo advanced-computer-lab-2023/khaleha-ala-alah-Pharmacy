@@ -36,6 +36,21 @@ const PharmacistList_info = () => {
       >
         Log Out
       </button>
+      <button
+        onClick={() => {
+          window.location.href = "/formmm";
+        }}
+      >
+        Add Medicine
+      </button>
+      <button
+        onClick={() => {
+          //localStorage.clear();
+          window.location.href = "/changePassword";
+        }}
+      >
+        Change Password
+      </button>
       <ul>
         {pharmacists.map((pharmacist) => (
           <li
