@@ -311,11 +311,12 @@ exports.login = async (req, res) => {
 //change password
 exports.changePassword = async (req, res) => {
   try {
-    const { username,oldPassword, newPassword } = req.body;
+    const userID = req.user._id;
+    const { oldPassword, newPassword } = req.body;
     //validate password
     validatePassword(newPassword);
     //check if user exists
-    let user = await userModel.findOne({username});
+    let user = await userModel.findOne({ _id: userID });
     if (!user) {
       return res.status(400).json({ error: "User does not exists" });
     }
@@ -335,6 +336,7 @@ exports.changePassword = async (req, res) => {
     return res.status(500).json({ error: "internal server error" });
   }
 };
+
 //forget password
 exports.forgotPassword = async (req, res) => {
   try {
