@@ -2,10 +2,14 @@
 
 import React, { useState } from "react";
 import { message } from "antd";
+import { useEffect } from "react";
 import axios from "axios";
+import { useAuth } from "../AuthContext";
+import { Link, useNavigate } from "react-router-dom";
 import './PharmacistRegister.css'; // Import your external CSS file if you have one
 
 const PharmacistRegister = () => {
+  const { role } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -15,6 +19,32 @@ const PharmacistRegister = () => {
   const [affiliation, setAffiliation] = useState("");
   const [speciality, setSpeciality] = useState("");
   const [educationalBackground, setEducationalBackground] = useState("");
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (role) {
+      switch (role) {
+        case "patient":
+          navigate("/patientHome");
+          break;
+        case "pharmacist":
+          navigate("/PharmacistHome");
+          break;
+        case "admin":
+          navigate("/adminHome");
+          break;
+        default:
+          navigate("/");
+      }
+    }
+  }, [role, navigate]);
+
+  const handleFileSelect = (e) => {
+    const files = e.target.files;
+    setSelectedFiles([...files]);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,19 +62,23 @@ const PharmacistRegister = () => {
       message.error("Please fill all the fields and add at least one slot");
       return;
     }
-    const data = {
-      username: username,
-      password: password,
-      email: email,
-      name: name,
-      birthdate: birthdate,
-      hourlyRate: hourlyRate,
-      affiliation: affiliation,
-      speciality: speciality,
-      educationalBackground: educationalBackground,
-    };
+
+    const formData  = new FormData();
+    formData.append("name", name);
+    formData.append("username", username);
+    formData.append("password", password);
+    formData.append("email", email);
+    formData.append("birthdate", birthdate);
+    formData.append("hourlyRate", hourlyRate);
+    formData.append("affiliation", affiliation);
+    formData.append("speciality", speciality);
+    formData.append("educationalBackground", educationalBackground);
+    for (let i = 0; i < selectedFiles.length; i++) {
+      formData.append("files", selectedFiles[i]);
+    }
+
     await axios
-      .post("http://localhost:4000/users/register", data, {
+      .post("http://localhost:4000/users/register", formData, {
         headers: {
           role: "pharmacist",
         },
@@ -53,6 +87,7 @@ const PharmacistRegister = () => {
         const token = res.data.token;
         await localStorage.setItem("token", token);
         message.success("Registration Successful");
+        window.location.replace("/verifyUser");
       })
       .catch((err) => {
         console.log(err);
@@ -157,6 +192,17 @@ const PharmacistRegister = () => {
                   placeholder="Educational Background"
                 />
               </div>
+              {/* upload files */}
+              <div className="input-box">
+                <span className="details">Upload File(s)</span>
+                <input
+                  type="file"
+                  name="file"
+                  accept=".pdf, .jpg, .png" // Specify allowed file types
+                  multiple // Allow multiple file selection
+                  onChange={handleFileSelect}
+                />
+            </div>
             </div>
             <div className="button">
               <input type="submit"  />

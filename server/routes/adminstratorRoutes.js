@@ -6,7 +6,7 @@ const router = express.Router();
 router.route("/").get(adminController.getAllAdmins);
 router.route("/addAdmin").post(adminController.addAdmin);
 router.route("/delAdminpharmacistPatient").delete(adminController.delAdminpharmacistPatient);
- 
+router.post("/approveOrRejectDoctor", adminController.approvepharmacist);
 
 router.route("/pendingDoctors").get(adminController.viewPendingpharmacists);
 

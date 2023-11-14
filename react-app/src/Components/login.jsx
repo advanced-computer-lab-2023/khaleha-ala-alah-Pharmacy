@@ -80,9 +80,9 @@ import logoImage from "../Images/logo-home.png"; // Adjust the path accordingly
           await localStorage.setItem("token", err.response.data.token);
           message.error("User not verified yet");
           window.location.replace("/verifyUser");
-        } else if (err.response.data.error === "Doctor not approved yet") {
+        } else if (err.response.data.error === "pharmacist not approved yet") {
           await localStorage.setItem("token", err.response.data.token);
-          message.error("Doctor not approved yet");
+          message.error("pharmacist not approved yet");
           window.location.replace("/notApproved");
         } else {
           message.error("Invalid Credentials");
