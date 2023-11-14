@@ -16,6 +16,7 @@ import PatientList_info from './Components/patientbasicInfo';
 import MainApp from './Components/MainApp';
 // Change this line
 import Login from './Components/login';
+import OrdersPage from './Components/ordersPage'
 
 import { useAuth } from "./AuthContext";
 import PrivateRoute from './PrivateRoute';
@@ -28,23 +29,34 @@ import ForgotPassword from './Components/forgotPassword';
 import { VerifyUser } from './Components/verifyUser';
 import PatientHomePage from './Components/patientHome'
 import PatientHomePagebuy from './Components/medicineViewtobuy'
-
-
-
+import { CartProvider } from './Components/cart-context';
+import CartPage from './Components/cart';
+import StripePaymentButton from './Components/Checkout'
+import AddressList from './Components/address'
+import WalletAmount from './Components/Wallet'
 
 function App() {
   const { role } = useAuth();
   return (
     <div className="App">
+          <CartProvider>
+
+     
       <Routes>
         {/* public routes */}
-
-        <Route path="/login" element={<Login />} />
+                <Route path="/wallet" element={< WalletAmount />} />
+                 <Route path="/orders" element={< OrdersPage />} />
+          <Route path="/addresses" element={< AddressList />} />
+  <Route path="/checkout" element={< StripePaymentButton />} />
+     <Route path="/login" element={<Login />} />
              <Route path="/patientHome" element={<PatientHomePage />} />
                <Route path="/medicine-to-buy" element={<PatientHomePagebuy />} />
+                  <Route path="/cart" element={<CartPage />} />
                <Route path="/search-medicine" element={<MedicineSearch />} />
         <Route path="/medical-use-filter" element={<MedicineFilter />} />
         <Route path="/available-medicines" element={<AvailableMedicines />} />
+
+   
 
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/PatientRegister" element={<PatientRegister />} />
@@ -96,6 +108,7 @@ function App() {
 
       
      </Routes>
+          </CartProvider>
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import PatientHomePagebuy from './medicineViewtobuy'
 import { MedicinesProvider } from './medicineContext';
+import {CartProvider} from './cart-context'
 
 const PatientHomePage = () => {
   const redirectToSearchMedicine = () => {
@@ -24,7 +25,10 @@ const PatientHomePage = () => {
 
  
 <MedicinesProvider>
-      <PatientHomePagebuy/>
+  
+ <PatientHomePagebuy/>
+
+     
       </MedicinesProvider>
     
     </div>
