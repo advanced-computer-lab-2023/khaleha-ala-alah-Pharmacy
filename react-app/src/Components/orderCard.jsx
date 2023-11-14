@@ -10,23 +10,24 @@ const OrderCard = ({ order, handleCancelOrder }) => {
 
   return (
     <div className="order-card">
-      {order.items.map((item, index) => (
-        <div key={index} className="order-item">
-          <img
-            src={item.medicine.pictureUrl}
-            alt={item.medicine.name}
-            className="medicine-image"
-          />
-          <div className="medicine-details">
-            <h5>{item.medicine.name}</h5>
-            <p>Quantity: {order.order.items[index].quantity} x</p>
-            <p>Price: ${order.order.items[index].totalPrice}</p>
-          </div>
-        </div>
-      ))}
+{order.items.map((item, index) => (
+  <div key={index} className="order-item">
+    <img
+      src={item.medicine.pictureUrl}
+      alt={item.medicine.name}
+      className="medicine-image"
+    />
+    <div className="medicine-details">
+      <h5>{item.medicine.name}</h5>
+      <p>Quantity: {item.quantity} x</p>
+      <p>Price: ${item.totalPrice}</p>
+    </div>
+  </div>
+))}
+
       <div className="order-summary">
-        <p>Total Amount: ${order.order.totalAmount}</p>
-        <p>Status: {order.order.status}</p>
+        <p>Total Amount: ${order.totalAmount}</p>
+        <p>Status: {order.status}</p>
         {
           <button
             onClick={() => handleCancelOrder(order)}

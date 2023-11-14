@@ -2,7 +2,7 @@ import React from "react";
 import { message } from "antd";
 import { useState } from "react";
 import axios from "axios";
-
+import './patientregister.css'
 
  const PatientRegister = () => {
   const [username, setUsername] = useState("");

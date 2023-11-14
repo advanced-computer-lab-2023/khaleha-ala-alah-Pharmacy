@@ -1,0 +1,114 @@
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.register-form {
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* PharmacistRegister.css */
+
+.user-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.input-box {
+    width: calc(50% - 10px);
+    /* Set the width of each input box to 50% minus some margin */
+    margin-bottom: 15px;
+}
+
+/* ... The rest of your styles remain unchanged ... */
+.details {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.button {
+    margin-top: 20px;
+}
+
+input[type="submit"] {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+
+/* PharmacistRegister.css */
+
+.register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+}
+
+.register-container::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../Images//register.jpg') center/cover fixed;
+    /* Replace 'path/to/your/image.jpg' with the path to your background image */
+    filter: blur(4px);
+    /* Adjust the blur effect as needed */
+    z-index: -1;
+}
+
+.register-form {
+    background-color: rgba(255, 255, 255, 0.5);
+    /* Add a semi-transparent white background for better readability */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+}
+.button {
+    margin-top: 20px;
+}
+
+input[type="submit"] {
+    width: 200px;
+    height: 50px;
+    background: url('../Images//register-button.png') center/cover;
+    /* Replace 'path/to/your/image.jpg' with the path to your button background image */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0px;
+    background-size: 100% 100%;
+}
+/* ... The rest of your styles remain unchanged ... */

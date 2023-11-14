@@ -1,0 +1,58 @@
+.medicine-list {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.medicine-card-container {
+   width: 30%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin: 10px;
+}
+
+.medicine-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    height: 100%;
+    /* Ensure each card has the same height */
+    display: flex;
+    flex-direction: column;
+}
+
+.medicine-image {
+    width: 100%;
+    height: 100px;
+    /* Set a fixed height for the image */
+    object-fit: cover;
+    border-radius: 8px 8px 0 0;
+    /* Rounded corners for the top */
+    margin-bottom: 10px;
+    /* Adjust as needed */
+}
+
+.medicine-details {
+    flex-grow: 1;
+}
+
+/* Additional styling for text content */
+.medicine-details h2 {
+    margin-bottom: 10px;
+}
+
+.medicine-details p {
+    margin: 5px 0;
+}
+
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+button:hover {
+    background-color: #555;
+}

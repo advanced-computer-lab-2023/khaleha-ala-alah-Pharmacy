@@ -70,6 +70,191 @@ exports.getPatients = async function (req, res) {
   }
 };
 
+const Address = require('../models/addresses'); // Import your Address model
+
+
+
+// Add address for a specific user
+exports.addAddress = async (req, res) => {
+  const { userId } = req.params; // Assuming you have the user ID in the request parameters
+  const { address } = req.body; // Assuming the new address is sent in the request body
+
+  try {
+    // Find the address document by user ID
+    let userAddress = await Address.findOne({ userId });
+
+    if (!userAddress) {
+      // If the address is not found, create a new one with the user ID
+      userAddress = await Address.create({ userId, addresses: [address] });
+    } else {
+      // If the address is found, log the current state and push the new address to the addresses array
+      console.log('Existing userAddress:', userAddress);
+      userAddress.addresses = userAddress.addresses || [];
+      userAddress.addresses.push(address);
+      await userAddress.save();
+    }
+
+    // Find the patient by user ID
+    let patient = await Patient.findOne({ userID: userId });
+
+    if (!patient) {
+      // If the patient is not found, create a new one with the address
+     
+    } else {
+      // If the patient is found, log the current state and push the new address to the addresses array
+      console.log('Existing patient:', patient);
+      patient.addresses = patient.addresses || [];
+      patient.addresses.push(userAddress);
+      await patient.save();
+    }
+
+    return res.status(200).json({ message: 'Address added successfully', patient });
+  } catch (error) {
+    console.error('Error adding address:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+const Wallet = require('../models/wallet');
+exports.getAmountInWallet = async (req, res) => {
+  try {
+    const userID = req.params.userID.trim(); 
+  
+    const userWallet = await Wallet.findOne({ userID });
+
+    if (userWallet) {
+      // Retrieve the current amount in the wallet
+      const amountInWallet = userWallet.amount;
+
+      // Send the amount in the wallet as a response
+      res.json({ success: true, amountInWallet });
+    } else {
+      // Send an error response if user wallet not found
+      res.status(404).json({ success: false, message: 'User wallet not found' });
+    }
+  } catch (error) {
+    // Send an error response
+    res.status(500).json({ success: false, message: 'Error retrieving amount from wallet', error: error.message });
+  }
+};
+// Function to add amount to the wallet or create a new wallet if not available
+exports.addAmountToWallet = async (req, res) => {
+  try {
+    const { userID, amount } = req.body;
+    let userWallet = await Wallet.findOne({ userID });
+
+    if (!userWallet) {
+      // User wallet not found, create a new wallet
+      userWallet = new Wallet({ userID });
+    }
+
+    // Add amount to the wallet
+    await userWallet.addAmount(amount);
+
+    // Send a success response
+    res.json({ success: true, message: 'Amount added to wallet successfully' });
+  } catch (error) {
+    // Send an error response
+    res.status(500).json({ success: false, message: 'Error adding amount to wallet', error: error.message });
+  }
+};
+
+// Function to remove amount from the wallet
+exports.removeAmountFromWallet = async (req, res) => {
+  try {
+    const { userID, amount } = req.body;
+    const userWallet = await Wallet.findOne({ userID });
+
+    if (userWallet) {
+      // Attempt to remove amount (throws error if insufficient funds)
+      await userWallet.removeAmount(amount);
+
+      // Send a success response
+      res.json({ success: true, message: 'Amount removed from wallet successfully' });
+    } else {
+      // Send an error response if user wallet not found
+      res.status(404).json({ success: false, message: 'User wallet not found' });
+    }
+  } catch (error) {
+    // Send an error response
+    res.status(500).json({ success: false, message: 'Error removing amount from wallet', error: error.message });
+  }
+};
+
+
+
+
+// Delete an address based on its index for a specific user
+exports.deleteAddress = async (req, res) => {
+  const { userId, addressIndex } = req.params; // Assuming you have user ID and address index in the request parameters
+
+  try {
+    // Find and update the address document by user ID
+    const userAddress = await Address.findOne({ userId });
+
+    if (!userAddress) {
+      return res.status(404).json({ message: 'User address not found' });
+    }
+
+    // Ensure that the addresses array is initialized
+    userAddress.addresses = userAddress.addresses || [];
+
+    // Check if the address index is valid
+    if (addressIndex < 0 || addressIndex >= userAddress.addresses.length) {
+      return res.status(400).json({ message: 'Invalid address index' });
+    }
+
+    // Remove the address at the specified index
+    userAddress.addresses.splice(addressIndex, 1);
+    await userAddress.save();
+
+    // Find and update the patient by user ID
+    const patient = await Patient.findOne({ userID: userId });
+
+    if (!patient) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    // Ensure that the addresses array is initialized
+    patient.addresses = patient.addresses || [];
+
+    // Remove the address at the specified index from the patient's addresses array
+    patient.addresses.splice(addressIndex, 1);
+    await patient.save();
+
+    return res.status(200).json({ message: 'Address deleted successfully', patient });
+  } catch (error) {
+    console.error('Error deleting address:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
+
+
+
+// Get all addresses for a specific user
+exports.getAllAddresses = async (req, res) => {
+  const { userId } = req.params; // Assuming you have the user ID in the request parameters
+
+  try {
+    // Find addresses by user ID
+    const addressesResult = await Address.findOne({ userId });
+
+    if (!addressesResult) {
+      return res.status(404).json({ message: 'User addresses not found' });
+    }
+
+    const addresses = addressesResult.addresses || [];
+
+    return res.status(200).json({ addresses });
+  } catch (error) {
+    console.error('Error getting addresses:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+};
+
+
 exports.createPatient = async function (req, res) {
   try {
     const newPatient = await Patient.create(req.body);
@@ -90,7 +275,7 @@ exports.createPatient = async function (req, res) {
 
 exports.filterMedicine = async (req, res) => {
   try {
-    const uniqueMedicalUses = await medicine.distinct("medicalUse");
+    const uniqueMedicalUses = await Medicine.distinct("medicalUse");
     res.status(200).json({ uniqueMedicalUses });
   } catch (error) {
     console.error("Error fetching unique medical uses:", error);
@@ -101,7 +286,7 @@ exports.searchMedicineByName = async function (req, res) {
   try {
     const prefix = req.query.prefix; // Access the 'prefix' from the request body
 
-    const medicines = await medicine.find({
+    const medicines = await Medicine.find({
       name: { $regex: new RegExp(`^${prefix}`, "i") }, // 'i' for case-insensitive
     });
 
@@ -398,40 +583,48 @@ exports.changeItemQuantity = async function (req, res) {
   }
 };
 
-// checkout my order
+
 exports.checkout = async function (req, res) {
-  const patientId = req.params.patientId;
+  const patientId = req.params.patientId.trim();
 
   try {
-    // Find the patient's cart
-    const cart = await Cart.findOne({ user: patientId });
+    // Retrieve cart items from the request body
+    const cartItems = req.body.cartItems;
 
-    if (!cart) {
-      return res.status(404).json({ error: "Cart not found." });
+    if (!cartItems || cartItems.length === 0) {
+      return res.status(400).json({ error: "Cart items are required." });
     }
-    if (cart.items.length === 0) {
-      return res.status(404).json({ error: "Cart is empty." });
-    }
+
+    // Calculate total amount based on cart items
+    const totalAmount = cartItems.reduce((total, item) => {
+      return total + item.price * item.quantity;
+    }, 0);
+
+    // Create an array to store order items
+    const orderItems = cartItems.map(cartItem => ({
+      medicine: cartItem.id,
+      quantity: cartItem.quantity,
+      totalPrice: cartItem.price * cartItem.quantity,
+    }));
+
     // Create a new order
     const order = new Order({
-      user: patientId,
-      items: cart.items,
-      totalAmount: cart.totalAmount,
+      userID: patientId,
+      items: orderItems,
+      totalAmount,
+      address: req.body.address, // Assuming the address is provided in the request body
+      status: "Pending", // Default status
     });
 
     // Save the order
     await order.save();
-
-    // Clear the cart
-    cart.items = [];
-    cart.totalAmount = 0;
-    await cart.save();
 
     res.status(200).json({ message: "Order placed successfully." });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
+
 // exports.getPerscriptions = async function (req, res) {
 //   try {
 //     const prescriptions = await Patient.find({
@@ -514,24 +707,36 @@ exports.cancelOrder = async function (req, res) {
   }
 };
 
+
 exports.getMyOrders = async function (req, res) {
   try {
-    let user = "652b512450d1b797fa0a42f1";
-    const orders = await Order.find({ user: user });
+    const userID = req.params.userID.trim(); // Assuming you extract the userID from the request parameters
+
+    // Fetch orders for the specific userID
+    const orders = await Order.find({ userID: userID });
+
+    // Process orders
     let result = [];
     for (let i = 0; i < orders.length; i++) {
       let order = orders[i];
       let items = [];
       for (let j = 0; j < order.items.length; j++) {
         let item = order.items[j];
+        console.log("first");
         let medicine = await Medicine.findById(item.medicine);
+        console.log("hh");
         items.push({
           medicine: medicine,
+          quantity: item.quantity,
+          totalPrice: item.totalPrice,
         });
       }
       result.push({
-        order: order,
+        orderID: order._id,
         items: items,
+        totalAmount: order.totalAmount,
+        address: order.address,
+        status: order.status,
       });
     }
 
@@ -545,7 +750,7 @@ exports.getMyOrders = async function (req, res) {
   } catch (err) {
     res.status(500).json({
       status: "error",
-      message: "this route is not defined yet",
+      message: "An error occurred while fetching orders.",
     });
   }
 };

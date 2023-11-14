@@ -4,7 +4,8 @@ import "./OrdersPage.css"; // Import CSS for styling
 import FeedbackMessage from "./feedbackMessage";
 import ConfirmationDialog from "./ConfirmationDialog";
 
-const OrdersPage = () => {
+const OrdersPage = ({userID}) => {
+    userID = "652b512450d1b797fa0a42ef";
   const [myOrders, setMyOrders] = useState([]);
   let [message, setMessage] = useState("");
   let [messageType, setMessageType] = useState("");
@@ -12,16 +13,19 @@ const OrdersPage = () => {
   let [isLoading, setIsLoading] = useState(false);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
-
+  const [error, setError] = useState(null);
   useEffect(() => {
-    setIsLoading(true);
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:4000/patients/myOrders");
+        const response = await fetch(`http://localhost:4000/patients/myOrders/${userID}`);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch orders. Status: ${response.status}`);
+        }
         const data = await response.json();
         setMyOrders(data.data.result);
       } catch (error) {
         console.error("Error fetching orders:", error);
+        setError(error.message || 'Error fetching orders');
       } finally {
         setIsLoading(false);
       }
@@ -29,6 +33,7 @@ const OrdersPage = () => {
 
     fetchOrders();
   }, []);
+
 
   const handleCancelOrderConfirm = async (order) => {
     console.log(order);
