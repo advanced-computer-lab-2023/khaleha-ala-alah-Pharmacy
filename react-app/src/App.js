@@ -19,6 +19,7 @@ import ViewPending from "./Components/viewPendingPharmacist";
 // Change this line
 import Login from "./Components/login";
 import OrdersPage from "./Components/ordersPage";
+import Form from "./Components/uploadMedicinesImage.jsx";
 
 import { useAuth } from "./AuthContext";
 import PrivateRoute from "./PrivateRoute";
@@ -80,6 +81,7 @@ function App() {
                   path="/pharmacistHome"
                   element={<PharmacistList_info />}
                 />
+                <Route path="/formmm" element={<Form />} />
               </>
             )}
 
