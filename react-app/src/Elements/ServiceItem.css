@@ -1,0 +1,52 @@
+.service-item {
+    background: #1f7a8c;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    text-align: left;
+    display: relative;
+    margin-bottom: 20px; /* Adjust as needed */
+    width: 330px;
+    height: 200px;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    border: 2px solid #022b3a; /* Border color */
+    border-radius: 8px;
+    padding: 20px;  
+  }
+
+
+.service-item:hover {
+  transform: scale(1.05); /* Slight scale effect on hover */
+}
+  
+  .image-container {
+    /* Add your styles for the icon container here */
+    margin-bottom: 10px; /* Adjust as needed */
+    justify-content: right;
+    align-items: right;
+  }
+  
+  .service-image {
+    width: 30px; /* Ensure the image is fully contained within the item */
+    height: 30px; /* Maintain the aspect ratio of the image */
+    border-radius: 4px; /* Optional: if you want rounded corners on the image */
+    justify-content: right;
+    align-items: right;
+  }
+  .service-title {
+    color: #022b3a; /* Adjust the color as needed */
+    margin-top: -2px;
+    margin-bottom: 5px; /* Adjust as needed */
+    font-size: 27px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  }
+  
+  .service-description {
+    margin-top: 25px;
+    color: white; /* Adjust the color as needed */
+    font-size: 15px; /* Adjust the size as needed */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+  }
+  
+ 

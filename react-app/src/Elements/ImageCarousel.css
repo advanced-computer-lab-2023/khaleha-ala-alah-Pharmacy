@@ -1,0 +1,88 @@
+.carousel {
+  position: flex;
+  width: 99vw; /* Half of the screen width */
+  height: 22vh;
+  margin: auto;
+}
+
+.slide-container {
+  overflow: hidden;
+}
+
+.slide {
+  position: absolute;
+  width: 100vw; /* Full viewport width */
+  height: 70vh; /* 30% of viewport height */
+  overflow: hidden; /* Hide parts of the image that overflow the container */
+  z-index: -1;
+}
+
+.slide img {
+  width: 100%; /* Stretch image to full width of the container */
+  height: 100%; /* Stretch image to full height of the container */
+  object-fit: cover; /* Cover the container while maintaining aspect ratio */
+}
+
+.slide.active {
+  display: block;
+}
+.text-overlay {
+  position: absolute;
+  bottom: 140px;
+  left: 10px;
+  right: 0;
+  background-color: rgba(2, 43, 58, 0.4); /*Semi-transparent black background */
+  /* background-color: rgba(225, 229, 242, 0.6);*/
+  color: white;
+  padding: 10px;
+  text-align: left;
+  width: 450px;
+  height: 350px;
+  z-index: 0;
+  border: 2px solid #022b3a; /* Border color */
+  border-top-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.text-overlay h3 {
+  margin-top: 0;
+  margin-bottom: 5px;
+  font-size: 20px; /* Adjust size as needed */
+  font-weight: bold; /* Bold font for title */
+  font-size: 50px;
+  color: #e1e5f2;
+  font-family: "Times New Roman", Times, serif;
+}
+
+.text-overlay p {
+  margin-top: 40px;
+  font-size: 1em; /* Adjust size as needed */
+  font-weight: normal;
+  line-height: 1.4; /* Good for readability */
+  font-size: 25px;
+  color: white;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial,
+    sans-serif;
+}
+
+.left-arrow,
+.right-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: black;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 24px;
+}
+
+.left-arrow {
+  left: 0;
+}
+
+.right-arrow {
+  right: 0;
+}
+
+/* Responsive and additional styling can be added here */

@@ -1,61 +1,93 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
+//import "./patient.css";
+import "./patientHome.css";
 import { Link } from "react-router-dom";
 
+import makeappointment from "../Images/appointmentpatient.png";
+import pres from "../Images/perscriptionpatient.png";
+import addfm from "../Images/addfmpatient.png";
+import viewdoctor from "../Images/viewdoctorpatient.png";
+import searchdoctor from "../Images/searchdoctor.png";
+import viewfm from "../Images/fammember.png";
+import healthpackages from "../Images/packages.png";
+import chatdoctor from "../Images/chat.png";
+import familymember from "../Images/FamilyMember.jpg";
+import appointments from "../Images/appointments.jpg";
+import packages from "../Images/Packages.jpg";
+import doctors from "../Images/SearchDoctor.jpg";
 
-const PharmacistList_info = () => {
-  const [pharmacists, setPharmacists] = useState([]);
-  const [selectedPharmacist, setSelectedPharmacist] = useState(null);
+import ServiceItem from "../Elements/ServiceItem";
+import NavBar from "../Elements/NavBar";
+import ImageCarousel from "../Elements/ImageCarousel";
 
-  const handlePharmacistClick = (pharmacist) => {
-    setSelectedPharmacist(pharmacist);
-  };
-
+export  const AdminHome = () => {
+  const slides = [
+    {
+      image: familymember,
+      title: "Choose your Doctor",
+      description:
+        "Explore our diverse range of expert doctors and select the one who best suits your healthcare needs.",
+    },
+    {
+      image: doctors,
+      title: "Family Members",
+      description:
+        " Easily add family members to your account, and Experience personalized care for the whole family, all in one place.",
+    },
+  ];
   return (
-    <>
-    <div>
-      <h1>Admin Home</h1>
+    <div style={{ backgroundColor: "white", height: "100vh", width: "99.9vw" }}>
 
-      <button
-        onClick={() => {
-          localStorage.clear();
-          window.location.href = "/changePassword";
-        }}
-      >
-        Change Password
-      </button>
-      <button
-        onClick={() => {
-          localStorage.clear();
-          window.location.href = "/login";
-        }}
-      >
-        Log Out
-      </button>
+      <div className="all-containers">
+        {/* Profile Side Menu */}
+
+        {/* Sidebar */}
+        <div
+          className="services-container"
+          style={{ justifyContent: "flex-start", margin: "20px 0 0 20px" }}
+        >
+          <ServiceItem
+            imgSrc={searchdoctor}
+            title="Add new admin"
+            description="Here you can add new admin"
+            navigateTo="/addAdmin"
+          />
+          ,
+          <ServiceItem
+            imgSrc={viewdoctor}
+            title="delete admin/pharmacist/patient"
+            description="Explore profiles and expertise of all our available users"
+            navigateTo="/deleteAdminPharmacistPatient"
+          />
+          ,
+          <ServiceItem
+            imgSrc={pres}
+            title="View Pending Pharmacists"
+            description="Show your medications prescribed online quickly and securely"
+            navigateTo="/viewPendingPharmacists"
+          />
+          ,
+          <ServiceItem
+            imgSrc={makeappointment}
+            title="View Medicines"
+            description="View all medicines"
+            navigateTo="/viewMedicines"
+          />,
+          
+              <ServiceItem
+         
+            title="chang password"
+            navigateTo="/changePassword"
+          />
+            <ServiceItem
+            imgSrc={makeappointment}
+            title="search Medicines"
+            description="View all medicines"
+            navigateTo="/searchMedicine"
+          />
+       
+        </div>
+      </div>
     </div>
-
-    <div>
-    <Link 
-        to="/viewPendingDoctors" 
-        className="sidebar-button" 
-        style={{
-            display: 'inline-block',
-            padding: '10px 15px',
-            margin: '5px',
-            backgroundColor: '#007bff',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '5px',
-            textAlign: 'center',
-            fontWeight: 'bold'
-        }}
-    >
-        View Pending Doctors
-    </Link>
-</div>
-
-    </>
   );
 };
-
-export default PharmacistList_info;
