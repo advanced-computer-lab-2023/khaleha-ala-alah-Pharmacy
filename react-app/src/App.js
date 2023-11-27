@@ -14,7 +14,7 @@ import UpdateMedicine from "./Components/medicineEdit";
 import PharmacistList_info from "./Components/Viewpharmasistinfo";
 import PatientList_info from "./Components/patientbasicInfo";
 import MainApp from "./Components/MainApp";
-import AdminHome from "./Components/adminHome";
+
 import ViewPending from "./Components/viewPendingPharmacist";
 // Change this line
 import Login from "./Components/login";
@@ -37,8 +37,14 @@ import CartPage from "./Components/cart";
 import StripePaymentButton from "./Components/Checkout";
 import AddressList from "./Components/address";
 import WalletAmount from "./Components/Wallet";
-import ChangePasswordForm from "./Components/changePassword";
 
+
+import  {DoctorHome}  from './Components/pharmacistHome.jsx';
+import {AdminHome} from './Components/adminHome'
+import PendingDoctors from './Components/viewPendingDoctors';
+import DeleteUser from './Components/deleteAdminDoctorPatiient';
+import ChangePasswordForm from './Components/changePassword';
+import MedSearch from "./Components/searchForMedicine.js";
 function App() {
   const { role } = useAuth();
   return (
@@ -58,6 +64,18 @@ function App() {
           <Route path="/medical-use-filter" element={<MedicineFilter />} />
           <Route path="/available-medicines" element={<AvailableMedicines />} />
           <Route path="/changePassword" element={<ChangePasswordForm />} />
+                                      <Route path="/searchMedicine" element={<MedSearch  />} />
+
+ <Route path="/addAdmin" element={<AddUser />} />
+                           <Route path="/adminHome" element={<AdminHome />} />
+              <Route
+                path="/deleteAdminPharmacistPatient"
+                element={<DeleteUser />}
+              />
+              <Route path="/viewPendingPharmacists" element={<PendingDoctors />} />
+              <Route path="/viewMedicines" element={<AvailableMedicines />} />
+              <Route path="/changePassword" element={<ChangePasswordForm />} />
+
 
           <Route path="/viewPendingDoctors" element={<ViewPending />} />
           <Route path="/" element={<Navigate to="/login" />} />
@@ -77,20 +95,31 @@ function App() {
             {/* doctor routes */}
             {role === "pharmacist" && (
               <>
-                <Route
-                  path="/pharmacistHome"
-                  element={<PharmacistList_info />}
-                />
-                <Route path="/formmm" element={<Form />} />
+         
+
+                 <Route path="/PharmacistHome" element={<DoctorHome  />} />
+      
+              <Route path="/wallet" element={<WalletAmount  />} />
+              <Route path="/AddMedicine" element={<AddMedicine  />} />
+                       <Route path="/viewMedicines" element={<AvailableMedicines  />} />
+             
               </>
             )}
 
             {/* admin routes */}
             {role === "admin" && (
               <>
-                <Route path="/adminHome" element={<AdminHome />} />
-                <Route path="/addAdmin" element={<AddUser />} />
-                <Route path="/formmm" element={<Form />} />
+                   <Route path="/addAdmin" element={<AddUser />} />
+                           <Route path="/adminHome" element={<AdminHome />} />
+              <Route
+                path="/deleteAdminPharmacistPatient"
+                element={<DeleteUser />}
+              />
+              <Route path="/viewPendingPharmacists" element={<PendingDoctors />} />
+              <Route path="/viewMedicines" element={<AvailableMedicines />} />
+              <Route path="/changePassword" element={<ChangePasswordForm />} />
+                            <Route path="/searchMedicine" element={<PatientHomePage  />} />
+          
               </>
             )}
 

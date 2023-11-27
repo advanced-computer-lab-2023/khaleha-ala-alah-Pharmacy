@@ -1,0 +1,33 @@
+/* Button.css */
+.center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* This ensures the container takes the full viewport height */
+  }
+  
+  .custom-button {
+    background-color: #022b3a;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    border: 2px solid #022b3a;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .custom-button.clicked {
+    background-color: #1f7a8c; /* Change the background color when clicked */
+    color: #fff; /* Change text color when clicked */
+    border: 2px solid #1f7a8c; /* Modify the border color when clicked */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a box-shadow when clicked */
+    transform: translateY(2px); /* Add a slight upward lift when clicked */
+  }
+  
+  .custom-button:hover {
+    background-color: #1f7a8c;
+    color: #fff;
+  }
+  
