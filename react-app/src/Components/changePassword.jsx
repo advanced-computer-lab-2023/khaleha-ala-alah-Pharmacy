@@ -2,6 +2,10 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
+import NavBar from "../Elements/NavBar.jsx";
+import Header from "../Elements/Header";
+
+import styles from "./changePassword.module.css"
 
 const ChangePasswordForm = () => {
   const [oldPassword, setOldPassword] = useState('');
@@ -53,37 +57,44 @@ const ChangePasswordForm = () => {
   };
 
   return (
-    <div>
-      <h1>Change Password</h1>
+    <div className={styles.container}>
+      <Header/>
+      <NavBar/>
       <form onSubmit={handleSubmit}>
-        <label>
-          Old Password:
+        <label className={styles.label}> 
+          Current Password
           <input
             type="password"
             value={oldPassword}
             onChange={handleOldPasswordChange}
+            className={styles.input}
+            placeholder="Current Password"
           />
         </label>
         <br />
-        <label>
-          New Password:
+        <label className={styles.label}>
+          New Password
           <input
             type="password"
             value={newPassword}
             onChange={handleNewPasswordChange}
+            className={styles.input}
+            placeholder="New Password"
           />
         </label>
         <br />
-        <label>
-          Confirm Password:
+        <label className={styles.label}>
+          Confirm Password
           <input
             type="password"
             value={confirmPassword}
             onChange={handleConfirmPasswordChange}
+            className={styles.input}
+            placeholder="Confirm your new Password"
           />
         </label>
         <br />
-        <button type="submit">Change Password</button>
+        <button type="submit" className={styles.button}>Change Password</button>
       </form>
       <p>{statusMessage}</p>
     </div>

@@ -3,6 +3,10 @@ import PatientHomePagebuy from './medicineViewtobuy'
 import { MedicinesProvider } from './medicineContext';
 import {CartProvider} from './cart-context'
 
+import NavBar from "../Elements/NavBar.jsx";
+import Header from "../Elements/Header";
+
+
 const PatientHomePage = () => {
   const redirectToSearchMedicine = () => {
     window.location.replace('/search-medicine');
@@ -18,17 +22,10 @@ const PatientHomePage = () => {
 
   return (
     <div>
-      <h1>Welcome to the Patient Home Page</h1>
-
-      {/* Add buttons to navigate to different pages */}
-
-
- 
-<MedicinesProvider>
-  
- <PatientHomePagebuy/>
-
-     
+      <Header/>
+      <NavBar/>
+      <MedicinesProvider>
+      <PatientHomePagebuy/>
       </MedicinesProvider>
     
     </div>

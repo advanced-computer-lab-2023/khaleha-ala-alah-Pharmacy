@@ -3,6 +3,8 @@ import OrderCard from "./orderCard"; // Import the OrderCard component
 import "./OrdersPage.css"; // Import CSS for styling
 import FeedbackMessage from "./feedbackMessage";
 import ConfirmationDialog from "./ConfirmationDialog";
+import NavBar from "../Elements/NavBar.jsx";
+import Header from "../Elements/Header";
 
 const OrdersPage = ({ userID }) => {
   userID = "652b512450d1b797fa0a42ef";
@@ -129,7 +131,9 @@ const OrdersPage = ({ userID }) => {
         </div>
       ) : (
         <div className="orders-page">
-          <h1 style={{ color: "#022B3A" }}>My Orders</h1>
+          <Header/>
+          <NavBar/>
+          <div className="orders-container">
           {myOrders.map((order, index) => (
             <>
               <OrderCard
@@ -142,6 +146,7 @@ const OrdersPage = ({ userID }) => {
               />
             </>
           ))}
+          </div>
           {showMessage && (
             <FeedbackMessage
               type={messageType}

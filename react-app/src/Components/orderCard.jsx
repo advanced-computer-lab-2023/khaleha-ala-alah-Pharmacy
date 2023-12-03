@@ -17,18 +17,19 @@ const OrderCard = ({ order, handleCancelOrder }) => {
             height="100px"
             src={item.medicine.pictureUrl}
             alt={item.medicine.name}
+            style={{ marginTop: '1.3rem' }}
           />
           <div className="medicine-details">
             <h5>{item.medicine.name}</h5>
-            <p>Quantity: {item.quantity} x</p>
-            <p>Price: ${item.totalPrice}</p>
+            <p style={{ fontFamily: 'Arial', fontSize: '10pt', marginBottom: '0.2rem' }}>Quantity: {item.quantity}</p>
+            <p style={{ fontFamily: 'Arial', fontSize: '10pt', marginBottom: '0.2rem' }}>Price: ${item.totalPrice}</p>
           </div>
         </div>
       ))}
 
       <div className="order-summary">
-        <p>Total Amount: ${order.totalAmount}</p>
-        <p>Status: {order.status}</p>
+      <p style={{ fontFamily: 'Arial', fontWeight: '700', fontSize: '10pt', marginTop: '3rem', marginLeft: '1rem' }}>Total Amount: ${order.totalAmount}</p>
+        <p style={{ fontFamily: 'Arial', fontWeight: '700', fontSize: '10pt', marginBottom: '0.2rem', marginLeft: '1rem' }}>Status: {order.status}</p>
         {
           <button
             onClick={() => handleCancelOrder(order)}

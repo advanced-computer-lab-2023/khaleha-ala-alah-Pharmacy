@@ -1,0 +1,145 @@
+.navbar {
+    background-color: #f1f1f1;
+    position: fixed;
+    width: 100vw;
+    height: 5vh;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    margin-top: 60px;
+  }
+  
+  .navbarContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    height: 38px;
+  }
+  .navbarLogo {
+    text-align: center; /* Centers the logo in the div */
+    padding: 10px; /* Adds some space around the logo */
+    /* Add more styling as needed */
+  }
+  
+  .navbarLogo img {
+    max-width: 150px; /* Adjusts the width of the logo */
+    max-height: 70px; /* Adjusts the height of the logo */
+    /* Add more styling as needed */
+  }
+  
+  /* Responsive design: Adjust logo size for smaller screens */
+  @media (max-width: 768px) {
+    .navbarLogo img {
+      max-width: 50px;
+      max-height: 25px;
+    }
+  }
+  
+  .navbarLinks {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between items */
+  }
+  
+  .navbarLink {
+    text-decoration: none;
+    color: #1f2022;
+    font-size: 18px; /* Adjust font size as needed */
+    cursor: pointer;
+    font-family: "Times New Roman", Times, serif;
+  }
+  
+  .navbarRight {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbarLink img {
+    height: 25px;
+    width: 25px;
+  }
+  
+  .navbarRight {
+    position: relative; /* Needed for absolute positioning of dropdown */
+    /* Other styles as needed */
+  }
+  
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    margin-right: 0px;
+    right: 0; /* Align dropdown to the right */
+    background-color: white; /* Background of dropdown */
+    border: 1px solid #ddd; /* Border for dropdown */
+    /*border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;*/
+    z-index: 100; /* Ensures dropdown is above other content */
+    width: 150px;
+  }
+  
+  .dropdownItem {
+    display: block;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Separator for items */
+    background-color: white;
+    width: 100%; /* Full width of the parent */
+    box-sizing: border-box;
+    text-decoration: none;
+    color: black; /* Text color */
+    /*border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;*/
+  }
+  
+  .dropdownItem:hover {
+    background-color: #f5f5f5; /* Hover effect for dropdown items */
+  }
+  
+  .navbarLink:hover {
+    color: white;
+    cursor: pointer;
+  }
+  .navbarLinkSection:hover,
+  .navbarLinkSelected {
+    color: #336cfb;
+    cursor: pointer;
+  }
+  
+  .dropdownItemSelected {
+    color: #336cfb;
+    display: block;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd; /* Separator for items */
+    background-color: white;
+    width: 100%; /* Full width of the parent */
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+  
+  .dropdownItemSelected:hover {
+    background-color: #f5f5f5; /* Hover effect for dropdown items */
+  }
+  
+  .navbarLinkSection {
+    color: #1f2022;
+  }
+  
+  .navbarLink:hover .dropdownMenu {
+    display: block; /* Show on hover */
+  }
+  
+  .navbarLink span {
+    margin-left: 5px; /* Adjust spacing as needed */
+    /* Style the arrow as needed */
+  }
+  
+  /* CSS for the Home section's dropdown menu */
+  .homeDropdownMenu {
+    position: absolute;
+    top: 86%;
+    z-index: 10000000;
+    /* ... other styles ... */
+  }
+  

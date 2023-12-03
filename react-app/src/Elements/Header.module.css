@@ -1,0 +1,178 @@
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-index: 1001;
+  }
+  
+  .navbarContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+  }
+  .navbarLogo {
+    text-align: center; /* Centers the logo in the div */
+    padding: 10px; /* Adds some space around the logo */
+    /* Add more styling as needed */
+  }
+  
+  .navbarLogo img {
+    max-width: 150px; /* Adjusts the width of the logo */
+    max-height: 70px; /* Adjusts the height of the logo */
+    /* Add more styling as needed */
+  }
+  
+  /* Responsive design: Adjust logo size for smaller screens */
+  @media (max-width: 768px) {
+    .navbarLogo img {
+      max-width: 50px;
+      max-height: 25px;
+    }
+  }
+  
+  .navbarLinks {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Space between items */
+  }
+  
+  .navbarLink {
+    text-decoration: none;
+    color: #1f2022;
+    font-size: 18px; /* Adjust font size as needed */
+    cursor: pointer;
+    font-family: "Times New Roman", Times, serif;
+  }
+  
+  .navbarRight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navbarLink img {
+    margin-top: 7px;
+    margin-right: 15px;
+    height: 30px;
+    width: 30px;
+  }
+  
+  .navbarRight {
+    position: relative; /* Needed for absolute positioning of dropdown */
+    /* Other styles as needed */
+  }
+  
+  .dropdownMenu {
+    position: absolute;
+    top: 100%;
+    margin-right: 0px;
+    right: 0; /* Align dropdown to the right */
+    background-color: white; /* Background of dropdown */
+    border: 1px solid #ddd; /* Border for dropdown */
+    /*border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;*/
+    z-index: 100000; /* Ensures dropdown is above other content */
+    width: 150px;
+  }
+  
+  .dropdownItem {
+    display: block;
+    padding: 10px;
+    text-align: left;
+    background-color: white;
+    width: 100%; /* Full width of the parent */
+    box-sizing: border-box;
+    text-decoration: none;
+    color: black; /* Text color */
+    /*border-bottom-left-radius: 8px;
+    border-top-left-radius: 8px;*/
+  }
+  
+  .dropdownItem:hover {
+    background-color: #f5f5f5; /* Hover effect for dropdown items */
+  }
+  
+  .navbarLink:hover {
+    color: white;
+    cursor: pointer;
+  }
+  .navbarLinkSection:hover,
+  .navbarLinkSelected {
+    color: #336cfb;
+    cursor: pointer;
+  }
+  
+  .dropdownItemSelected {
+    color: #336cfb;
+    display: block;
+    padding: 10px;
+    text-align: left;
+    background-color: white;
+    width: 100%; /* Full width of the parent */
+    box-sizing: border-box;
+    text-decoration: none;
+  }
+  
+  .dropdownItemSelected:hover {
+    background-color: #f5f5f5; /* Hover effect for dropdown items */
+  }
+  
+  .navbarLinkSection {
+    color: #1f2022;
+  }
+  
+  .navbarLink:hover .dropdownMenu {
+    display: block; /* Show on hover */
+  }
+  
+  .navbarLink span {
+    margin-left: 5px; /* Adjust spacing as needed */
+    /* Style the arrow as needed */
+  }
+  
+  /* CSS for the Home section's dropdown menu */
+  .homeDropdownMenu {
+    position: absolute;
+    top: 75%;
+    /* ... other styles ... */
+  }
+  
+  .notificationWrapper {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    display: inline-block; /* or flex, based on your layout */
+  }
+  
+  .notificationBadge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 10px;
+    margin-right: 55px;
+    background-color: red; /* Example color */
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .notificationIcon {
+    width: 24px; /* Adjust the width as needed */
+    height: 24px; /* Adjust the height as needed */
+    padding: 5px; /* Add padding around the icon */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    vertical-align: middle; /* Aligns icon with adjacent elements */
+  }
+  
+  .notificationIcon:hover {
+    opacity: 0.8; /* Example hover effect */
+  }
+  

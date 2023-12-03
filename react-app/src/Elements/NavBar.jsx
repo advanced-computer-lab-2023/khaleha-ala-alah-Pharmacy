@@ -1,12 +1,30 @@
 import React from "react";
-import "../Elements/NavBar.css"; // Link to the CSS file for styles
-import logopng from "../Images/logooo.png";
-import settingsIcon from "../Images/settings.png";
+import styles from "../Elements/NavBar.module.css"; // Link to the CSS file for styles
 import { useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ selectedSection, selectedSubSection = "" }) => {
   const navigate = useNavigate();
+  const [hoveredSection, setHoveredSection] = useState(null);
+  const [hoverTimeout, setHoverTimeout] = useState(null);
+
+  const handleSectionMouseEnter = (section) => {
+    clearTimeout(hoverTimeout); // Clear any existing timeout
+    setHoveredSection(section);
+  };
+
+  const handleSectionMouseLeave = () => {
+    const timeout = setTimeout(() => {
+      setHoveredSection(null);
+    }, 130); // Delay of 500ms
+    setHoverTimeout(timeout);
+  };
+
+  const handleSectionClick = (event, section, route) => {
+    event.stopPropagation();
+    //setSelectedSection(section);
+    navigate(route);
+  };
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const toggleDropdown = () => {
@@ -19,34 +37,94 @@ const NavBar = () => {
   };
 
   const handlePassword = () => {
-    navigate('/changePassword');
+    navigate("/changePassword");
   };
 
+  const hasSubsections = (sectionName) => {
+    // Logic to determine if a section has subsections
+    // For example:
+    return (
+      sectionName === "wallet" ||
+      sectionName === "appointments" ||
+      sectionName === "packages"
+    ); // Assume 'home' has subsections for this example
+  };
   return (
-    <nav className="navbar">
-      <div className="navbar-container">
-        <div className="navbar-logo">
-          <img src={logopng} alt="Logo" />
-        </div>
-        <div className="navbar-links">
-          <a href="#home" className="navbar-link">
-            Home
-          </a>
-          <a href="#notifications" className="navbar-link">
-            Notifications
-          </a>
-        </div>
-        <div className="navbar-right">
-          <a href="#settings" className="navbar-link" onClick={toggleDropdown}>
-            <img src={settingsIcon} alt="Settings" />
-          </a>
-          {dropdownVisible && (
-            <div className="dropdown-menu">
-              <button className="dropdown-item">My Account</button>
-              <button className="dropdown-item" onClick={handlePassword}>Change Password</button>
-              <button className="dropdown-item" onClick={handleLogout}>Log Out</button>
-            </div>
-          )}
+    <nav className={styles.navbar}>
+      <div className={styles.navbarContainer}>
+        <div className={styles.navbarLinks}>
+          {/* Example for Home section */}
+          <div
+            className={
+              selectedSection === "home"
+                ? styles.navbarLinkSelected
+                : styles.navbarLinkSection
+            }
+            onMouseEnter={() => handleSectionMouseEnter("home")}
+            onMouseLeave={() => handleSectionMouseLeave()}
+            onClick={(e) => handleSectionClick(e, "home", "/")}
+          >
+            Home {hasSubsections("home") && <span>▼</span>}
+            {/* Dropdown Menu */}
+            {hoveredSection === "home" && (
+              <div
+                className={styles.homeDropdownMenu}
+                onMouseEnter={() => setHoveredSection("home")}
+                onMouseLeave={() => setHoveredSection(null)}
+              >
+                {/* Unique className */}
+                {/* ... dropdown items ... */}
+              </div>
+            )}
+          </div>
+
+          <div
+            className={
+              selectedSection === "orders"
+                ? styles.navbarLinkSelected
+                : styles.navbarLinkSection
+            }
+            onMouseEnter={() => handleSectionMouseEnter("orders")}
+            onMouseLeave={() => handleSectionMouseLeave()}
+            onClick={(e) =>
+              handleSectionClick(e, "orders", "/orders")
+            }
+          >
+            Orders {hasSubsections("orders") }
+          </div>
+
+          <div
+            className={
+              selectedSection === "wallet"
+                ? styles.navbarLinkSelected
+                : styles.navbarLinkSection
+            }
+            onMouseEnter={() => handleSectionMouseEnter("wallet")}
+            onMouseLeave={() => handleSectionMouseLeave()}
+            onClick={(e) =>
+              handleSectionClick(e, "wallet", "/wallet")
+            }
+          >
+            Wallet{" "}
+            {hasSubsections("wallet") }
+          </div>
+
+          <div
+            className={
+              selectedSection === "cart"
+                ? styles.navbarLinkSelected
+                : styles.navbarLinkSection
+            }
+            onMouseEnter={() => handleSectionMouseEnter("cart")}
+            onMouseLeave={() => handleSectionMouseLeave()}
+            onClick={(e) =>
+              handleSectionClick(e, "cart", "/cart")
+            }
+          >
+            Cart {hasSubsections("cart") }
+          </div> 
+         
+          
         </div>
       </div>
     </nav>
