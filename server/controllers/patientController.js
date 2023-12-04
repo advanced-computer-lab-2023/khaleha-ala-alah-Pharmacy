@@ -725,7 +725,7 @@ exports.getMyOrders = async function (req, res) {
     console.log("ALLOOOO");
     // Fetch orders for the specific userID
     const orders = await Order.find({ userID: userID });
-
+    console.log(userID);
     // Process orders
     let result = [];
     for (let i = 0; i < orders.length; i++) {
@@ -733,9 +733,8 @@ exports.getMyOrders = async function (req, res) {
       let items = [];
       for (let j = 0; j < order.items.length; j++) {
         let item = order.items[j];
-        console.log("first");
+        if (item.quantity === 0) continue; // Skip items with quantity 0 (removed from cart
         let medicine = await Medicine.findById(item.medicine);
-        console.log("hh");
         items.push({
           medicine: medicine,
           quantity: item.quantity,
@@ -750,6 +749,8 @@ exports.getMyOrders = async function (req, res) {
         status: order.status,
       });
     }
+
+    console.log(result);
 
     res.status(200).json({
       status: "success",
@@ -823,6 +824,23 @@ exports.setMedicinePhoto = async function (req, res) {
     res.status(500).json({
       status: "error",
       message: "An error occurred while setting medicine photo.",
+    });
+  }
+};
+
+exports.getCurrentPatient = async function (req, res) {
+  try {
+    const patient = await Patient.findOne({ userID: req.user._id });
+    res.status(200).json({
+      status: "success",
+      data: {
+        patient,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching patient.",
     });
   }
 };

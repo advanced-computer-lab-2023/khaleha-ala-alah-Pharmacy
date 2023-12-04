@@ -5,6 +5,7 @@ const patientController = require("./../controllers/patientController");
 const paymentController = require("../controllers/paymentController");
 
 router.route("/").get(patientController.getAllPatients);
+router.get("/currentPatient", CheckAuth, patientController.getCurrentPatient);
 //  .post(patientController.createPatient);
 router.get("/filterMedicine", patientController.filterMedicine);
 router.get("/searchmedicine", patientController.searchMedicineByName);

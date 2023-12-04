@@ -3,7 +3,7 @@ import styles from "../Elements/NavBar.module.css"; // Link to the CSS file for 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const NavBar = ({ selectedSection, selectedSubSection = "" }) => {
+const NavBar = ({ selectedSection, selectedSubSection = "", patient }) => {
   const navigate = useNavigate();
   const [hoveredSection, setHoveredSection] = useState(null);
   const [hoverTimeout, setHoverTimeout] = useState(null);
@@ -23,7 +23,7 @@ const NavBar = ({ selectedSection, selectedSubSection = "" }) => {
   const handleSectionClick = (event, section, route) => {
     event.stopPropagation();
     //setSelectedSection(section);
-    navigate(route);
+    navigate(route, { state: { patient: patient } });
   };
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
@@ -86,11 +86,9 @@ const NavBar = ({ selectedSection, selectedSubSection = "" }) => {
             }
             onMouseEnter={() => handleSectionMouseEnter("orders")}
             onMouseLeave={() => handleSectionMouseLeave()}
-            onClick={(e) =>
-              handleSectionClick(e, "orders", "/orders")
-            }
+            onClick={(e) => handleSectionClick(e, "orders", "/orders")}
           >
-            Orders {hasSubsections("orders") }
+            Orders {hasSubsections("orders")}
           </div>
 
           <div
@@ -101,12 +99,9 @@ const NavBar = ({ selectedSection, selectedSubSection = "" }) => {
             }
             onMouseEnter={() => handleSectionMouseEnter("wallet")}
             onMouseLeave={() => handleSectionMouseLeave()}
-            onClick={(e) =>
-              handleSectionClick(e, "wallet", "/wallet")
-            }
+            onClick={(e) => handleSectionClick(e, "wallet", "/wallet")}
           >
-            Wallet{" "}
-            {hasSubsections("wallet") }
+            Wallet {hasSubsections("wallet")}
           </div>
 
           <div
@@ -117,14 +112,10 @@ const NavBar = ({ selectedSection, selectedSubSection = "" }) => {
             }
             onMouseEnter={() => handleSectionMouseEnter("cart")}
             onMouseLeave={() => handleSectionMouseLeave()}
-            onClick={(e) =>
-              handleSectionClick(e, "cart", "/cart")
-            }
+            onClick={(e) => handleSectionClick(e, "cart", "/cart")}
           >
-            Cart {hasSubsections("cart") }
-          </div> 
-         
-          
+            Cart {hasSubsections("cart")}
+          </div>
         </div>
       </div>
     </nav>

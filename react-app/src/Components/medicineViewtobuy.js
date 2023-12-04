@@ -8,10 +8,13 @@ import { useMedicines } from "./medicineContext";
 import { CartContext } from "./cart-context";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Card from "./Card.jsx";
 
 const PatientHomePagebuy = () => {
   const { medicines, updateMedicines } = useMedicines();
   const { cart, updateCart } = useContext(CartContext);
+  const [allmedsQuantities, setAllMedsQuantities] = useState({});
+  const [patient, setPatient] = useState(null);
 
   const fetchAvailableMedicines = async () => {
     try {
@@ -19,6 +22,13 @@ const PatientHomePagebuy = () => {
         "http://localhost:4000/admins/available-medicines"
       );
       updateMedicines(response.data);
+      const medsQuantities = {};
+
+      for (let i = 0; i < response.data.length; i++) {
+        medsQuantities[response.data[i]._id] = 0; // Initialize each medicine's quantity as 0
+      }
+      setAllMedsQuantities(medsQuantities);
+      console.log(medsQuantities);
     } catch (error) {
       console.error("Error fetching available medicines:", error);
     }
@@ -35,12 +45,39 @@ const PatientHomePagebuy = () => {
   }, [cart]);
   useEffect(() => {
     fetchAvailableMedicines();
+    fetchCurrentPatient();
   }, []); // Fetch available medicines when the component mounts
 
   const filteredMedicines = medicines.filter(
     (medicine) => medicine.availableQuantity > 0
   );
+  const fetchCurrentPatient = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:4000/patients/currentPatient",
+        {
+          method: "GET", // Method is optional because GET is the default value
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+            // ...any other headers
+          },
+        }
+      );
 
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const currentPatient = await response.json();
+      console.log(currentPatient.data.patient);
+      setPatient(currentPatient.data.patient);
+      console.log("ALoooooooooooooooooooooO");
+    } catch (error) {
+      console.log("AA");
+      console.error("Error fetching current patient:", error);
+    }
+  };
   return (
     <div>
       <Link to="/wallet">
@@ -49,7 +86,7 @@ const PatientHomePagebuy = () => {
       <Link to="/orders">
         <button>My Orders</button>
       </Link>
-      
+
       <Link to="/changePassword">
         <button>Change Password</button>
       </Link>
@@ -76,17 +113,13 @@ const PatientHomePagebuy = () => {
       <div className="medicine-list">
         {filteredMedicines.map((medicine) => (
           <div key={medicine._id} className="medicine-card-container">
-            <MedicineCard medicine={medicine} />
-            <div>
-              <button onClick={() => updateCart(medicine._id, "subtract")}>
-                -
-              </button>
-              <span>{cart[medicine._id]?.quantity || 0}</span>
-              <button onClick={() => updateCart(medicine._id, "add")}>+</button>
-              <button onClick={() => updateCart(medicine._id, "add")}>
-                Add to Cart
-              </button>
-            </div>
+            <MedicineCard
+              medicine={medicine}
+              updateCart={updateCart}
+              cart={cart}
+              medsQuantities={allmedsQuantities}
+              patient={patient}
+            />
           </div>
         ))}
       </div>

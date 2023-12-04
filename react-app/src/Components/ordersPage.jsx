@@ -32,6 +32,7 @@ const OrdersPage = ({ userID }) => {
           throw new Error(`Failed to fetch orders. Status: ${response.status}`);
         }
         const data = await response.json();
+        console.log(data.data.result);
         setMyOrders(data.data.result);
       } catch (error) {
         console.error("Error fetching orders:", error);
@@ -131,21 +132,21 @@ const OrdersPage = ({ userID }) => {
         </div>
       ) : (
         <div className="orders-page">
-          <Header/>
-          <NavBar/>
+          <Header />
+          <NavBar />
           <div className="orders-container">
-          {myOrders.map((order, index) => (
-            <>
-              <OrderCard
-                key={index}
-                order={order}
-                handleCancelOrder={handleCancelOrderConfirm}
-                setShowMessage={setShowMessage}
-                setMessageType={setMessageType}
-                setMessage={setMessage}
-              />
-            </>
-          ))}
+            {myOrders.map((order, index) => (
+              <>
+                <OrderCard
+                  key={index}
+                  order={order}
+                  handleCancelOrder={handleCancelOrderConfirm}
+                  setShowMessage={setShowMessage}
+                  setMessageType={setMessageType}
+                  setMessage={setMessage}
+                />
+              </>
+            ))}
           </div>
           {showMessage && (
             <FeedbackMessage
