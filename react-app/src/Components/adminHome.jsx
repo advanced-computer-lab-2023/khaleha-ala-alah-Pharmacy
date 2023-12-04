@@ -48,16 +48,16 @@ export  const AdminHome = () => {
         >
           <ServiceItem
             imgSrc={searchdoctor}
-            title="Add new admin"
+            title="Manage admins"
             description="Here you can add new admin"
             navigateTo="/addAdmin"
           />
           ,
           <ServiceItem
             imgSrc={viewdoctor}
-            title="delete admin/pharmacist/patient"
+            title="Manage Pharmacist/Patient"
             description="Explore profiles and expertise of all our available users"
-            navigateTo="/deleteAdminPharmacistPatient"
+            navigateTo="/ManageUsers"
           />
           ,
           <ServiceItem
