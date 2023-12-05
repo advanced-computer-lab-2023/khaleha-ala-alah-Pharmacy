@@ -49,11 +49,22 @@ const SearchResults = () => {
   }, [query]);
 
   useEffect(() => {
+    const indexOfLastMedicine = currentPage * medicinesPerPage;
+    const indexOfFirstMedicine = indexOfLastMedicine - medicinesPerPage;
+    const currentMedicines = filteredMedicines.slice(
+      indexOfFirstMedicine,
+      indexOfLastMedicine
+    );
+
+    setCurrentMedicines(currentMedicines);
+  }, [currentPage, filteredMedicines, medicinesPerPage]);
+
+  useEffect(() => {
     const uniqueMedicalUses = [
       ...new Set(medicines.map((medicine) => medicine.medicalUse)),
     ];
     setMedicalUses(uniqueMedicalUses);
-  }, [medicines]);
+  }, [medicines, filteredMedicines]);
 
   const handleSearch = async () => {
     // Function to parse query parameters
