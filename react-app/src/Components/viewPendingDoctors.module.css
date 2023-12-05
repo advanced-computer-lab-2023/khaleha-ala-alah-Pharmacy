@@ -27,3 +27,27 @@
 .rejectButton:hover {
     background-color: #d32f2f;
 }
+
+.radioGroup {
+    margin: 10px 0;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+  
+  .radioGroup label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .radioGroup input[type="radio"] {
+    margin-right: 5px;
+  }
+
+  .options{
+   font-size: medium;
+   color: rgb(88, 88, 88); 
+  }
+
+
