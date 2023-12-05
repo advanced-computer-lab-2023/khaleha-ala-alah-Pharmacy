@@ -10,6 +10,9 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "./Card.jsx";
 import OverlayWindow from "./overlayWindow.jsx";
+import { Pagination } from "antd";
+import "./patientHomePhar.css";
+import LoadingPage from "./LoadingPage.jsx";
 
 const PatientHomePagebuy = () => {
   const { medicines, updateMedicines } = useMedicines();
@@ -18,6 +21,40 @@ const PatientHomePagebuy = () => {
   const [patient, setPatient] = useState(null);
   const [showMedicineDescription, setShowMedicineDescription] = useState(false);
   const [medicineToDescribe, setMedicineToDescribe] = useState(null); // The medicine whose description is to be shown
+  const [currentPage, setCurrentPage] = useState(1);
+  const [medicinesPerPage, setMedicinesPerPage] = useState(6); // You can adjust this number
+  const [currentMedicines, setCurrentMedicines] = useState([]); // The medicines to be displayed on the current page
+  const [indexOfLastMedicine, setIndexOfLastMedicine] = useState(
+    currentPage * medicinesPerPage - 1
+  ); // You can adjust this number
+  const [indexOfFirstMedicine, setIndexOfFirstMedicine] = useState(
+    indexOfLastMedicine - medicinesPerPage + 1
+  );
+
+  const [medicalUses, setMedicalUses] = useState([]);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  const [filteredMedicines, setFilteredMedicines] = useState([]);
+  const [selectedMedicalUse, setSelectedMedicalUse] = useState("all");
+  const [isLoading, setIsLoading] = useState(true);
+
+  const handlePageChange = (page) => {
+    console.log(page);
+    console.log(filteredMedicines);
+    setCurrentPage(page);
+
+    const indexOfLastMedicinee = page * medicinesPerPage;
+    const indexOfFirstMedicinee = indexOfLastMedicinee - medicinesPerPage;
+    console.log(indexOfLastMedicinee);
+    console.log(indexOfFirstMedicinee);
+    setIndexOfLastMedicine(indexOfLastMedicinee);
+    setIndexOfFirstMedicine(indexOfFirstMedicinee);
+    const currentMediciness = filteredMedicines.slice(
+      indexOfFirstMedicinee,
+      indexOfLastMedicinee
+    );
+    console.log(currentMediciness);
+    setCurrentMedicines(currentMediciness);
+  };
 
   const fetchAvailableMedicines = async () => {
     try {
@@ -26,17 +63,38 @@ const PatientHomePagebuy = () => {
       );
       updateMedicines(response.data);
       const medsQuantities = {};
+      let medicineFromDB = response.data;
+      let filteredMedicinees = medicineFromDB.filter(
+        (medicine) => medicine.availableQuantity > 0
+      );
+      setFilteredMedicines(filteredMedicinees);
+      const indexOfLastMedicinee = currentPage * medicinesPerPage;
+      const indexOfFirstMedicinee = indexOfLastMedicinee - medicinesPerPage;
+      setIndexOfLastMedicine(indexOfLastMedicinee);
+      setIndexOfFirstMedicine(indexOfFirstMedicinee);
+      const currentMediciness = filteredMedicinees.slice(
+        indexOfFirstMedicinee,
+        indexOfLastMedicinee
+      );
+      setCurrentMedicines(currentMediciness);
 
       for (let i = 0; i < response.data.length; i++) {
         medsQuantities[response.data[i]._id] = 0; // Initialize each medicine's quantity as 0
       }
       setAllMedsQuantities(medsQuantities);
       console.log(medsQuantities);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching available medicines:", error);
     }
   };
-  const [totalQuantity, setTotalQuantity] = useState(0);
+
+  useEffect(() => {
+    const uniqueMedicalUses = [
+      ...new Set(medicines.map((medicine) => medicine.medicalUse)),
+    ];
+    setMedicalUses(uniqueMedicalUses);
+  }, [medicines]);
 
   useEffect(() => {
     // Calculate the total quantity whenever the cart changes
@@ -51,9 +109,20 @@ const PatientHomePagebuy = () => {
     fetchCurrentPatient();
   }, []); // Fetch available medicines when the component mounts
 
-  const filteredMedicines = medicines.filter(
+  useEffect(() => {
+    const indexOfLastMedicine = currentPage * medicinesPerPage;
+    const indexOfFirstMedicine = indexOfLastMedicine - medicinesPerPage;
+    const currentMedicines = filteredMedicines.slice(
+      indexOfFirstMedicine,
+      indexOfLastMedicine
+    );
+
+    setCurrentMedicines(currentMedicines);
+  }, [currentPage, filteredMedicines, medicinesPerPage]);
+
+  /* const filteredMedicines = medicines.filter(
     (medicine) => medicine.availableQuantity > 0
-  );
+  ); */
   const fetchCurrentPatient = async () => {
     try {
       const response = await fetch(
@@ -87,60 +156,91 @@ const PatientHomePagebuy = () => {
     setMedicineToDescribe(medicine);
   };
 
+  const handleMedicalUseClick = (medicalUse) => {
+    setSelectedMedicalUse(medicalUse);
+
+    console.log("ALO");
+    if (medicalUse !== "all") {
+      const filtered = medicines.filter(
+        (medicine) =>
+          medicine.medicalUse === medicalUse && medicine.availableQuantity > 0
+      );
+      setFilteredMedicines(filtered);
+    }
+    if (medicalUse === "all") {
+      setFilteredMedicines(
+        medicines.filter((medicine) => medicine.availableQuantity > 0)
+      );
+    }
+
+    handlePageChange(1); // Reset to first page
+  };
+
   return (
-    <div>
-      <Link to="/wallet">
-        <button>wallet</button>
-      </Link>
-      <Link to="/orders">
-        <button>My Orders</button>
-      </Link>
+    <>
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          <div className="page-container">
+            <aside className="sidebar">
+              <h3>Medical Uses</h3>
+              <ul className="medical-use-list">
+                <li
+                  className={"all" === selectedMedicalUse ? "selected" : ""}
+                  onClick={() => handleMedicalUseClick("all")}
+                >
+                  All
+                </li>
+                {medicalUses.map((use, index) => (
+                  <li
+                    key={index}
+                    className={use === selectedMedicalUse ? "selected" : ""}
+                    onClick={() => handleMedicalUseClick(use)}
+                  >
+                    {use}
+                  </li>
+                ))}
+              </ul>
+            </aside>
+            <div style={{ marginTop: "14vh" }}>
+              <div
+                style={{ display: "flex", justifyContent: "space-between" }}
+              ></div>
 
-      <Link to="/changePassword">
-        <button>Change Password</button>
-      </Link>
-      <button
-        onClick={() => {
-          localStorage.clear();
-          window.location.href = "/login";
-        }}
-      >
-        Log Out
-      </button>
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <MedicineFilter />
-        <MedicineSearch />
+              <div className="medicine-list">
+                {currentMedicines.map((medicine) => (
+                  <div key={medicine._id} className="medicine-card-container">
+                    <MedicineCard
+                      medicine={medicine}
+                      updateCart={updateCart}
+                      cart={cart}
+                      medsQuantities={allmedsQuantities}
+                      patient={patient}
+                      handleViewDescription={handleViewDescription}
+                    />
+                  </div>
+                ))}
+              </div>
+              {showMedicineDescription && (
+                <OverlayWindow
+                  message={medicineToDescribe.description}
+                  onCancel={() => setShowMedicineDescription(false)}
+                  cancelLabel={"Close"}
+                />
+              )}
 
-        <div style={{ textAlign: "center", padding: "20px" }}>
-          <Link to="/cart">
-            <button>Cart</button>
-          </Link>
-          <p>Total Quantity: {totalQuantity}</p>
-        </div>
-      </div>
-
-      <div className="medicine-list">
-        {filteredMedicines.map((medicine) => (
-          <div key={medicine._id} className="medicine-card-container">
-            <MedicineCard
-              medicine={medicine}
-              updateCart={updateCart}
-              cart={cart}
-              medsQuantities={allmedsQuantities}
-              patient={patient}
-              handleViewDescription={handleViewDescription}
-            />
+              <Pagination
+                current={currentPage}
+                onChange={handlePageChange}
+                total={filteredMedicines.length}
+                pageSize={medicinesPerPage}
+              />
+            </div>
           </div>
-        ))}
-      </div>
-      {showMedicineDescription && (
-        <OverlayWindow
-          message={medicineToDescribe.description}
-          onCancel={() => setShowMedicineDescription(false)}
-          cancelLabel={"Close"}
-        />
+        </>
       )}
-    </div>
+    </>
   );
 };
 
