@@ -118,9 +118,13 @@ exports.delAdminpharmacistPatient = async (req, res) => {
     } else if (role === "admin") {
       // Delete an admin
       console.log("admin");
+      const admins = await Admin.find();
+      for (let i = 0 ; i < admins.length ;i++ ){
+        console.log(admins[i]);
+      }
       const result = await Admin.deleteOne({ username: name });
 
-      console.log(result + "hahahhahah" + object);
+      console.log(result.deletedCount);
       deletedCount = result.deletedCount;
     } else if (role === "pharmacist") {
       // Delete a pharmacist
@@ -197,5 +201,25 @@ exports.approvepharmacist = async (req, res) => {
     return res.status(500).json({ error: "Internal server error." });
   }
 }
+
+
+exports.getCurrentUserAdmin = async (req, res) => {
+  try {
+    console.log("ALO");
+    console.log(req.user._id);
+    const adminUser = await User.findOne({_id : req.user._id});
+    const admin = await Admin.findOne({ username: adminUser.username });
+    if (!admin) {
+      return res.status(404).json({ error: "Admin not found." });
+    }
+    return res.status(200).json({
+      admin: admin,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Internal server error." });
+  }
+};
+
 
 // ...

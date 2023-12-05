@@ -1,0 +1,170 @@
+.book-container {
+  background-color: #e1e5f2;
+  border-top: 2px solid #022b3a;
+  border-left: 2px solid #022b3a;
+  border-right: 2px solid #022b3a;
+  border-bottom: 1px solid #022b3a;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  color: #000;
+  display: flex;
+  /*flex-direction: column;*/
+  align-items: left;
+  width: 1480px;
+  height: 400;
+}
+
+.doctor-info-container {
+  display: flex;
+  background-color: #e1e5f2;
+  border: 2px solid #022b3a;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  color: #000;
+  display: flex;
+  align-items: center;
+  width: 1400px;
+  height: 230px;
+  font-size: x-large;
+}
+
+.doctor-info-container:hover {
+  transform: scale(1.02); /* Slight scale effect on hover */
+}
+
+.doctor-photo:hover {
+  transform: scale(1.02); /* Slight scale effect on hover */
+}
+
+.slots-container {
+  background-color: #e1e5f2;
+  border-bottom: 2px solid #022b3a;
+  border-right: 3px solid #022b3a;
+  border-left: 3px solid #022b3a;
+  padding: 20px;
+  color: #000;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  align-items: center;
+  width: 1480px;
+  height: 450px;
+}
+
+.doctor-photo {
+  margin-top: 40px;
+  margin-right: 20px;
+}
+
+.doctor-photo img {
+  width: 150px; /* Adjust the size as needed */
+  height: auto;
+}
+
+.doctor-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.doctor-details p {
+  margin: 5px 0;
+}
+
+/* ConfirmationDialog.css */
+.confirmationBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* Make sure it appears above other content */
+}
+
+.confirmationDialog {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  width: 1000px;
+  min-height: 45vh;
+  max-height: 56vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.confirmationMessage {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.confirmationButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.confirmationButtons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.confirmationButtons button.confirm {
+  background-color: #4caf50; /* Green color for confirmation button */
+  color: #fff;
+}
+
+.confirmationButtons button.cancel {
+  background-color: #f44336; /* Red color for cancel button */
+  color: #fff;
+}
+
+.testDiv {
+  position: relative;
+  width: 100%;
+  height: 43vh;
+}
+
+.addPackage {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 15%;
+  font-size: 12pt;
+  transition: background-color 0.3s;
+}
+
+.inputLabel {
+  margin-bottom: 0px; /* Spacing between label and input */
+  font-size: 16px; /* Font size of label */
+  color: #333; /* Color of label text */
+  font-weight: bold; /* Make label text bold */
+  margin-top: 11px;
+  position: fixed;
+  left: 327px;
+  text-align: left;
+}
+
+.infoPackages:hover {
+  border-color: #007bff; /* Change border color on hover */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Add box shadow on hover */
+}
+.infoPackages {
+  width: 30%;
+  padding: 8px;
+  font-size: 11pt; /* Font size for the select element */
+  border: 1px solid #ccc;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  margin: 3px;
+  margin-bottom: 10px;
+}
+
+/* Other existing styles */

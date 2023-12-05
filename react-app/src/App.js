@@ -21,6 +21,11 @@ import Login from "./Components/login";
 import OrdersPage from "./Components/ordersPage";
 import Form from "./Components/uploadMedicinesImage.jsx";
 
+import UserManagementAdmin from "./Components/UserManagementAdmin.jsx";
+import AdminDeleteDoctor from "./Components/adminDeleteDoctor.jsx";
+import AdminDeltePatient from "./Components/adminDeletePatient.jsx";
+
+
 import { useAuth } from "./AuthContext";
 import PrivateRoute from "./PrivateRoute";
 import NotApproved from "./Components/notApproved";
@@ -118,7 +123,10 @@ function App() {
               <Route path="/viewPendingPharmacists" element={<PendingDoctors />} />
               <Route path="/viewMedicines" element={<AvailableMedicines />} />
               <Route path="/changePassword" element={<ChangePasswordForm />} />
-                            <Route path="/searchMedicine" element={<PatientHomePage  />} />
+              <Route path="/searchMedicine" element={<PatientHomePage  />} />
+              <Route path="/ManageUsers" element={<UserManagementAdmin />}/>
+              <Route path="/ManagePharmacists" element={<AdminDeleteDoctor />} />
+              <Route path="/ManagePatients" element={<AdminDeltePatient />} />
           
               </>
             )}
