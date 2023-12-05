@@ -15,7 +15,7 @@ import familymember from "../Images/FamilyMember.jpg";
 import appointments from "../Images/appointments.jpg";
 import packages from "../Images/Packages.jpg";
 import doctors from "../Images/SearchDoctor.jpg";
-
+import HeaderDoctor from "../Elements/HeaderDoctor";
 import ServiceItem from "../Elements/ServiceItem";
 import NavBar from "../Elements/NavBar";
 import ImageCarousel from "../Elements/ImageCarousel";
@@ -36,6 +36,8 @@ export  const AdminHome = () => {
     },
   ];
   return (
+    <>
+    <HeaderDoctor />
     <div style={{ backgroundColor: "white", height: "100vh", width: "99.9vw" }}>
 
       <div className="all-containers">
@@ -82,5 +84,6 @@ export  const AdminHome = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

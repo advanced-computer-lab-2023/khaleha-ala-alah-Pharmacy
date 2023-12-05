@@ -13,7 +13,9 @@ import editprofile from "../Images/editprofile.png";
 
 import ImageCarousel from "../Elements/ImageCarousel";
 import ServiceItem from "../Elements/ServiceItem";
-import NavBar from "../Elements/NavBar";
+
+import NavBarPharmacist from "../Elements/NavBarPharmacist";
+import HeaderDoctor from "../Elements/HeaderDoctor";
 
 import appointments from "../Images/appointmentwithpatient.jpg";
 import chat from "../Images/chatwithpatient.jpg";
@@ -51,37 +53,9 @@ export const DoctorHome = () => {
   ];
 
   return (
-    <div>
-
-
-
-
-
-
     <>
-    <div>
-      <h1>Pharmacist Home</h1>
-
-
-      <button
-        onClick={() => {
-          localStorage.clear();
-          window.location.href = "/login";
-        }}
-      >
-        Log Out
-      </button>
-      
-
-    </div>
-
-
-</>
-         
-
-
-
-  
+      <HeaderDoctor />
+      <NavBarPharmacist/>
       {
         <div className="all-containers-doctorH">
         
@@ -127,6 +101,6 @@ export const DoctorHome = () => {
           </div>
         </div>
       }
-    </div>
+    </>
   );
 };

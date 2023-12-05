@@ -5,6 +5,8 @@ import Table from "./table.jsx";
 import styles from "./viewPendingDoctors.module.css";
 import OverlayWindow from "./overlayWindow.jsx";
 import ToggleSwitch from "./toggleSwitch"; // Assuming you've created this component
+import NavBarPharmacist from "../Elements/NavBarPharmacist";
+import HeaderDoctor from "../Elements/HeaderDoctor";
 
 
 const AvailableMedicines = () => {
@@ -113,12 +115,15 @@ const AvailableMedicines = () => {
   };
 
   return (
-    <div>
+    <>
+    <HeaderDoctor />
+      <NavBarPharmacist/>
+    <div className={styles.ContainerOfAvailableMedicines}>
       {isLoading ? (
         <LoadingPage />
       ) : (
         <>
-          <h1>Available Medicines</h1>
+          <h1 className={styles.headerOfMedicineList}>Available Medicines</h1>
           <div className={styles.radioGroup}>
             <h3 className={styles.options}> Show Available Medicines </h3>
             <ToggleSwitch isOn={showAll} handleToggle={handleToggleChange} />
@@ -157,6 +162,7 @@ const AvailableMedicines = () => {
         </>
       )}
     </div>
+    </>
   );
 };
 

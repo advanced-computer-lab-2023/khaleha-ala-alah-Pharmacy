@@ -66,3 +66,16 @@
   .searchInput:hover {
     border-color: #007bff; /* Change color as needed */
   }
+
+  .ContainerOfAvailableMedicines{
+
+    margin-top: 130px;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .headerOfMedicineList{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+  }
