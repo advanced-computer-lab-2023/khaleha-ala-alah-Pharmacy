@@ -2,24 +2,21 @@ import React from "react";
 import { Avatar, Button, Card } from "antd";
 import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons/lib";
 
-const Department = ({ department, className = "" }) => (
+const Department = ({ medicine, className = "" }) => (
   <>
     <Card
       className={`department ${className}`}
-      cover={<img alt={`${department.title} avatar`} src={department.img} />}
+      cover={<img alt={`${medicine.name} avatar`} src={medicine.pictureUrl} />}
     >
-      <h3 className="h4 mt-0">{department.title}</h3>
+      <h3 className="h4 mt-0">{medicine.name}</h3>
 
       <div className="team d-flex align-items-center mb-4">
-        <strong className="mr-3">Team:</strong>
-
-        {department.team.map((src, i) => (
-          <Avatar className="avatar" src={src} key={i} />
-        ))}
-        <Button shape="circle" type="primary" icon={<PlusOutlined />} />
+        <p>Price: ${medicine.price}</p>
+        <p>Available Quantity: {medicine.availableQuantity}</p>
+        <p>Sales: {medicine.sales}</p>
       </div>
 
-      <p>{department.desc}</p>
+      <p>{medicine.description}</p>
 
       <div className="button-box pb-2">
         <Button type="primary">

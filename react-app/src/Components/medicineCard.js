@@ -9,6 +9,7 @@ const Department = ({
   cart,
   medsQuantities,
   patient,
+  handleViewDescription,
 }) => (
   <>
     <Card
@@ -29,11 +30,14 @@ const Department = ({
         <p>Sales: {medicine.sales}</p>
       </div>
 
-      <p>{medicine.description}</p>
-
       <div className="button-box pb-2">
-        <Button type="primary">
-          More <FileDoneOutlined className="ml-2" />
+        <Button
+          type="primary"
+          onClick={() => {
+            handleViewDescription(medicine);
+          }}
+        >
+          View Medicine Description <FileDoneOutlined className="ml-2" />
         </Button>
       </div>
       <div>
@@ -46,6 +50,7 @@ const Department = ({
         <button onClick={() => updateCart(medicine._id, "add", medsQuantities)}>
           +
         </button>
+        <br />
         <button
           onClick={() =>
             updateCart(medicine._id, "addToCart", medsQuantities, patient)

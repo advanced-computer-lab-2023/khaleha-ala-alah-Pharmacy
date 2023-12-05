@@ -9,12 +9,15 @@ import { CartContext } from "./cart-context";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Card from "./Card.jsx";
+import OverlayWindow from "./overlayWindow.jsx";
 
 const PatientHomePagebuy = () => {
   const { medicines, updateMedicines } = useMedicines();
   const { cart, updateCart } = useContext(CartContext);
   const [allmedsQuantities, setAllMedsQuantities] = useState({});
   const [patient, setPatient] = useState(null);
+  const [showMedicineDescription, setShowMedicineDescription] = useState(false);
+  const [medicineToDescribe, setMedicineToDescribe] = useState(null); // The medicine whose description is to be shown
 
   const fetchAvailableMedicines = async () => {
     try {
@@ -78,6 +81,12 @@ const PatientHomePagebuy = () => {
       console.error("Error fetching current patient:", error);
     }
   };
+
+  const handleViewDescription = (medicine) => {
+    setShowMedicineDescription(true);
+    setMedicineToDescribe(medicine);
+  };
+
   return (
     <div>
       <Link to="/wallet">
@@ -119,10 +128,18 @@ const PatientHomePagebuy = () => {
               cart={cart}
               medsQuantities={allmedsQuantities}
               patient={patient}
+              handleViewDescription={handleViewDescription}
             />
           </div>
         ))}
       </div>
+      {showMedicineDescription && (
+        <OverlayWindow
+          message={medicineToDescribe.description}
+          onCancel={() => setShowMedicineDescription(false)}
+          cancelLabel={"Close"}
+        />
+      )}
     </div>
   );
 };
