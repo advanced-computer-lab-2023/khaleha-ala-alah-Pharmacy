@@ -5,7 +5,7 @@ import AddUser from "./Components/addAdmin";
 import PatientList from "./Components/patientList";
 import PharmacistList from "./Components/pharmcistDelete";
 
-import AvailableMedicines from "./Components/Avilablemedicine";
+import AvailableMedicines from "./Components/Availablemedicine";
 
 import MedicineSearch from "./Components/searchmedicine";
 import MedicineFilter from "./Components/medicalusefilter";
