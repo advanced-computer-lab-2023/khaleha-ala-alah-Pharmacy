@@ -79,13 +79,6 @@ export  const AdminHome = () => {
             title="chang password"
             navigateTo="/changePassword"
           />
-            <ServiceItem
-            imgSrc={makeappointment}
-            title="search Medicines"
-            description="View all medicines"
-            navigateTo="/searchMedicine"
-          />
-       
         </div>
       </div>
     </div>

@@ -4,6 +4,8 @@ import LoadingPage from "./LoadingPage.jsx";
 import Table from "./table.jsx";
 import styles from "./viewPendingDoctors.module.css";
 import OverlayWindow from "./overlayWindow.jsx";
+import ToggleSwitch from "./toggleSwitch"; // Assuming you've created this component
+
 
 const AvailableMedicines = () => {
   const [medicines, setMedicines] = useState([]);
@@ -12,6 +14,22 @@ const AvailableMedicines = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [medicineToDescribe, setMedicineToDescribe] = useState(null);
   const [showMedicineDescription, setShowMedicineDescription] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(""); // State to hold the search query
+  const filteredMedicines = medicines
+  .filter(
+    (medicine) => showAll || medicine.availableQuantity > 0
+  )
+  .filter(
+    (medicine) => medicine.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleToggleChange = () => {
+    setShowAll(!showAll);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
 
   // Function to fetch available medicines
   const fetchAvailableMedicines = async () => {
@@ -36,17 +54,9 @@ const AvailableMedicines = () => {
     fetchAvailableMedicines();
   }, []);
 
-  useEffect(() => {
 
-    console.log(showMedicineDescription + "A")
-  }, [setShowMedicineDescription])
 
-  // Function to filter medicines based on availability
-  const filteredMedicines = showAll
-    ? medicines
-    : medicines.filter((medicine) => medicine.availableQuantity > 0);
-
-  const data = medicines.map((medicine) => ({
+  const data = filteredMedicines.map((medicine) => ({
     pictureUrl: (
       <img
         width="70px"
@@ -61,7 +71,6 @@ const AvailableMedicines = () => {
     price: medicine.price,
     availableQuantity: medicine.availableQuantity,
     sales: medicine.sales,
-    medicalUse: medicine.medicalUse,
   }));
 
   const columns = [
@@ -95,19 +104,12 @@ const AvailableMedicines = () => {
       key: "sales",
       className: styles.tableHeader,
     },
-    {
-      title: "Medical Use",
-      dataIndex: "medicalUse",
-      key: "medicalUse",
-      className: styles.tableHeader,
-    },
   ];
 
   
   const handleViewDescription = (medicine) => {
     setShowMedicineDescription(true);
     setMedicineToDescribe(medicine);
-    console.log(showMedicineDescription);
   };
 
   return (
@@ -117,11 +119,23 @@ const AvailableMedicines = () => {
       ) : (
         <>
           <h1>Available Medicines</h1>
-          <div>
-            <button onClick={() => setShowAll(true)}>Show All</button>
-            <button onClick={() => setShowAll(false)}>Show Available</button>
+          <div className={styles.radioGroup}>
+            <h3 className={styles.options}> Show Available Medicines </h3>
+            <ToggleSwitch isOn={showAll} handleToggle={handleToggleChange} />
+            <h3 className={styles.options}> Show All Medicines </h3>
+            <br/>
+          </div>
+          <div className={styles.searchBar}>
+            <input
+              type="text"
+              placeholder="Search by name..."
+              value={searchQuery}
+              onChange={handleSearchChange}
+              className={styles.searchInput}
+            />
           </div>
           <div className={styles.viewPendingDoctors}>
+            <h4>click on any row to show the medicine description</h4>
             <div className={styles.tableWrapper}>
               <Table
                 data={data}
@@ -133,8 +147,8 @@ const AvailableMedicines = () => {
               />
               {showMedicineDescription && (
                 <OverlayWindow
-                  message={"ALO"}
-                  onCancel={setShowMedicineDescription(false)}
+                  message={medicineToDescribe.description}
+                  onCancel={() => {setShowMedicineDescription(false)}}
                   cancelLabel={"Close"}
                 />
               )}

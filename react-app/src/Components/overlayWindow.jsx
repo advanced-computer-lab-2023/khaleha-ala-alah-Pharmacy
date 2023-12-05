@@ -3,7 +3,6 @@ import styles from "./overlayWindow.module.css";
 import { CloseOutlined } from "@ant-design/icons"; // Importing a close icon from Ant Design
 
 const OverlayWindow = ({ message, onCancel, cancelLabel }) => {
-  console.log(message);
   const handleBackdropClick = (e) => {
     if (e.target === e.currentTarget) {
       onCancel();
