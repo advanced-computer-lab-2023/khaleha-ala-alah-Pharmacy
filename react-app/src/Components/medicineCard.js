@@ -25,29 +25,31 @@ const Department = ({
             <img
               alt={`${medicine.name} avatar`}
               src={medicine.pictureUrl}
-              style={{ width: "326px", height: "260px" }}
+              style={{ width: "326px", height: "260px" , marginLeft: "1.75rem"}}
             />
+            
           </>
         }
       >
         <>
-          <div className="team d-flex align-items-center mb-4">
-            <p>Price: ${medicine.price}</p>
-            <p>Available Quantity: {medicine.availableQuantity}</p>
-            <p>Sales: {medicine.sales}</p>
+          <div className="textStyling">
+            <label style={{ fontSize: '16pt', textAlign: 'left'}}>{medicine.price} EGP</label>
+            <label style={{ color: 'rgb(128, 128, 128)'}}>Available Quantity: {medicine.availableQuantity}</label>
+            <label style={{ color: 'rgb(128, 128, 128)'}}>Sale: {medicine.sales}% </label>
           </div>
-          <div className="button-box pb-2">
-            <Button
-              type="primary"
-              onClick={() => {
-                handleViewDescription(medicine);
-              }}
-            >
-              View Medicine Description <FileDoneOutlined className="ml-2" />
-            </Button>
-          </div>
-          <div>
-            <button
+          <div className="button-container">
+            <div className="button-box">
+              <button
+                type="primary"
+                onClick={() => {
+                  handleViewDescription(medicine);
+                }}
+              >
+                Details <FileDoneOutlined className="ml-2" />
+                </button>
+            </div>
+            <div className="button-box">
+               {/* <button
               onClick={() =>
                 updateCart(medicine._id, "subtract", medsQuantities)
               }
@@ -60,14 +62,15 @@ const Department = ({
             >
               +
             </button>
-            <br />
-            <button
-              onClick={() =>
-                updateCart(medicine._id, "addToCart", medsQuantities, patient)
-              }
-            >
-              Add to Cart
-            </button>
+            <br /> */}
+              <button
+                onClick={() =>
+                  updateCart(medicine._id, "addToCart", medsQuantities, patient)
+                }
+              >
+                Add to Cart
+              </button>
+            </div>
           </div>
         </>
       </Card>

@@ -50,11 +50,11 @@ const Header = () => {
         <div className={styles.navbarSearch}>
           <div
             className={styles.searchInputWrapper}
-            style={{ width: "45%", marginLeft: "-40px" }}
+            style={{ width: "35%", marginLeft: "-40px" }}
           >
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search for Medicine ...."
               value={searchValue}
               onChange={handleSearchChange}
               className={styles.searchInput}
