@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import NavBar from "../Elements/NavBarPharmacist";
 import Header from "../Elements/HeaderDoctor";
-import styles from './addMedicine.module.css';
+import styles from './pharmEditAcc.module.css';
 
-const AddMedicine = () => {
+const PharmEditProfileForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     pictureUrl: '',
@@ -53,54 +53,36 @@ const AddMedicine = () => {
       <form onSubmit={handleSubmit} className={styles.addMedicinecontainer}>
         <div className={styles.inputContainer}>
           <label className={styles.label}>Name</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} className={styles.input} placeholder='Medicine Name' />
+          <input type="text" name="name" value={formData.name} onChange={handleChange} className={styles.input} placeholder='Name' />
         </div>
         <div className={styles.inputContainer}>
-          <label className={styles.labelToLeft}>Picture URL</label>
-          <input type="text" name="pictureUrl" value={formData.pictureUrl} onChange={handleChange} className={styles.inputToLeft} placeholder='Medicine Img URL'/>
+          <label className={styles.labelToLeft}>Email</label>
+          <input type="text" name="pictureUrl" value={formData.pictureUrl} onChange={handleChange} className={styles.inputToLeft} placeholder='Email'/>
         </div>
         <div className={styles.inputContainer}>
-          <label className={styles.label}>Price</label>
-          <input type="number" name="price" value={formData.price} onChange={handleChange} className={styles.input} placeholder='EGP'/>
+          <label className={styles.label}>Birth Date</label>
+          <input type="date" name="price" value={formData.price} onChange={handleChange} className={styles.input} placeholder='Date Of Birth'/>
         </div>
         <div className={styles.inputContainer}>
-          <label className={styles.labelToLeft}>Description</label>
-          <input type="text" name="description" value={formData.description} onChange={handleChange} className={styles.inputToLeft} placeholder='Medicine Description'/>
+          <label className={styles.labelToLeft}>Affiliation</label>
+          <input type="text" name="description" value={formData.description} onChange={handleChange} className={styles.inputToLeft} placeholder='Affiliation'/>
         </div>
         
         <div className={styles.inputContainer}>
-          <label className={styles.label}>Available Quantity</label>
-          <input type="number" name="availableQuantity" value={formData.availableQuantity} onChange={handleChange} className={styles.input} placeholder='Avaliable Quantity'/>
+          <label className={styles.label}>Educational Background</label>
+          <input type="text" name="availableQuantity" value={formData.availableQuantity} onChange={handleChange} className={styles.input} placeholder='Educational Background'/>
         </div>
         <div className={styles.inputContainer}>
-          <label className={styles.labelToLeft}>Medical Use</label>
-          <input type="text" name="medicalUse" value={formData.medicalUse} onChange={handleChange} className={styles.inputToLeft} placeholder='Medical Usage' />
+          <label className={styles.labelToLeft}>Hourly Rate</label>
+          <input type="text" name="medicalUse" value={formData.medicalUse} onChange={handleChange} className={styles.inputToLeft} placeholder='EGP' />
         </div>
-        <div className={styles.addInContainer}>
-          <label className={styles.label}>Active Ingredients</label>
-          {formData.activeIngredients.map((ingredient, index) => (
-            <input
-              key={index}
-              type="text"
-              name="activeIngredients"
-              value={ingredient}
-              onChange={handleChange}
-              data-index={index}
-              className={styles.inputActiveIn}
-              placeholder='Medicine Active Ingredient'
-            />
-          ))}
-          <button type="button" onClick={handleAddIngredient} className={styles.addInButton}>
-            + add another Ingredient
-          </button>
-        </div>
-        <button type="submit" className={styles.button}>Save Medicine</button> 
+        <button type="submit" className={styles.button}>Update Profile</button> 
       </form>
     </div>
   );
 };
 
-export default AddMedicine;
+export default PharmEditProfileForm;
 
 
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingPage from "./LoadingPage.jsx";
 import Table from "./table.jsx";
-import styles from "./viewPendingDoctors.module.css";
+import styles from "./Availablemedicine.module.css";
 import OverlayWindow from "./overlayWindow.jsx";
 import ToggleSwitch from "./toggleSwitch"; // Assuming you've created this component
 import NavBarPharmacist from "../Elements/NavBarPharmacist";
@@ -123,7 +123,8 @@ const AvailableMedicines = () => {
         <LoadingPage />
       ) : (
         <>
-          <h1 className={styles.headerOfMedicineList}>Available Medicines</h1>
+          {/* <h1 className={styles.headerOfMedicineList}>Available Medicines</h1> */}
+          <div className={styles.components}>
           <div className={styles.radioGroup}>
             <h3 className={styles.options}> Show Available Medicines </h3>
             <ToggleSwitch isOn={showAll} handleToggle={handleToggleChange} />
@@ -159,8 +160,11 @@ const AvailableMedicines = () => {
               )}
             </div>
           </div>
+        </div>
+
         </>
       )}
+      
     </div>
     </>
   );

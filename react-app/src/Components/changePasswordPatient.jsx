@@ -2,12 +2,12 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import NavBar from "../Elements/NavBarPharmacist.jsx";
-import Header from "../Elements/HeaderDoctor";
+import NavBar from "../Elements/NavBar.jsx";
+import Header from "../Elements/Header";
 
 import styles from "./changePassword.module.css"
 
-const ChangePasswordForm = () => {
+const PatientChangePasswordForm = () => {
   const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -101,4 +101,4 @@ const ChangePasswordForm = () => {
   );
 };
 
-export default ChangePasswordForm;
+export default PatientChangePasswordForm;

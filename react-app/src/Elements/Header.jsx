@@ -28,8 +28,16 @@ const Header = () => {
   };
 
   const handlePassword = () => {
-    navigate("/changePassword");
+    navigate("/changePasswordPatient");
   };
+
+  const handleUserProfile = () => {
+    navigate("/patientUserProfile");
+  };
+
+  const handleEditAccount = () =>{
+    navigate("/patientEditAcc");
+  }
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -93,14 +101,19 @@ const Header = () => {
           </a>
           {dropdownVisible && (
             <div className={styles.dropdownMenu}>
-              <button className={styles.dropdownItem}>My Account</button>
-              <button className={styles.dropdownItem} onClick={handlePassword}>
-                Change Password
-              </button>
-              <button className={styles.dropdownItem} onClick={handleLogout}>
-                Log Out
-              </button>
-            </div>
+            <button className={styles.dropdownItem} onClick={handleEditAccount}>
+              Edit Account
+            </button>
+            <button className={styles.dropdownItem} onClick={handleUserProfile}>
+              User Profile
+            </button>
+            <button className={styles.dropdownItem} onClick={handlePassword}>
+              Change Password
+            </button>
+            <button className={styles.dropdownItem} onClick={handleLogout}>
+              Log Out
+            </button>
+          </div>
           )}
         </div>
       </div>

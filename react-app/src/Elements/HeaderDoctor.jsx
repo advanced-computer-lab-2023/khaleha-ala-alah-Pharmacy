@@ -28,6 +28,14 @@ const Header = () => {
   const handlePassword = () => {
     navigate("/changePassword");
   };
+  
+  const handleUserProfile = () => {
+    navigate("/pharmUserProfile");
+  };
+
+  const handleEditAccount = () =>{
+    navigate("/pharmEditAcc");
+  }
 
   return (
     <nav className={styles.navbar}>
@@ -62,14 +70,19 @@ const Header = () => {
           </a>
           {dropdownVisible && (
             <div className={styles.dropdownMenu}>
-              <button className={styles.dropdownItem}>My Account</button>
-              <button className={styles.dropdownItem} onClick={handlePassword}>
-                Change Password
-              </button>
-              <button className={styles.dropdownItem} onClick={handleLogout}>
-                Log Out
-              </button>
-            </div>
+            <button className={styles.dropdownItem} onClick={handleEditAccount}>
+              Edit Account
+            </button>
+            <button className={styles.dropdownItem} onClick={handleUserProfile}>
+              User Profile
+            </button>
+            <button className={styles.dropdownItem} onClick={handlePassword}>
+              Change Password
+            </button>
+            <button className={styles.dropdownItem} onClick={handleLogout}>
+              Log Out
+            </button>
+          </div>
           )}
         </div>
       </div>
