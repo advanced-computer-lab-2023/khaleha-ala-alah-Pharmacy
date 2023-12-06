@@ -2,8 +2,6 @@ const mongoose = require("mongoose");
 const validator = require("validator");
 // const familyMembers = require('./familyMemberModel');
 // const emergencyContactSchema = require('./emergencyContactModel');
-//const presecriptionsSchema = require("./presecriptionsModel");
-//const package = require("./packageModel");
 
 const emergencyContactSchema = new mongoose.Schema({
   fullName: {
@@ -31,6 +29,11 @@ const emergencyContactSchema = new mongoose.Schema({
   },
 });
 const familyMemberSchema = new mongoose.Schema({
+  userID: {
+    type: String,
+    //required: true, sheel elcomment law kol el family members lazm yb2o patients
+    unique: true,
+  },
   name: {
     type: String,
     required: true,
@@ -81,33 +84,58 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please provide your email"],
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
+    unique: true,
   },
   gender: {
     type: String,
     enum: ["Male", "Female", "Other"],
     required: [true, "Please tell us your gender"],
   },
-  dataOfBirth: {
+  dateOfBirth: {
     type: Date,
-    //required: [true, 'Please tell us your age']
+    required: [true, "Please tell us your age"],
   },
   mobileNumber: {
     type: String,
     required: [true, "Please tell us your mobile number"],
+    unique: true,
   },
-  package: {
-    type: mongoose.Schema.Types.ObjectId, // Use ObjectId type to reference packages
-    ref: "Package",
+  packageName: {
+    type: String,
+    default: "none",
   },
-  // presecriptions:{
-  //     type: [presecriptionsSchema],
-  //     default:[]
-  // },
+  doctorsDiscount: {
+    type: Number,
+    default: 0,
+  },
+  medicalDiscount: {
+    type: Number,
+    default: 0,
+  },
+  familyDiscount: {
+    type: Number,
+    default: 0,
+  },
+  selfSubscription: {
+    type: Boolean,
+    default: false,
+  },
+  packageEndDate: {
+    type: Date,
+    default: null,
+  },
+
   EmergencyContact: emergencyContactSchema,
   familyMembers: {
     type: [familyMemberSchema],
     default: [],
   },
+  files: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "uploads.files",
+    },
+  ],
 });
 
 const Patient = mongoose.model("Patient", userSchema);

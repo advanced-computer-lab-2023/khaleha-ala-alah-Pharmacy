@@ -39,7 +39,7 @@ const AddMedicine = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:4000/pharmacists/addMedicine', formData); // Replace with your API endpoint
+      const response = await axios.post('http://localhost:4002/pharmacists/addMedicine', formData); // Replace with your API endpoint
       console.log('Medicine added:', response.data);
     } catch (error) {
       console.error('Error adding medicine:', error);

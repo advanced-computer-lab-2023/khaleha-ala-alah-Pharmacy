@@ -37,7 +37,7 @@ const AddUser = () => {
   const handleAddUser = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/admins/addAdmin', {
+      const response = await axios.post('http://localhost:4002/admins/addAdmin', {
         username: formData.username,  // Use the user-entered username
         password: formData.password,  // Use the user-entered password
       });
@@ -55,7 +55,7 @@ const AddUser = () => {
 
   const fetchAllAdmins = async () => {
     try {
-      const response = await fetch("http://localhost:4000/admins");
+      const response = await fetch("http://localhost:4002/admins");
       if (!response.ok) {
         throw new Error("Failed to fetch data");
       }
@@ -64,7 +64,7 @@ const AddUser = () => {
       console.log(data.data.admins);
 
       const response2 = await fetch(
-        "http://localhost:4000/admins/getCurrentAdmin",
+        "http://localhost:4002/admins/getCurrentAdmin",
         {
           method: "GET",
           headers: {
@@ -132,7 +132,7 @@ const AddUser = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete('http://localhost:4000/admins/delAdminpharmacistPatient', {
+      const response = await axios.delete('http://localhost:4002/admins/delAdminpharmacistPatient', {
         data: { role: "admin", name: username },
       });
       setShowDeleteConfirmationDialog(false);

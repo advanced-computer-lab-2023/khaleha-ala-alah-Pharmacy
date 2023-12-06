@@ -75,11 +75,7 @@ exports.addAdmin = async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Create a new admin user with the provided data
-    const newAdmin = await Admin.create({
-      username,
-      password,
-    });
+    
 
     // Create a new user record with the role "admin" and email set to username@gmail.com
     const newUser = await User.create({
@@ -89,6 +85,16 @@ exports.addAdmin = async (req, res) => {
       email: `${username}@gmail.com`, // Set the email as username@gmail.com
       name: username, // Set the name to the username
     });
+
+    newUser.save();
+
+    // Create a new admin user with the provided data
+    const newAdmin = await Admin.create({
+      username,
+      userID: newUser._id,
+    });
+
+    newAdmin.save();
 
     res.status(201).json({
       status: "success",

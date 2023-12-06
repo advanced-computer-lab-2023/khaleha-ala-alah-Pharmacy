@@ -37,7 +37,7 @@ const ChangePasswordForm = () => {
 
       // Call the changePassword API
       const response = await axios.post(
-        'http://localhost:4000/users/changePassword',
+        'http://localhost:4002/users/changePassword',
         {
           oldPassword,
           newPassword,

@@ -20,7 +20,7 @@ const OrdersPage = ({ userID }) => {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4000/patients/myOrders`,
+          `http://localhost:4002/patients/myOrders`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -67,7 +67,7 @@ const OrdersPage = ({ userID }) => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:4000/patients/cancel-order?id=${order.order._id}`,
+        `http://localhost:4002/patients/cancel-order?id=${order.order._id}`,
         {
           method: "PATCH",
           headers: {

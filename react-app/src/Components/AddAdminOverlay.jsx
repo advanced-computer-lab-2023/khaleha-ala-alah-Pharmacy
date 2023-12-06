@@ -4,7 +4,7 @@ import "../Elements/AppointmentCard.css";
 import LoadingPage from "./LoadingPageForOverlay.jsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const backendUrl = "http://localhost:4000";
+const backendUrl = "http://localhost:4002";
 
 const EditPackage = ({ onCancel }) => {
   const navigate = useNavigate();
@@ -40,7 +40,7 @@ const EditPackage = ({ onCancel }) => {
     setLoading(true);
     try {
       const response = await axios.post(
-        "http://localhost:4000/admins/addAdmin",
+        "http://localhost:4002/admins/addAdmin",
         formData,
         {
           headers: {

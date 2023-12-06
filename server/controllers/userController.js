@@ -297,6 +297,9 @@ exports.login = async (req, res) => {
           .json({ error: "pharmacist rejected", token: token, role: user.role });
       }
     }
+    if(user.role === "doctor"){
+      return res.status(400).json({ error: "doctor is not able to login"});
+    }
     res
       .status(200)
       .json({

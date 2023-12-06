@@ -87,7 +87,7 @@ const PharmacistRegister = () => {
     }
 
     await axios
-      .post("http://localhost:4000/users/register", formData, {
+      .post("http://localhost:4002/users/register", formData, {
         headers: {
           role: "pharmacist",
         },
