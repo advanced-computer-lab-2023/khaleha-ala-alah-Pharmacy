@@ -45,6 +45,8 @@ import SearchResults from "./Components/searchResults.jsx";
 
 import PharmEditProfileForm from "./Components/pharmEditAcc.js";
 import PatientEditProfileForm from "./Components/patientEditAcc.js";
+import PatientUserProfileForm from "./Components/patientUserprofile.js";
+import PharmUserProfileForm from "./Components/pharmUserProfile";
 
 import { DoctorHome } from "./Components/pharmacistHome.jsx";
 import { AdminHome } from "./Components/adminHome";
@@ -76,8 +78,12 @@ function App() {
           <Route path="changePasswordPatient" element={<PatientChangePasswordForm/>}/>
           <Route path="/changePassword" element={<ChangePasswordForm />} />
           <Route path="/searchMedicine" element={<MedSearch />} />
+
           <Route path="/pharmEditAcc" element={<PharmEditProfileForm/>}/>
           <Route path="/patientEditAcc" element={<PatientEditProfileForm/>}/>
+          <Route path="/patientUserprofile" element={<PatientUserProfileForm/>}/>
+          <Route path="/pharmUserProfile" element={<PharmUserProfileForm/>}/>
+          
           <Route path="/addAdmin" element={<AddUser />} />
           <Route path="/adminHome" element={<AdminHome />} />
           <Route

@@ -64,13 +64,13 @@ export const DoctorHome = () => {
             <h1> To cure sometimes, to relieve often, to comfort always. </h1>
           </div>
           <div className="services-container-doctorH">
-            <ServiceItem
+            {/* <ServiceItem
               imgSrc={editprofile}
               title="Edit My Profile"
               description="Easily edit and update your profile details"
               navigateTo="/editPharmacistProfile"
             />
-            ,
+            , */}
             <ServiceItem
               imgSrc={allpatients}
               title="View Medicines"
@@ -83,23 +83,48 @@ export const DoctorHome = () => {
               title="ADD Medicine"
               description="Schedule a consultation with your patients anytime"
               navigateTo="/AddMedicine"
-            />
+            />,
                   <ServiceItem
               imgSrc={chatpatient}
               title="Chat with Doctor"
               description="Connect with a doctor for instant advice through secure messaging. SOON"
             />
-                <ServiceItem
+                {/* <ServiceItem
              
               title="wallet"
               description="check your wallet"
               navigateTo="/wallet"
-            />
+            /> */}
             ,
-
-     
           </div>
+          <div className="about-us-container">
+      <h2>About Us</h2>
+      <p style={{
+  padding: '2rem',
+  marginLeft: '3rem',
+  fontSize: '16pt',
+  lineHeight: 1.6,
+  fontFamily: 'Arial, sans-serif',
+  fontWeight: 'bold'
+}}>
+  At Khaleha-ala-allah Clinic, we are dedicated to providing exceptional healthcare services tailored to meet the unique needs of our patients.
+  With a commitment to excellence and a passion for wellness, our team of experienced healthcare professionals strives to 
+  deliver compassionate and comprehensive medical care.
+</p>
+<p style={{
+  marginTop: '2rem',
+  fontSize: '14pt',
+  lineHeight: 1.6,
+  fontFamily: 'Arial, sans-serif'
+}}>
+  From routine check-ups to specialized medical services, we offer a range of healthcare solutions designed to promote a lifetime of optimal health. We look forward to serving you and your family with the highest standards of medical excellence.
+</p>
+   
+
+
+    </div>
         </div>
+        
       }
     </>
   );

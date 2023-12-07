@@ -32,7 +32,7 @@ const Header = () => {
   };
 
   const handleUserProfile = () => {
-    navigate("/patientUserProfile");
+    navigate("/patientUserprofile");
   };
 
   const handleEditAccount = () =>{
