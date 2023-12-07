@@ -16,7 +16,7 @@ const Department = ({
   return (
     <div style={{ minWidth: "27vw" }}>
       <Card
-        className={`department ${className}`}
+         style={{ border: "none" }}
         cover={
           <>
             <h3 className="h4 mt-0" style={{ textAlign: "center" }}>

@@ -18,9 +18,15 @@ const ServiceItem = ({ imgSrc, title, description, navigateTo}) => {
       </div>
       <h3 className="service-title">{title}</h3>
       <p className="service-description">{description}</p>
-      <div className="button-container" >
-        <button className="button-Style" onClick={handleClick} >  Details <FileDoneOutlined className="ml-2" /> </button>
-      </div>
+      <div style={{
+  paddingTop: '40px',
+  alignItems: 'flex-end',
+  marginLeft: '11rem'
+}}>
+  <button className="button-Style" onClick={handleClick}>
+    Details <FileDoneOutlined className="ml-2" />
+  </button>
+</div>
       
     </div>
   );

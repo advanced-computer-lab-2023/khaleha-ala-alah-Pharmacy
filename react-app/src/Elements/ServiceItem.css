@@ -43,11 +43,7 @@
     font-family: Arial, sans-serif;
     font-weight: bold;
   }
-  .button-container{
-    padding-top: 40px;
-    align-items:flex-end;
-    margin-left: 13rem;
-  }
+ 
   .service-description {
     padding: 12px;
     padding-top: 16px;;

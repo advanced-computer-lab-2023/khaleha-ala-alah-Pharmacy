@@ -5,7 +5,6 @@ import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons/lib";
 const Department = ({ medicine, className = "" }) => (
   <>
     <Card
-      className={`department ${className}`}
       cover={<img alt={`${medicine.name} avatar`} src={medicine.pictureUrl} />}
     >
       <h3 className="h4 mt-0">{medicine.name}</h3>
