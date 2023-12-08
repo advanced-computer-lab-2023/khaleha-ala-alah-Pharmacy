@@ -7,6 +7,8 @@ import searchIcon from "../Images/searchIcon.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+
+
 const Header = () => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);

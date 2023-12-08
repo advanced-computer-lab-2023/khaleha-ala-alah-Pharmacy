@@ -6,7 +6,7 @@ import PatientList from "./Components/patientList";
 import PharmacistList from "./Components/pharmcistDelete";
 
 import AvailableMedicines from "./Components/Availablemedicine";
-
+import Messenger from "./Components/messenger.jsx";
 import MedicineSearch from "./Components/searchmedicine";
 import MedicineFilter from "./Components/medicalusefilter";
 import AddMedicine from "./Components/addMedicine";
@@ -110,6 +110,7 @@ function App() {
             {role === "patient" && (
               <>
                 <Route path="/searchResults" element={<SearchResults />} />
+                <Route path="/messenger" element={<Messenger />} />
               </>
             )}
 
@@ -121,6 +122,7 @@ function App() {
                 <Route path="/wallet" element={<WalletAmount />} />
                 <Route path="/AddMedicine" element={<AddMedicine />} />
                 <Route path="/viewMedicines" element={<AvailableMedicines />} />
+                <Route path="/messenger" element={<Messenger />} />
               </>
             )}
 
