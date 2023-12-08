@@ -5,12 +5,16 @@ import settingsIcon from "../Images/settings.png";
 import alertIcon from "../Images/alert.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { BellOutlined, MessageOutlined } from "@ant-design/icons";
+import { Badge, Dropdown, Menu } from "antd";
 
 const Header = () => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [dropdownVisibleAlert, setDropdownVisibleAlert] = useState(false);
   const [numOfNotifications, setnumOfNotifications] = useState(8);
+  const [dropdownVisibleMessages, setDropdownVisibleMessages] = useState(false);
+  const [hasNewMessages, setHasNewMessages] = useState(true);
 
   const toggleDropdownforSettings = () => {
     setDropdownVisible(!dropdownVisible);
@@ -18,6 +22,15 @@ const Header = () => {
 
   const toggleDropdownforNotification = () => {
     setDropdownVisibleAlert(!dropdownVisibleAlert);
+  };
+
+  const toggleDropdownforMessages = () => {
+    setDropdownVisibleMessages(!dropdownVisibleMessages);
+    setHasNewMessages(false);
+  };
+
+  const handleMessagesClick = () => {
+    console.log("Messages icon clicked");
   };
 
   const handleLogout = () => {
@@ -44,6 +57,22 @@ const Header = () => {
           <img src={logopng} alt="Logo" />
         </div>
         <div className={styles.navbarRight}>
+        <a
+            href="#messages"
+            className={styles.navbarLink}
+            onClick={toggleDropdownforMessages}
+          >
+            {hasNewMessages && <Badge dot><MessageOutlined style={{ fontSize: "20px" }} onClick={handleMessagesClick} /></Badge>}
+            {!hasNewMessages && <MessageOutlined style={{ fontSize: "20px" }} onClick={handleMessagesClick} />}
+          </a>
+          {dropdownVisibleMessages && (
+            <div className={styles.dropdownMenu}>
+              {/* Placeholder for messages dropdown content */}
+              <button className={styles.dropdownItem}>Message 1</button>
+              <button className={styles.dropdownItem}>Message 2</button>
+              <button className={styles.dropdownItem}>Message 3</button>
+            </div>
+          )}
           <a
             href="#notifications"
             className={styles.navbarLink}
