@@ -10,7 +10,7 @@ const PendingDoctors = () => {
     // Function to fetch all pending doctors
     const fetchPendingDoctors = async () => {
       try {
-        const response = await fetch("http://localhost:4000/admins/pendingDoctors", {
+        const response = await fetch("http://localhost:4002/admins/pendingDoctors", {
           method: "GET",
           headers: {
             authorization: "Bearer " + localStorage.getItem("token"),
@@ -34,7 +34,7 @@ const PendingDoctors = () => {
     const data = {
       username: username,
     };
-    await axios.post(`http://localhost:4000/admins/approveOrRejectDoctor`, data, {
+    await axios.post(`http://localhost:4002/admins/approveOrRejectDoctor`, data, {
       headers: {
         authorization: "Bearer " + localStorage.getItem("token"),
         type: action,

@@ -16,7 +16,7 @@ export const CartProvider = ({ children }) => {
     try {
       // Fetch available medicines from the API
       const response = await axios.get(
-        "http://localhost:4000/admins/available-medicines"
+        "http://localhost:4002/admins/available-medicines"
       );
       const availableMedicines = response.data;
 

@@ -17,7 +17,7 @@ const Wallet = ({ userID }) => {
   const fetchWalletAmount = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/patients/amount-wallet/${userID}`
+        `http://localhost:4002/patients/amount-wallet/${userID}`
       );
       setWalletAmount(response.data.amountInWallet);
     } catch (error) {
@@ -35,7 +35,7 @@ const Wallet = ({ userID }) => {
   };
   const addAmountToWallet = async (amountToAdd) => {
     try {
-      await axios.post("http://localhost:4000/patients/add-amount-Wallet", {
+      await axios.post("http://localhost:4002/patients/add-amount-Wallet", {
         userID: userID,
         amount: amountToAdd,
       });
@@ -49,7 +49,7 @@ const Wallet = ({ userID }) => {
 
   const removeAmountFromWallet = async (amountToRemove) => {
     try {
-      await axios.post("http://localhost:4000/patients/remove-from-wallet", {
+      await axios.post("http://localhost:4002/patients/remove-from-wallet", {
         userID: userID,
         amount: amountToRemove,
       });

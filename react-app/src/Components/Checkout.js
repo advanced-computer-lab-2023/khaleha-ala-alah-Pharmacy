@@ -19,7 +19,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
   const fetchCurrentPatient = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4000/patients/currentPatient",
+        "http://localhost:4002/patients/currentPatient",
         {
           method: "GET", // Method is optional because GET is the default value
           headers: {
@@ -52,7 +52,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
   const onToken = (token) => {
     console.log(token);
     console.log("amounttt ++ " + amount22);
-    fetch("http://localhost:4000/patients/save-stripe-token", {
+    fetch("http://localhost:4002/patients/save-stripe-token", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
         "Content-Type": "application/json",
@@ -70,7 +70,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
         if (data.success) {
           // Payment successful, proceed to place the order
           const orderResponse = await fetch(
-            `http://localhost:4000/patients/checkout/${patientId}`,
+            `http://localhost:4002/patients/checkout/${patientId}`,
             {
               method: "POST",
               headers: {
@@ -113,7 +113,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
     try {
       // Call the API to decrement the amount from the wallet
       const walletResponse = await fetch(
-        "http://localhost:4000/patients/remove-from-wallet",
+        "http://localhost:4002/patients/remove-from-wallet",
         {
           method: "POST",
           headers: {
@@ -130,7 +130,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
         // Wallet amount decremented successfully
         // Now, proceed to create an order using a similar approach to Cash on Delivery
         const orderResponse = await fetch(
-          `http://localhost:4000/patients/checkout/${patientId}`,
+          `http://localhost:4002/patients/checkout/${patientId}`,
           {
             method: "POST",
             headers: {
@@ -169,7 +169,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
     try {
       // Call the checkout API to place the order with cash on delivery
       const response = await fetch(
-        `http://localhost:4000/patients/checkout/${patientId}`,
+        `http://localhost:4002/patients/checkout/${patientId}`,
         {
           method: "POST",
           headers: {

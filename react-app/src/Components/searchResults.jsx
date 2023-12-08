@@ -71,7 +71,7 @@ const SearchResults = () => {
     setIsLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:4000/admins/available-medicines"
+        "http://localhost:4002/admins/available-medicines"
       );
       let allMeds = response.data;
       setSearchResults(allMeds.filter((med) => med.name.includes(query)));

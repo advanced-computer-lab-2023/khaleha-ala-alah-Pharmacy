@@ -21,7 +21,7 @@ class ProfileForm extends React.Component {
     try {
       // Use fetch to send the FormData to the server
       const response = await fetch(
-        "http://localhost:4000/patients/setMedicineImage",
+        "http://localhost:4002/patients/setMedicineImage",
         {
           method: "PATCH",
           body: formData,

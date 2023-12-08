@@ -11,7 +11,7 @@ const DoctorPatients = ({ doctorId }) => {
     // Fetch the doctor's patients and appointments
     const fetchDoctorData = async () => {
       try {
-        const patientsResponse = await fetch(`http://localhost:4001/doctors/${doctorId}/patients`);
+        const patientsResponse = await fetch(`http://localhost:4002/doctors/${doctorId}/patients`);
         if (!patientsResponse.ok) {
           throw new Error('Failed to fetch patients');
         }
@@ -19,7 +19,7 @@ const DoctorPatients = ({ doctorId }) => {
         setPatients(patientsData.data.patients);
         setFilteredPatients(patientsData.data.patients); // Initialize filtered patients with all patients
 
-        const appointmentsResponse = await fetch(`http://localhost:4001/doctors/${doctorId}/appointments`);
+        const appointmentsResponse = await fetch(`http://localhost:4002/doctors/${doctorId}/appointments`);
         if (!appointmentsResponse.ok) {
           throw new Error('Failed to fetch appointments');
         }

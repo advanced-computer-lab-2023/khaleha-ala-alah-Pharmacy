@@ -11,7 +11,7 @@ const MedicineSearch = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/patients/searchmedicine', {
+      const response = await axios.get('http://localhost:4002/patients/searchmedicine', {
         params: { prefix: searchTerm },
       });
       setSearchResults(response.data.medicines);
@@ -31,7 +31,7 @@ const MedicineSearch = () => {
     try {
       const { _id } = selectedMedicine;
 
-      const response = await axios.put(`http://localhost:4000/pharmacists/${_id}/edit-medicine`, {
+      const response = await axios.put(`http://localhost:4002/pharmacists/${_id}/edit-medicine`, {
         description: updatedDescription,
         price: updatedPrice,
       });

@@ -7,7 +7,7 @@ const MedicineList = () => {
 
   useEffect(() => {
     // Fetch the list of medicines from the API
-    fetch("http://localhost:4000/patients/allMediciness")
+    fetch("http://localhost:4002/patients/allMediciness")
       .then((response) => response.json())
       .then((data) => setMedicines(data.data.medicines))
       .catch((error) => console.error("Error fetching medicines:", error));

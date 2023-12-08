@@ -16,7 +16,7 @@ const Helper = () => {
   const fetchAvailableMedicines = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/admins/available-medicines"
+        "http://localhost:4002/admins/available-medicines"
       );
       updateMedicines(response.data);
     } catch (error) {

@@ -9,7 +9,7 @@ const PharmacistList_info = () => {
     const fetchPharmacists = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:4000/pharmacists/allpharmacists"
+          "http://localhost:4002/pharmacists/allpharmacists"
         );
         setPharmacists(response.data);
       } catch (error) {
