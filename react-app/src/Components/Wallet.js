@@ -17,7 +17,15 @@ const Wallet = ({ userID }) => {
   const fetchWalletAmount = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4002/patients/amount-wallet/${userID}`
+        `http://localhost:4002/patients/amount-wallet/${userID}`,{
+          method:"GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+
+            // Add any other headers like authorization if needed
+          },
+        }
       );
       setWalletAmount(response.data.amountInWallet);
     } catch (error) {

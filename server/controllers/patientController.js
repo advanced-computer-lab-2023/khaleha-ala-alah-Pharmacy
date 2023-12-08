@@ -117,10 +117,8 @@ exports.addAddress = async (req, res) => {
 const Wallet = require("../models/wallet");
 exports.getAmountInWallet = async (req, res) => {
   try {
-    const userID = req.params.userID.trim();
-
+    const userID = req.user._id;
     const userWallet = await Wallet.findOne({ userID });
-
     if (userWallet) {
       // Retrieve the current amount in the wallet
       const amountInWallet = userWallet.amount;
@@ -702,10 +700,16 @@ exports.getOrderDetails = async function (req, res) {
 
 exports.cancelOrder = async function (req, res) {
   try {
-    const order = await Order.findById(req.query.id);
+    console.log(req.params.orderID);
+    const order = await Order.findOne({orderID : req.params.id});
+    const orderAmount = order.totalAmount;
     order.status = "Cancelled";
     await order.save();
-
+    const wallet = await Wallet.findOne({userID : req.user._id});
+    console.log(req.user._id);
+    console.log(wallet);
+    wallet.amount += orderAmount;
+    await wallet.save();
     res.status(204).json({
       status: "success",
       data: order,
@@ -718,54 +722,61 @@ exports.cancelOrder = async function (req, res) {
   }
 };
 
-exports.getMyOrders = async function (req, res) {
-  try {
-    const userID = req.user._id; // Assuming you extract the userID from the request parameters
-
-    console.log("ALLOOOO");
-    // Fetch orders for the specific userID
-    const orders = await Order.find({ userID: userID });
-    console.log(userID);
-    // Process orders
-    let result = [];
-    for (let i = 0; i < orders.length; i++) {
-      let order = orders[i];
-      let items = [];
-      for (let j = 0; j < order.items.length; j++) {
-        let item = order.items[j];
-        if (item.quantity === 0) continue; // Skip items with quantity 0 (removed from cart
-        let medicine = await Medicine.findById(item.medicine);
-        items.push({
-          medicine: medicine,
-          quantity: item.quantity,
-          totalPrice: item.totalPrice,
+  exports.getMyOrders = async function (req, res) {
+    try {
+      const userID = req.user._id;
+      let orders; // Use a different name for the array
+      console.log(req.params);
+  
+      if (req.params.status === 'all') {
+        orders = await Order.find({ userID: userID });
+      } else {
+        orders = await Order.find({ userID: userID, status: req.params.status });
+      }
+      console.log(orders);
+  
+      let result = [];
+      for (let i = 0; i < orders.length; i++) {
+        let currentOrder = orders[i]; // Use a different name for the loop variable
+        let items = [];
+  
+        for (let j = 0; j < currentOrder.items.length; j++) {
+          let item = currentOrder.items[j];
+          if (item.quantity === 0) continue;
+  
+          let medicine = await Medicine.findById(item.medicine);
+          items.push({
+            medicine: medicine,
+            quantity: item.quantity,
+            totalPrice: item.totalPrice,
+          });
+        }
+  
+        result.push({
+          orderID: currentOrder._id,
+          items: items,
+          totalAmount: currentOrder.totalAmount,
+          address: currentOrder.address,
+          status: currentOrder.status,
         });
       }
-      result.push({
-        orderID: order._id,
-        items: items,
-        totalAmount: order.totalAmount,
-        address: order.address,
-        status: order.status,
+  
+      console.log(result);
+  
+      res.status(200).json({
+        status: 'success',
+        results: orders.length,
+        data: {
+          result,
+        },
+      });
+    } catch (err) {
+      res.status(500).json({
+        status: 'error',
+        message: err.message,
       });
     }
-
-    console.log(result);
-
-    res.status(200).json({
-      status: "success",
-      results: orders.length,
-      data: {
-        result,
-      },
-    });
-  } catch (err) {
-    res.status(500).json({
-      status: "error",
-      message: "An error occurred while fetching orders.",
-    });
-  }
-};
+  };  
 
 exports.getOrderMedicine = async function (req, res) {
   try {

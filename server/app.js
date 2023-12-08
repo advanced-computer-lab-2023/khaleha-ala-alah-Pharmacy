@@ -69,6 +69,9 @@ app.use("/admins", adminRouter);
 app.use("/pharmacists", pharmacistRouter);
 app.use("/patients", patientRouter);
 app.use("/users", require("./routes/userRoute"));
+
+app.use('/notifications', require('./routes/notificationsRoutes'))
+
 app.use('/conversations', require('./routes/conversationsRoutes'));
 app.use('/messages', require('./routes/messagesRoutes'));
 
