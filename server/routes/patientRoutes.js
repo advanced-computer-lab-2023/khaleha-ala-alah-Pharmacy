@@ -9,9 +9,9 @@ router.get("/currentPatient", CheckAuth, patientController.getCurrentPatient);
 //  .post(patientController.createPatient);
 router.get("/filterMedicine", patientController.filterMedicine);
 router.get("/searchmedicine", patientController.searchMedicineByName);
-router.get("/myOrders", CheckAuth, patientController.getMyOrders);
+router.get("/myOrders/:status", CheckAuth, patientController.getMyOrders);
 router.get("/myorderDetails/", CheckAuth, patientController.getOrderDetails);
-router.patch("/cancel-order", patientController.cancelOrder);
+router.patch("/cancel-order/:orderID", CheckAuth,patientController.cancelOrder);
 router.get("/getOrderMedicine", patientController.getOrderMedicine);
 router.get("/allMediciness", patientController.getAllMedicines);
 router.get("/mydoctors", CheckAuth, patientController.getMypharmacists);
@@ -21,9 +21,10 @@ router.patch(
   CheckAuth,
   patientController.addFamilyMembers
 );
+
 router.post("/add-amount-Wallet", patientController.addAmountToWallet);
 router.post("/remove-from-wallet", patientController.removeAmountFromWallet);
-router.get("/amount-wallet/:userID", patientController.getAmountInWallet);
+router.get("/amount-wallet/:userID", CheckAuth,patientController.getAmountInWallet);
 
 router.post("/:userId/add-address", patientController.addAddress);
 router.delete(

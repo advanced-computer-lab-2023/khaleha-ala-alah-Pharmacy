@@ -7,7 +7,7 @@ import NavBar from "../Elements/NavBar.jsx";
 import Header from "../Elements/Header";
 
 const OrdersPage = ({ userID }) => {
-  userID = "652b512450d1b797fa0a42ef";
+  // userID = "652b512450d1b797fa0a42ef";
   const [myOrders, setMyOrders] = useState([]);
   let [message, setMessage] = useState("");
   let [messageType, setMessageType] = useState("");
@@ -16,16 +16,20 @@ const OrdersPage = ({ userID }) => {
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
   const [error, setError] = useState(null);
-  useEffect(() => {
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  //useEffect(() => {
     const fetchOrders = async () => {
       try {
         const response = await fetch(
-          `http://localhost:4002/patients/myOrders`,
+          `http://localhost:4002/patients/myOrders/${selectedStatus}`,
           {
+            method: "GET",
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
-              "Content-Type": "application/json", // Specify the content type if needed
+              "Content-Type": "application/json",
             },
+            //body: JSON.stringify({ status: selectedStatus }), // Include status in the request body
+            
           }
         );
         if (!response.ok) {
@@ -34,20 +38,32 @@ const OrdersPage = ({ userID }) => {
         const data = await response.json();
         console.log(data.data.result);
         setMyOrders(data.data.result);
+        
+
+    
+        // ... rest of the function ...
+    
       } catch (error) {
-        console.error("Error fetching orders:", error);
-        setError(error.message || "Error fetching orders");
+        alert(error);
       } finally {
         setIsLoading(false);
       }
     };
+    
 
+    // fetchOrders();
+  //}, []);
+  useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [selectedStatus]);
+
+  const handleStatusChange = (status) => {
+    setSelectedStatus(status);
+  };
 
   const handleCancelOrderConfirm = async (order) => {
     console.log(order);
-    if (order.order.status !== "Pending") {
+    if (order.status !== "Pending") {
       setMessage("You can only cancel pending orders");
       setMessageType("warning");
       setShowMessage(true);
@@ -58,7 +74,7 @@ const OrdersPage = ({ userID }) => {
   };
 
   const handleCancelOrder = async (order) => {
-    if (order.order.status !== "Pending") {
+    if (order.status !== "Pending") {
       setMessage("You can only cancel pending orders");
       setMessageType("warning");
       setShowMessage(true);
@@ -67,7 +83,7 @@ const OrdersPage = ({ userID }) => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:4002/patients/cancel-order?id=${order.order._id}`,
+        `http://localhost:4002/patients/cancel-order/${order.orderID}`,
         {
           method: "PATCH",
           headers: {
@@ -93,7 +109,7 @@ const OrdersPage = ({ userID }) => {
       setShowMessage(true);
       setMyOrders((prevOrders) =>
         prevOrders.map((o) => {
-          if (o.order._id === order.order._id) {
+          if (o.orderID === order.orderID) {
             return { ...o, order: { ...o.order, status: "Cancelled" } };
           }
           return o;
@@ -130,6 +146,7 @@ const OrdersPage = ({ userID }) => {
             />
           )}
         </div>
+        
       ) : (
         <div className="orders-page">
           <Header />
@@ -148,6 +165,18 @@ const OrdersPage = ({ userID }) => {
               </>
             ))}
           </div>
+          <div className="filter-container">
+        <label>Filter by Status:</label>
+        <select
+          value={selectedStatus}
+          onChange={(e) => handleStatusChange(e.target.value)}
+        >
+          <option value="all">All</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="delivered">Delivered</option>
+        </select>
+      </div>
           {showMessage && (
             <FeedbackMessage
               type={messageType}

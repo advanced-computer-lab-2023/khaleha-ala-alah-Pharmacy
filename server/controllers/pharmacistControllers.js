@@ -85,7 +85,8 @@ const addMedicine = async (req, res) => {
             description,
             availableQuantity,
             activeIngredients,
-            medicalUse
+            medicalUse,
+            userID: req.user._id,
         });
 
         // Save the new medicine to the database
@@ -96,5 +97,38 @@ const addMedicine = async (req, res) => {
         res.status(500).json({ error: 'Error adding medicine' });
     }
 };
+const archiveMedicine = async (req,res)=>{
+    try{
+        const medicineName = req.body.medicineName;
+        const medicine = await Medicine.findOne({name : medicineName});
+        if(!medicine){
+            return res.status(404).json({error:'Medicine not found'});
+        }
+        medicine.isArchived = true;
+        await medicine.save();
+        res.status(200).json(medicine);
+    }
+    catch(error){
+        res.status(500).json({error:'Error archiving medicine'});
+    }
+}
+const unarchiveMedicine = async (req,res)=>{
+    try{
+        const medicineName = req.body.medicineName;
+        const medicine = await Medicine.findOne({name : medicineName});
+        if(!medicine){
+            return res.status(404).json({error:'Medicine not found'});
+        }
+        if(!medicine.isArchived){
+            return res.status(404).json({error:'Medicine is already unarchived'});
+        }
+        medicine.isArchived = false;
+        await medicine.save();
+        res.status(200).json(medicine);
+    }
+    catch(error){
+        res.status(500).json({error:'Error unarchiving medicine'});
+    }
+}
 
-module.exports = { addMedicine ,updateMedicine , getMedicineDetails,allpharmacists};
+module.exports = { addMedicine ,updateMedicine , getMedicineDetails,allpharmacists , archiveMedicine ,unarchiveMedicine };

@@ -42,7 +42,7 @@ import StripePaymentButton from "./Components/Checkout";
 import AddressList from "./Components/address";
 import WalletAmount from "./Components/Wallet";
 import SearchResults from "./Components/searchResults.jsx";
-
+import { Notification } from "./Components/notification";
 import PharmEditProfileForm from "./Components/pharmEditAcc.js";
 import PatientEditProfileForm from "./Components/patientEditAcc.js";
 import PatientUserProfileForm from "./Components/patientUserprofile.js";
@@ -121,6 +121,7 @@ function App() {
                 <Route path="/wallet" element={<WalletAmount />} />
                 <Route path="/AddMedicine" element={<AddMedicine />} />
                 <Route path="/viewMedicines" element={<AvailableMedicines />} />
+                <Route path="/notification" element={<Notification />} />
               </>
             )}
 

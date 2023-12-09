@@ -52,6 +52,34 @@ const AvailableMedicines = () => {
     setSelectedMedicine(medicine);
   };
 
+  const handleArchiveMedicine = (medicine) =>{
+    try {
+      const response = axios.patch(
+        "http://localhost:4002/pharmacists/archiveMedicine",
+        {
+          medicineName: medicine.name
+        }
+      );
+      alert("Medicine archived successfully");
+    } catch (error) {
+      console.error("Error archiving medicine:", error);
+    }
+  }
+  const handleUnArchiveMedicine = (medicine) =>{
+    try {
+      const response = axios.patch(
+        "http://localhost:4002/pharmacists/unarchiveMedicine",
+        {
+          medicineName: medicine.name
+        }
+      );
+      alert("Medicine unarchived successfully");
+    } catch (error) {
+      alert(error);
+      console.error("Error archiving medicine:", error);
+    }
+  }
+
   useEffect(() => {
     fetchAvailableMedicines();
   }, []);
@@ -106,6 +134,32 @@ const AvailableMedicines = () => {
       key: "sales",
       className: styles.tableHeader,
     },
+    {
+      title: "Archive",
+      key: "Archive",
+      className: styles.tableHeader,
+      render: (text, record) => (
+        <button
+          className={styles.button}
+          onClick={() => handleArchiveMedicine(record.medicine)}
+        >
+          Archive
+        </button>
+      ),
+    },
+    {
+      title: "Unarchive",
+      key: "Unarchive",
+      className: styles.tableHeader,
+      render: (text, record) => (
+        <button
+          className={styles.button}
+          onClick={() => handleUnArchiveMedicine(record.medicine)}
+        >
+          Unarchive
+        </button>
+      ),
+    }
   ];
 
   
