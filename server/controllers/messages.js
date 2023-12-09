@@ -1,4 +1,5 @@
 const messageModel = require('../models/messageModel');
+const messageNotification = require('../models/messagesNotification');
 const mongoose = require('mongoose');
 
 const conn = mongoose.connection;
@@ -64,6 +65,19 @@ exports.getMessages = async (req, res) => {
         res.status(200).json({ messages: messagesWithFiles });
     } catch (error) {
         console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+};
+
+// Get notification for new messages
+exports.getMessagesNotifications = async (req, res) => {
+    try {
+       const receiverId = req.user._id;
+        const messages = await messageNotification.find({
+            receiverId,
+        });
+        res.status(200).json({ messages });
+    } catch (error) {
         res.status(500).json({ error: error.message });
     }
 };

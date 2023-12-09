@@ -485,6 +485,21 @@ exports.validateToken = async (req, res) => {
   }
 };
 
+//get user name and role from id
+exports.getUser = async (req, res) => {
+  try {
+    const { userID } = req.body;
+    const user=await userModel.findOne({_id:userID}).select('name role');
+    if(!user){
+      return res.status(400).json({ error: "User does not exists" });
+    }
+  
+    return res.status(200).json({ user: user, myID: req.user._id });
+  } catch (error) {
+    return res.status(500).json({ error: "internal server error" });
+  }
+}
+
 
 
 

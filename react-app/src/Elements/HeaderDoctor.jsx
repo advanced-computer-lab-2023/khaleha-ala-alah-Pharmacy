@@ -6,7 +6,11 @@ import alertIcon from "../Images/alert.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BellOutlined, MessageOutlined } from "@ant-design/icons";
-import { Badge, Dropdown, Menu } from "antd";
+import { Badge } from "antd";
+import axios from "axios";
+import { useEffect, useRef } from "react";
+import { useWebSocket } from '../WebSocketContext';
+import { useAuth } from "../AuthContext";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -14,7 +18,59 @@ const Header = () => {
   const [dropdownVisibleAlert, setDropdownVisibleAlert] = useState(false);
   const [numOfNotifications, setnumOfNotifications] = useState(8);
   const [dropdownVisibleMessages, setDropdownVisibleMessages] = useState(false);
-  const [hasNewMessages, setHasNewMessages] = useState(true);
+  const [hasNewMessages, setHasNewMessages] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const socket=useWebSocket();
+  const initialized = useRef(false)
+  const { role } = useAuth();
+
+  useEffect(() => {
+      axios
+      .get("http://localhost:4002/messages/notifications", {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setMessages(res.data.messages);
+        if (res.data.messages.length > 0) {
+          setHasNewMessages(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!initialized.current){
+      if(socket){
+        initialized.current = true
+        socket.on("getMessage", (data) => {
+          axios.post("http://localhost:4002/users/getUser", {
+            userID: data.senderId,
+          }, {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }).then((res) => {
+            const message = {
+              senderId: data.senderId,
+              senderName: res.data.user.name,
+              senderRole: res.data.user.role,
+              receiverId:res.data.myID
+            }
+            setMessages((prev) => [...prev, message]);
+            setHasNewMessages(true);
+          }).catch((err) => {
+            console.log(err);
+          });
+        });
+      }
+    };
+}, [role]);
+
 
   const toggleDropdownforSettings = () => {
     setDropdownVisible(!dropdownVisible);
@@ -28,9 +84,15 @@ const Header = () => {
     setDropdownVisibleMessages(!dropdownVisibleMessages);
     setHasNewMessages(false);
   };
+  const handleMessageItemClick = (message) => {
+    const updatedMessages = messages.filter(
+      (message) => message._id !== message._id
+    );
+    setMessages(updatedMessages);
+    const senderId = message.senderId;
+    navigate(`/messenger`, { state: {senderId} });
+    setDropdownVisibleMessages(false);
 
-  const handleMessagesClick = () => {
-    console.log("Messages icon clicked");
   };
 
   const handleLogout = () => {
@@ -57,22 +119,38 @@ const Header = () => {
           <img src={logopng} alt="Logo" />
         </div>
         <div className={styles.navbarRight}>
-        <a
+          <a
             href="#messages"
             className={styles.navbarLink}
             onClick={toggleDropdownforMessages}
           >
-            {hasNewMessages && <Badge dot><MessageOutlined style={{ fontSize: "20px" }} onClick={handleMessagesClick} /></Badge>}
-            {!hasNewMessages && <MessageOutlined style={{ fontSize: "20px" }} onClick={handleMessagesClick} />}
+            {hasNewMessages && (
+              <Badge dot>
+                <MessageOutlined
+                  style={{ fontSize: "20px" }}
+                />
+              </Badge>
+            )}
+            {!hasNewMessages && (
+              <MessageOutlined
+                style={{ fontSize: "20px" }}
+              />
+            )}
           </a>
           {dropdownVisibleMessages && (
             <div className={styles.dropdownMenu}>
-              {/* Placeholder for messages dropdown content */}
-              <button className={styles.dropdownItem}>Message 1</button>
-              <button className={styles.dropdownItem}>Message 2</button>
-              <button className={styles.dropdownItem}>Message 3</button>
+              {messages.map((message, index) => (
+                <button
+                  className={styles.dropdownItem}
+                  key={index}
+                  onClick={() => handleMessageItemClick(message)}
+                >
+                  {message.senderName}
+                </button>
+              ))}
             </div>
           )}
+
           <a
             href="#notifications"
             className={styles.navbarLink}
@@ -99,19 +177,19 @@ const Header = () => {
           </a>
           {dropdownVisible && (
             <div className={styles.dropdownMenu}>
-            <button className={styles.dropdownItem} onClick={handleEditAccount}>
-              Edit Account
-            </button>
+              <button className={styles.dropdownItem} onClick={handleEditAccount}>
+                Edit Account
+              </button>
             <button className={styles.dropdownItem} onClick={handleUserProfile}>
-              User Profile
-            </button>
-            <button className={styles.dropdownItem} onClick={handlePassword}>
-              Change Password
-            </button>
-            <button className={styles.dropdownItem} onClick={handleLogout}>
-              Log Out
-            </button>
-          </div>
+                User Profile
+              </button>
+              <button className={styles.dropdownItem} onClick={handlePassword}>
+                Change Password
+              </button>
+              <button className={styles.dropdownItem} onClick={handleLogout}>
+                Log Out
+              </button>
+            </div>
           )}
         </div>
       </div>
