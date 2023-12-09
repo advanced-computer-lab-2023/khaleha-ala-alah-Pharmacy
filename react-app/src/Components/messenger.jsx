@@ -5,8 +5,7 @@ import UserList from '../Elements/allUsers';
 import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { useWebSocket } from '../WebSocketContext';
-
-
+import { useLocation } from 'react-router-dom';
 
 
 function Messenger() {
@@ -18,9 +17,9 @@ function Messenger() {
   const [loading, setLoading] = useState(false); 
   const[userID, setUserID]=useState();
   const socket=useWebSocket();
+  const location = useLocation();
  
-
-
+  
   useEffect(() => {
     getUsers();
     socket.on("getMessage", (data) => {
@@ -33,10 +32,28 @@ function Messenger() {
       });
     });
   }, []);
+
+  useEffect(() => {
+    if (location.state) {
+    handleSelectUser(location.state.senderId);
+    }
+  }, [users]);
+
   useEffect(() => {
     arrivalMessage &&
       conversations?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
+
+      if(conversations?.members.includes(arrivalMessage.sender)){
+       setTimeout(() => {
+          axios.post(`http://localhost:4002/conversations/deleteMessagesNotification`, {senderId: arrivalMessage.sender, receiverId: userID})
+          .then((res) => {
+            console.log(res.data);
+          }).catch((err) => {
+            console.log(err);
+          });
+       }, 1000);
+      }
   }, [arrivalMessage, conversations]);
 
   const getUsers = async () => {
@@ -46,7 +63,6 @@ function Messenger() {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
      });
-     console.log(res.data);
       setUserID(res.data.userID);
      const allUsers = res.data.users;
      const filteredUsers = allUsers.filter((user) => user.userID !== userID);
