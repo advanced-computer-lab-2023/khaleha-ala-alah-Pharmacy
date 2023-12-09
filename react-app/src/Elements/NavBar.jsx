@@ -116,6 +116,17 @@ const NavBar = ({ selectedSection, selectedSubSection = "", patient }) => {
           >
             Cart {hasSubsections("cart")}
           </div>
+          <div className={
+              selectedSection === "chat"
+                ? styles.navbarLinkSelected
+                : styles.navbarLinkSection
+            }
+            onMouseEnter={() => handleSectionMouseEnter("chat")}
+            onMouseLeave={() => handleSectionMouseLeave()}
+            onClick={(e) => handleSectionClick(e, "chat", "/messenger")}
+          >
+            Chat {hasSubsections("chat")}
+          </div>
         </div>
       </div>
     </nav>
