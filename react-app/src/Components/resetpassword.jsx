@@ -20,7 +20,7 @@ function ResetPassword() {
             "newPassword" : newPassword,
             "token":token
         }
-        await axios.post("http://localhost:4000/users/resetPassword",data)
+        await axios.post("http://localhost:4002/users/resetPassword",data)
         .then((res) => {
             message.success("Password Reset Successful");
             navigate("/login");

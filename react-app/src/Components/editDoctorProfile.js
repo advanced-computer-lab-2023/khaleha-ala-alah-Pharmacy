@@ -13,7 +13,7 @@ const DoctorProfileUpdate = () => {
 
     try {
       // Send a PUT request to update the doctor's profile
-      const response = await fetch('http://localhost:4001/doctors/651f16c855b8273fedf03c93/update-email', {
+      const response = await fetch('http://localhost:4002/doctors/651f16c855b8273fedf03c93/update-email', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

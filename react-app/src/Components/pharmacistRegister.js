@@ -10,9 +10,14 @@ import './PharmacistRegister.css'; // Import your external CSS file if you have 
 
 const PharmacistRegister = () => {
   const { role } = useAuth();
+     const closeContract = () => {
+    setShowContract(false);
+  };
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+   const [agreedToContract, setAgreedToContract] = useState(false); 
+  const [showContract, setShowContract] = useState(false);
   const [name, setName] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [hourlyRate, setHourlyRate] = useState("");
@@ -47,6 +52,10 @@ const PharmacistRegister = () => {
   };
 
   const handleSubmit = async (e) => {
+    if (!agreedToContract) {
+      message.error("Please agree to the contract before registering.");
+      return;
+    }
     e.preventDefault();
     if (
       !name ||
@@ -78,7 +87,7 @@ const PharmacistRegister = () => {
     }
 
     await axios
-      .post("http://localhost:4000/users/register", formData, {
+      .post("http://localhost:4002/users/register", formData, {
         headers: {
           role: "pharmacist",
         },
@@ -208,6 +217,60 @@ const PharmacistRegister = () => {
               <input type="submit"  />
             </div>
           </form>
+          <div className="input-box">
+              <label>
+              <button onClick={() => setShowContract(!showContract)}>
+                View Contract
+              </button>
+                <input
+                  type="checkbox"
+                  checked={agreedToContract}
+                  onChange={() => {
+                    setAgreedToContract(!agreedToContract);
+                  }}
+                />
+                I agree to the terms of the contract
+              </label>
+              
+            </div>
+
+            { showContract && (
+              <div className="contract-container">
+                <h1 className="contract-title">Employment Contract</h1>
+                <pre className="contract-text">
+                  {`
+                    EMPLOYMENT CONTRACT AGREEMENT
+
+                    THIS EMPLOYMENT CONTRACT (the "Contract") is made and entered into by and between [Hospital Name], a [Type of Entity] ("Employer"), and [Employee Name] ("Employee") collectively referred to as the "Parties."
+
+                    1. POSITION AND RESPONSIBILITIES:
+                    1.1 Employee agrees to be employed as a [Position] and will perform the following responsibilities: [List of Responsibilities].
+                    1.2 Employee will report directly to [Supervisor's Name] and collaborate with other team members.
+
+                    2. SALARY AND BENEFITS:
+                    2.1 Employer agrees to pay Employee a monthly salary of $10,000, payable on the [Payment Schedule].
+                    2.2 Employee will be eligible for health benefits, retirement plans, and other benefits as outlined in the employee handbook.
+
+                    3. DURATION OF EMPLOYMENT:
+                    3.1 The term of this Contract shall commence on [Start Date] and continue for a period of 12 months, terminating on [End Date].
+                    3.2 Either party may terminate this Contract with a notice period of [Notice Period] days for any reason.
+
+                    ...
+
+                    10. ACCEPTANCE:
+                    10.1 Employee may accept or reject this Contract by clicking the respective buttons below.
+                    10.2 By accepting this Contract, Employee acknowledges understanding and agrees to abide by the terms and conditions outlined herein.
+                  `}
+                </pre>
+                <div className="button-container">
+                  <button className="close-button" onClick={closeContract}>
+                    close
+                  </button>
+                  
+                </div>
+              </div>
+            )}
+          
         </div>
       </div>
     </div>

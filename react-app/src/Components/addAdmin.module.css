@@ -1,0 +1,28 @@
+.tableHeader {
+    font-weight: heavier;
+    font-size: 1.2rem;
+  }
+  
+  .buttonsList .deleteButton {
+    background-color: red; /* Delete button background */
+    color: white; /* Icon color */
+  }
+  
+  .searchInput {
+    padding: 8px 15px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease-in-out;
+  
+    &:focus {
+      border-color: #007bff; /* Change color as needed */
+    }
+  }
+  
+  .searchInput:hover {
+    border-color: #007bff; /* Change color as needed */
+  }
+  

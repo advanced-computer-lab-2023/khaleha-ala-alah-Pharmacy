@@ -18,7 +18,7 @@ export const VerifyUser = () => {
         const data = {
             "OTP" : otp
         }
-        await axios.post("http://localhost:4000/users/verifyUser",data,{
+        await axios.post("http://localhost:4002/users/verifyUser",data,{
             headers: {
                 "authorization": "Bearer " + localStorage.getItem("token"),
             },

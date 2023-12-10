@@ -1,0 +1,60 @@
+.packageAdminContainer {
+  height: 100vh;
+  margin-top: 30px;
+}
+.infoPackages {
+  width: 30%;
+  padding: 8px;
+  font-size: 11pt; /* Font size for the select element */
+  border: 1px solid #ccc;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  margin: 3px;
+}
+
+.addPackage {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  width: 15%;
+  font-size: 12pt;
+  transition: background-color 0.3s;
+}
+
+.infoPackages:hover {
+  border-color: #007bff; /* Change border color on hover */
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5); /* Add box shadow on hover */
+}
+
+.addPackage:hover {
+  background-color: #0056b3; /* Change background color on hover */
+}
+
+.buttonsList .editButton {
+  background-color: blue; /* Edit button background */
+  color: white; /* Icon color */
+  margin-right: 8px;
+}
+
+.buttonsList .deleteButton {
+  background-color: red; /* Delete button background */
+  color: white; /* Icon color */
+}
+
+.searchInput {
+  padding: 8px 15px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s ease-in-out;
+
+  &:focus {
+    border-color: #007bff; /* Change color as needed */
+  }
+}
+.searchInput:hover {
+  border-color: #007bff; /* Change color as needed */
+}

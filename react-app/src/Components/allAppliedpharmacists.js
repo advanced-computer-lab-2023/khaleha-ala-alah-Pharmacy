@@ -8,7 +8,7 @@ const PharmacistListAPP = () => {
   // Function to fetch the list of pharmacists
   const fetchPharmacists = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/pharmacists/allpharmacists');
+      const response = await axios.get('http://localhost:4002/pharmacists/allpharmacists');
       setPharmacists(response.data);
     } catch (error) {
       console.error('Error fetching pharmacists:', error);

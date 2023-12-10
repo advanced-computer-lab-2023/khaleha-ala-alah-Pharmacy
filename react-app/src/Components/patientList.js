@@ -6,7 +6,7 @@ const PatientList = () => {
 
   useEffect(() => {
     // Fetch the list of patients when the component mounts
-    Axios.get('http://localhost:4000/patients')
+    Axios.get('http://localhost:4002/patients')
       .then((response) => {
         setPatients(response.data.data.patients);
       })
@@ -18,7 +18,7 @@ const PatientList = () => {
  const handleDeletePatient = async (role, name) => {
     try {
         
-      const response = await Axios.delete('http://localhost:4000/admins/delAdminpharmacistPatient', {data: { role, name }} );
+      const response = await Axios.delete('http://localhost:4002/admins/delAdminpharmacistPatient', {data: { role, name }} );
       const data = response.data;
       console.log(data);
 

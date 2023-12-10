@@ -8,7 +8,7 @@ const DeleteUser = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete('http://localhost:4001/admins/delAdminDoctorPatient', {
+      const response = await axios.delete('http://localhost:4002/admins/delAdminDoctorPatient', {
         data: { role, name: username },
       });
 

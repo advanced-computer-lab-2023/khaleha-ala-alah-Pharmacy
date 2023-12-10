@@ -3,8 +3,11 @@ import OrderCard from "./orderCard"; // Import the OrderCard component
 import "./OrdersPage.css"; // Import CSS for styling
 import FeedbackMessage from "./feedbackMessage";
 import ConfirmationDialog from "./ConfirmationDialog";
+import NavBar from "../Elements/NavBar.jsx";
+import Header from "../Elements/Header";
 
-const OrdersPage = () => {
+const OrdersPage = ({ userID }) => {
+  // userID = "652b512450d1b797fa0a42ef";
   const [myOrders, setMyOrders] = useState([]);
   let [message, setMessage] = useState("");
   let [messageType, setMessageType] = useState("");
@@ -12,27 +15,55 @@ const OrdersPage = () => {
   let [isLoading, setIsLoading] = useState(false);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
-
-  useEffect(() => {
-    setIsLoading(true);
+  const [error, setError] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState("all");
+  //useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("http://localhost:4000/patients/myOrders");
+        const response = await fetch(
+          `http://localhost:4002/patients/myOrders/${selectedStatus}`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+            //body: JSON.stringify({ status: selectedStatus }), // Include status in the request body
+            
+          }
+        );
+        if (!response.ok) {
+          throw new Error(`Failed to fetch orders. Status: ${response.status}`);
+        }
         const data = await response.json();
+        console.log(data.data.result);
         setMyOrders(data.data.result);
+        
+
+    
+        // ... rest of the function ...
+    
       } catch (error) {
-        console.error("Error fetching orders:", error);
+        alert(error);
       } finally {
         setIsLoading(false);
       }
     };
+    
 
+    // fetchOrders();
+  //}, []);
+  useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [selectedStatus]);
+
+  const handleStatusChange = (status) => {
+    setSelectedStatus(status);
+  };
 
   const handleCancelOrderConfirm = async (order) => {
     console.log(order);
-    if (order.order.status !== "Pending") {
+    if (order.status !== "Pending") {
       setMessage("You can only cancel pending orders");
       setMessageType("warning");
       setShowMessage(true);
@@ -43,7 +74,7 @@ const OrdersPage = () => {
   };
 
   const handleCancelOrder = async (order) => {
-    if (order.order.status !== "Pending") {
+    if (order.status !== "Pending") {
       setMessage("You can only cancel pending orders");
       setMessageType("warning");
       setShowMessage(true);
@@ -52,7 +83,7 @@ const OrdersPage = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        `http://localhost:4000/patients/cancel-order?id=${order.order._id}`,
+        `http://localhost:4002/patients/cancel-order/${order.orderID}`,
         {
           method: "PATCH",
           headers: {
@@ -78,7 +109,7 @@ const OrdersPage = () => {
       setShowMessage(true);
       setMyOrders((prevOrders) =>
         prevOrders.map((o) => {
-          if (o.order._id === order.order._id) {
+          if (o.orderID === order.orderID) {
             return { ...o, order: { ...o.order, status: "Cancelled" } };
           }
           return o;
@@ -115,21 +146,37 @@ const OrdersPage = () => {
             />
           )}
         </div>
+        
       ) : (
         <div className="orders-page">
-          <h1 style={{ color: "#022B3A" }}>My Orders</h1>
-          {myOrders.map((order, index) => (
-            <>
-              <OrderCard
-                key={index}
-                order={order}
-                handleCancelOrder={handleCancelOrderConfirm}
-                setShowMessage={setShowMessage}
-                setMessageType={setMessageType}
-                setMessage={setMessage}
-              />
-            </>
-          ))}
+          <Header />
+          <NavBar />
+          <div className="orders-container">
+            {myOrders.map((order, index) => (
+              <>
+                <OrderCard
+                  key={index}
+                  order={order}
+                  handleCancelOrder={handleCancelOrderConfirm}
+                  setShowMessage={setShowMessage}
+                  setMessageType={setMessageType}
+                  setMessage={setMessage}
+                />
+              </>
+            ))}
+          </div>
+          <div className="filter-container">
+        <label>Filter by Status:</label>
+        <select
+          value={selectedStatus}
+          onChange={(e) => handleStatusChange(e.target.value)}
+        >
+          <option value="all">All</option>
+          <option value="pending">Pending</option>
+          <option value="processing">Processing</option>
+          <option value="delivered">Delivered</option>
+        </select>
+      </div>
           {showMessage && (
             <FeedbackMessage
               type={messageType}
