@@ -23,7 +23,7 @@ const checkUser = async (userID) => {
   if (!user.verified) {
    throw new Error("User not verified");
   }
-  if(user.role === "pharmacist" && !user.pharmacistApproved){
+  if(user.role === "pharmacist" && !user.doctorApproved){
     throw new Error("pharmacist not approved");
   }
 };

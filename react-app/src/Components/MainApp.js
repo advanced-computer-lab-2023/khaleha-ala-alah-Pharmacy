@@ -3,7 +3,7 @@ import AddUser from './addAdmin';
 import PatientList from './patientList';
 import PharmacistList from './pharmcistDelete';
 import PharmacistListAPP from './allAppliedpharmacists';
-import AvailableMedicines from './Avilablemedicine';
+import AvailableMedicines from './Availablemedicine';
 import MedicineSearch from './searchmedicine';
 import MedicineFilter from './medicalusefilter';
 import AddMedicine from './addMedicine';

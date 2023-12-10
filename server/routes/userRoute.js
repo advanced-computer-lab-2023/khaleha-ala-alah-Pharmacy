@@ -13,6 +13,9 @@ router.post('/verifyUser', userController.verifyUser);
 router.post('/changePassword',CheckAuth, userController.changePassword);
 router.post('/forgotPassword', userController.forgotPassword);
 router.post('/resetPassword', userController.resetPassword);
+router.get('/getUsers',CheckAuth, userController.getUsers);
+router.get('/getUserID',CheckAuth, userController.getUserID);
+router.post('/getUser',CheckAuth, userController.getUser);
 
 
 

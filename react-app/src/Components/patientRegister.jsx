@@ -44,7 +44,7 @@ import './patientregister.css'
       emergencyNumber: emergencyNumber,
     };
     await axios
-      .post("http://localhost:4000/users/register", data, {
+      .post("http://localhost:4002/users/register", data, {
         headers: {
           role: "patient",
         },

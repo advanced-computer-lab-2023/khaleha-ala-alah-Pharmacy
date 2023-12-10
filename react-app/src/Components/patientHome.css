@@ -1,0 +1,38 @@
+.all-containers{
+    display: relative;
+    align-items: center; 
+    justify-content: center;
+}
+
+.carousel-container{
+    margin-top: 480px;
+    gap: 20px; /* Adjust the gap between items as needed */
+    justify-content: center; /* Centers the items horizontally */
+    width: auto;
+    height: auto;
+}
+
+.services-container {
+    display: flex;
+    flex-wrap: wrap; /* This allows items to wrap onto the next line */
+    gap: 20px; /* Adjust the gap between items as needed */
+    justify-content: center; /* This will center the items in the container */
+    align-items: flex-start; /* Align items to the start of the cross axis */
+    align-items: center;
+    background-color: white;
+  }
+
+  .titleofPAGE{
+    display: flex;
+    flex-wrap: wrap; /* This allows items to wrap onto the next line */
+    gap: 20px; /* Adjust the gap between items as needed */
+    justify-content: center; /* This will center the items in the container */
+    align-items: flex-start; /* Align items to the start of the cross axis */
+    margin-top: 350px;
+    align-items: center;
+    background-color: white;
+    font-size: x-large;
+    height: 200px;
+
+  }
+  

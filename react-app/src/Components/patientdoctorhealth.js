@@ -8,7 +8,7 @@ const Prescriptions = ({ doctorId, patientId }) => {
   // Function to fetch prescriptions for a specific doctor and patient
   const fetchPrescriptions = async () => {
     try {
-      const response = await fetch('http://localhost:4001/doctors/651f16c855b8273fedf03c93/651ee41994ed6dc1e163c4df/get-info');
+      const response = await fetch('http://localhost:4002/doctors/651f16c855b8273fedf03c93/651ee41994ed6dc1e163c4df/get-info');
       if (!response.ok) {
         throw new Error('Failed to fetch prescriptions');
       }

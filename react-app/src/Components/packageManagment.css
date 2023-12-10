@@ -1,0 +1,43 @@
+.manage-packages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: #fff; /* Light blue background */
+}
+
+.title {
+  color: #022b3a; /* Dark blue for the heading */
+  text-align: center;
+}
+
+.card {
+  background-color: #ffffff; /* White background */
+  border: 2px solid #659ba6; /* Border color */
+  border-radius: 8px;
+  padding: 20px;
+  margin: 20px;
+  width: 370px; /* Adjust width as needed */
+  text-wrap: wrap;
+  cursor: pointer;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Subtle shadow */
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.05); /* Slight scale effect on hover */
+  border-color: rgb(8, 60, 79);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7); /* Subtle shadow */
+}
+
+.card h2 {
+  color: #022b3a;
+}
+
+.card p {
+  color: #1f7a8c;
+  white-space: normal; /* Allows text to wrap */
+  word-wrap: break-word; /* Ensures long words do not overflow the card's width */
+}

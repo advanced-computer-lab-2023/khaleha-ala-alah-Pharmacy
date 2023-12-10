@@ -1,0 +1,67 @@
+/* ConfirmationDialog.css */
+.confirmationBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999; /* Make sure it appears above other content */
+}
+
+.confirmationDialog {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+  min-height: 20vh;
+  max-height: 20vh;
+  overflow-y: auto;
+}
+
+.confirmationMessage {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.confirmationButtons {
+  display: flex;
+  justify-content: center;
+}
+
+.confirmationButtons button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.confirmationButtons button.confirm {
+  background-color: #4caf50; /* Green color for confirmation button */
+  color: #fff;
+}
+
+.confirmationButtons button.cancel {
+  background-color: #f44336; /* Red color for cancel button */
+  color: #fff;
+}
+
+.closeButton {
+  position: fixed;
+  top: 278px; /* Adjust as needed */
+  right: 41%; /* Adjust as needed */
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.closeButton:hover {
+  background-color: #fff;
+}

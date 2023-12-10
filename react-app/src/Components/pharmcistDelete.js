@@ -7,7 +7,7 @@ const PharmacistList = () => {
   // Function to fetch the list of pharmacists
   const fetchPharmacists = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/pharmacists/allpharmacists'); // Replace with your API endpoint
+      const response = await axios.get('http://localhost:4002/pharmacists/allpharmacists'); // Replace with your API endpoint
 
       setPharmacists(response.data);
       console.log(response.data);
@@ -19,7 +19,7 @@ const PharmacistList = () => {
   const deletePharmacist = async (role, name) => {
     try {
        
-      const response = await axios.delete('http://localhost:4000/admins/delAdminpharmacistPatient', {data: {role , name}});
+      const response = await axios.delete('http://localhost:4002/admins/delAdminpharmacistPatient', {data: {role , name}});
       const data = response.data;
       console.log(data);
 

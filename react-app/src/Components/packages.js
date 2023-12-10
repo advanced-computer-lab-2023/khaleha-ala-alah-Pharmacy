@@ -17,7 +17,7 @@ const HealthPackages = () => {
   // Function to fetch all health packages
   const fetchAllHealthPackages = async () => {
     try {
-      const response = await fetch('http://localhost:4001/packages/');
+      const response = await fetch('http://localhost:4002/packages/');
       if (!response.ok) {
         throw new Error('Failed to fetch data');
       }
@@ -52,7 +52,7 @@ setSelectedID(healthPackage._id);
   const handleAddHealthPackage = async () => {
 
     try {
-      const response = await fetch('http://localhost:4001/packages/createPackage', {
+      const response = await fetch('http://localhost:4002/packages/createPackage', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +73,7 @@ setSelectedID(healthPackage._id);
     try {
         formData.id = selectedID;
    
-      const response = await fetch('http://localhost:4001/packages/updatePackage', {
+      const response = await fetch('http://localhost:4002/packages/updatePackage', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ setSelectedID(healthPackage._id);
         try {
         formData.id = selectedID;
    
-      const response = await fetch('http://localhost:4001/packages/deletePackage', {
+      const response = await fetch('http://localhost:4002/packages/deletePackage', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -1,0 +1,26 @@
+.loading-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  width: 100vw;
+  background-color: #e1e5f2; /* Light blue background */
+}
+
+.loading-circle {
+  border: 5px solid #bfd9f7; /* Lighter blue for border */
+  border-top: 5px solid #022b3a; /* Dark blue for rotating part */
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spinLoadingPage 2s linear infinite;
+}
+
+@keyframes spinLoadingPage {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
