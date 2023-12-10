@@ -9,7 +9,7 @@ const pharmacist = require('./models/users/pharmacist');
 const medicine = require('./models/medicine');
 const {GridFsStorage} = require('multer-gridfs-storage');
 const multer = require('multer');
-
+const socket = require('./utilities/sockets/socketio');
 
 
 
@@ -48,6 +48,18 @@ exports.upload = multer({storage});
 //4) start server
 const app = require('./app');
 const port = process.env.PORT || 3000;
+const server = require('http').createServer(app);
+//const io = socketIO(server);
+const io = socket.init(server);
+
+// Socket.io connection
+io.on('connection', (socket) => {
+    console.log('hahahaha +   a user connected');
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+    });
+});
 
 app.listen(port,()=>{
     console.log(`app is running on ${port}....`);

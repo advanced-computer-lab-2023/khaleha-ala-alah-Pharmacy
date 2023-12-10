@@ -26,6 +26,7 @@ const PrivateRoute = () => {
     navigate("/verifyUser");
     return <VerifyUser />;
   }else if(role === "notApproved"){
+    navigate("/notApproved");
     return <NotApproved />;
   }else {
     return <Navigate to="/" />;

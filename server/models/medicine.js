@@ -34,7 +34,15 @@ const medicineSchema = new mongoose.Schema({
         type: String,
         required: true,
     
-    }
+    },
+    isArchived:{
+        type: Boolean,
+        default: false,
+    },
+    userID: {
+        type:String,
+        required: true,
+    },
     // You can add more fields as needed
 });
 

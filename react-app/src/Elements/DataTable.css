@@ -1,0 +1,70 @@
+/* Define your color palette and row padding */
+:root {
+  --primary-bg: #ffffff; /* White background */
+  --primary-text: #000000; /* Black text */
+  --container-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Shadow */
+  --column-title-bg: #1f7a8c; /* Column titles background color */
+  --column-title-text: #ffffff; /* Column titles text color */
+  --row-hover-bg: #e1e5f2; /* Row hover background color */
+  --font-family: "Arial", sans-serif; /* Modern font */
+  --row-padding: 20px; /* Padding between rows */
+}
+
+/* Apply styles to the container */
+.table-container {
+  width: 100%;
+  box-shadow: var(--container-shadow);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+/* Apply styles to the table */
+table {
+  width: 1476px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  background-color: var(--primary-bg);
+  color: var(--primary-text);
+  font-family: var(--font-family);
+  border: 1px solid var(--border-color);
+}
+
+/* Style the table header */
+thead {
+  background-color: var(--column-title-bg);
+}
+
+th {
+  padding: 12px;
+  text-align: left;
+  font-weight: bold;
+  border-bottom: 2px solid var(--border-color);
+  color: var(--column-title-text);
+}
+
+/* Style the table body */
+tbody {
+  background-color: var(--accent-bg);
+}
+
+tr {
+  transition: background-color 0.3s;
+  margin-bottom: var(--row-padding);
+}
+
+/* Apply hover effect for rows except the first one */
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Style alternating rows for better readability */
+tr:nth-child() {
+  background-color: var(--accent-bg);
+}
+
+/* Apply text color to table cells */
+td {
+  color: var(--accent-text);
+}

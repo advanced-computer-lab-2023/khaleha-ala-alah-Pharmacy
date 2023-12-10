@@ -1,0 +1,72 @@
+.service-item {
+    /* background: #1f7a8c; */
+    padding: 20px;
+    border-radius: 10px; 
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.267);
+    text-align: left;
+    display: relative;
+    margin-bottom: 20px; /* Adjust as needed */
+    width: 330px;
+    height: 260px;
+    transition: transform 0.3s ease;
+    /* cursor: pointer; */
+    /* border: 2px solid #022b3a; Border ; */
+    /* border-radius: 8px; */
+    padding: 20px;  
+  }
+
+
+.service-item:hover {
+  transform: scale(1.07); /* Slight scale effect on hover */
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.267);
+}
+  
+  .image-container {
+    /* Add your styles for the icon container here */
+    margin-bottom: 10px; /* Adjust as needed */
+    justify-content: right;
+    align-items: right;
+  }
+  
+  .service-image {
+    width: 30px; /* Ensure the image is fully contained within the item */
+    height: 30px; /* Maintain the aspect ratio of the image */
+    border-radius: 4px; /* Optional: if you want rounded corners on the image */
+    justify-content: right;
+    align-items: right;
+  }
+  .service-title {
+    color: black;
+    margin-top: 6px;
+    margin-bottom: 5px; /* Adjust as needed */
+    font-size: 18pt;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
+ 
+  .service-description {
+    padding: 12px;
+    padding-top: 16px;;
+    margin-top: 25px;
+    color: rgba(0, 0, 0, 0.575); /* Adjust the color as needed */
+    font-size: 12pt; /* Adjust the size as needed */
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+  }
+  .button-Style{
+    font-weight: bold;
+  width: 150px;
+  background-color: white;
+  color: #007bff;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15pt;
+  font-family:Arial;
+  }
+
+  .button-Style:hover{
+    background-color: white;
+  }
+ 

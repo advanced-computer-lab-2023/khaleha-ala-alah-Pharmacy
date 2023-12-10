@@ -17,7 +17,7 @@ function ForgotPassword() {
         const data = {
             "username" : username
         }
-        await axios.post("http://localhost:4000/users/forgotPassword",data)
+        await axios.post("http://localhost:4002/users/forgotPassword",data)
         .then(async (res) => {
             message.success("Email Sent Successfully");
             navigate("/login");

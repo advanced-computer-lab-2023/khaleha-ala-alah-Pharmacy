@@ -5,6 +5,7 @@ const AuthContext = createContext();
 
 export const useAuth = () => {
 console.log( useContext(AuthContext))
+
   return useContext(AuthContext);
 
 };
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
         const token = localStorage.getItem('token');
         if (token) {
           try {
-            const res = await axios.post('http://localhost:4000/users/validateToken', {}, {
+            const res = await axios.post('http://localhost:4002/users/validateToken', {}, {
               headers: {
                 authorization: `Bearer ${token}`
               }

@@ -20,14 +20,25 @@ exports.payForPackage = async (req, res) => {
       currency: 'usd',
       payment_method: paymentMethod.id,
       confirm: true,
-      description: 'Package Subscription',
+      description: 'Buy medicines',
          return_url: 'https://www.google.com', 
     });
 
     // Do something with the paymentIntent object if needed
-    console.log(paymentIntent);
+     if (paymentIntent.status === 'succeeded') {
+      // Payment successful, proceed to place the order
+      // You can call your order placement logic here
+      console.log('Payment successful');
 
-    res.status(200).json({ success: true, email: req.body.token.email});
+      // Example: Place order using your order placement logic
+      // placeOrder(req.body.token.email, amount);
+
+      res.status(200).json({ success: true, email: req.body.token.email });
+    } else {
+      // Payment failed or has not been confirmed
+      console.log('Payment failed or not confirmed');
+      res.status(400).json({ success: false, error: 'Payment failed' });
+    }
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to process payment' });
