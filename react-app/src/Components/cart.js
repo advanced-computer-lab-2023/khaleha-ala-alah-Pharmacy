@@ -1,14 +1,13 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "./cart-context";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const CartPage = () => {
-  const location = useLocation();
+  const { updateCart } = useContext(CartContext);
   const navigate = useNavigate();
-  const { cart, updateCart } = useContext(CartContext);
-  const patient = location.state?.patient;
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const handleIncrement = (itemId) => {
     updateCart(itemId, "addInCart");
@@ -18,33 +17,66 @@ const CartPage = () => {
     updateCart(itemId, "subtractInCart");
   };
 
-  // Calculate the total price
-  const totalPrice = Object.values(cart).reduce((total, item) => {
-    return total + item.quantity * item.price;
-  }, 0);
   const handleCheckoutClick = () => {
-    // Optionally, you can do some logic before navigating
-    // For example, you might want to validate something before allowing the navigation
-
-    // Navigate to the "/checkout" route
-    navigate("/checkout", { state: { amount: totalPrice, patient: patient } });
+    // Navigate to the "/checkout" route with cart items and total price
+    navigate("/checkout", { state: { cartItems, totalPrice } });
   };
+
+  useEffect(() => {
+    // Fetch cart items when the component mounts
+   const fetchCartItems = async () => {
+    const response = await fetch("http://localhost:4002/patients/currentPatient", {
+  method: "GET",
+  headers: {
+    Authorization: "Bearer " + localStorage.getItem("token"),
+    "Content-Type": "application/json",
+  },
+});
+
+const data = await response.json();
+console.log(data);
+const patientId = data.data.patient.userID;
+  try {
+    const id = patientId;
+    const response = await axios.get(`http://localhost:4002/patients/viewcartitems/${id}`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+
+    console.log(response);
+
+    if (response.status !== 200) {
+      // Handle error
+      console.error("Error fetching cart items:", response.statusText);
+      return;
+    }
+
+    const data = response.data; // Use response.data instead of calling .json()
+
+    setCartItems(data.cart.items);
+    setTotalPrice(data.cart.totalAmount);
+  } catch (error) {
+    console.error("Error fetching cart items:", error);
+  }
+};
+
+
+    fetchCartItems();
+  }, [updateCart]); // Add dependencies as needed
+
   return (
     <div>
       <h1>Your Cart</h1>
       <ul>
-        {Object.values(cart).map(
-          (item) =>
-            // Display items with quantity > 0
-            item.quantity > 0 && (
-              <li key={item.id}>
-                <span>{item.name}</span>
-                <button onClick={() => handleDecrement(item.id)}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => handleIncrement(item.id)}>+</button>
-              </li>
-            )
-        )}
+        {cartItems.map((item) => (
+          <li key={item.medicine._id}>
+            <span>{item.medicine.name}</span>
+            <button onClick={() => handleDecrement(item.medicine._id)}>-</button>
+            <span>{item.quantity}</span>
+            <button onClick={() => handleIncrement(item.medicine._id)}>+</button>
+          </li>
+        ))}
       </ul>
       <div>
         <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
