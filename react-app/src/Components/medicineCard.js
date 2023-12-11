@@ -13,6 +13,10 @@ const Department = ({
   handleViewDescription,
 }) => {
   const [hovered, setHovered] = useState(false);
+   const hideAlert = () => {
+    setCartAlert(false);
+  };
+   const [cartAlert, setCartAlert] = useState(false);
   return (
     <div style={{ minWidth: "27vw" }}>
       <Card
@@ -53,14 +57,21 @@ const Department = ({
             <br /> 
               <button
                 onClick={() =>{
-                    updateCart(medicine._id, "add", medsQuantities)
-                  updateCart(medicine._id, "addToCart", medsQuantities, patient)
-           
+                    updateCart(medicine._id, "add", medsQuantities,patient)
+                       setCartAlert(true);
+                
                 }
                 }
               >
                 Add to Cart
               </button>
+               {/* Alert component */}
+      {cartAlert && (
+        <div>
+          <p>Added to Cart successfully</p>
+          <button onClick={hideAlert}>Close</button>
+        </div>
+      )}
             </div>
           </div>
         </>
