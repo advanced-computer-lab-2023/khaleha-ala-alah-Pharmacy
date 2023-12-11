@@ -427,29 +427,27 @@ exports.addToCart = async function (req, res) {
       .json({ error: "An error occurred while adding medicine to the cart." });
   }
 };
-
 exports.viewCartItems = async function (req, res) {
-  /////    3ndy so'al f hetet routes haga msh tab3ya /:id ????????????????/////////
-  const patientId = req.user._id;
-  console.log("ALLL");
   try {
+     const patientId = req.params.id;
+ 
+
     const patient = await Patient.findOne({ userID: patientId });
 
     if (!patient) {
       return res.status(404).json({ error: "Patient not found." });
     }
-    console.log("ALLL");
-    const cart = await Cart.findOne({ user: patientId }).populate(
-      "items.medicine"
-    );
-    // console.log(cart);
+
+    const cart = await Cart.findOne({ user: patientId }).populate("items.medicine");
+
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
     }
 
-    res.status(200).json({ cart });
+    res.status(200).json({ success: true, cart: cart });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error fetching cart items:", error);
+    res.status(500).json({ success: false, error: "Internal server error." });
   }
 };
 //remove an item from the cart
@@ -507,7 +505,6 @@ exports.changeItemQuantity = async function (req, res) {
 
   try {
     //check if the patient exists
-
     // Find the patient's cart
     const cart = await Cart.findOne({ user: patientId });
 

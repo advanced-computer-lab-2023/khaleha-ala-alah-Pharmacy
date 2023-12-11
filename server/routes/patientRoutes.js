@@ -41,14 +41,10 @@ router.delete(
 );
 // Route to get all addresses for a specific user
 router.get("/:userId/get-all-addresses", patientController.getAllAddresses);
-
+router.get("/viewcartitems/:id",CheckAuth,patientController.viewCartItems);
 router.post("/save-stripe-token", paymentController.payForPackage);
 router.post("/add-to-cart", CheckAuth, patientController.addToCart);
-router.get(
-  "/view-cart-items/:patientId",
-  CheckAuth,
-  patientController.viewCartItems
-);
+
 //router for the removeItemFromCart
 router.patch(
   "/remove-from-cart/:medicineId",
