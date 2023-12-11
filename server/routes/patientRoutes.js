@@ -52,7 +52,7 @@ router.patch(
   patientController.removeItemFromCart
 );
 // router for changeItemQuantity
-router.patch(
+router.put(
   "/change-item-quantity/:medicineId",
   CheckAuth,
   patientController.changeItemQuantity
