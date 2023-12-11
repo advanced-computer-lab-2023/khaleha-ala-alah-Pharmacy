@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Button, Card } from "antd";
+import { Alert, Avatar, Button, Card } from "antd";
 import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons/lib";
 import { useState } from "react";
 
@@ -49,23 +49,14 @@ const Department = ({
                 </button>
             </div>
             <div className="button-box">
-               {/* <button
-              onClick={() =>
-                updateCart(medicine._id, "subtract", medsQuantities)
-              }
-            >
-              -
-            </button>
-            <span>{medsQuantities[medicine._id]}</span>
-            <button
-              onClick={() => updateCart(medicine._id, "add", medsQuantities)}
-            >
-              +
-            </button>
-            <br /> */}
+        
+            <br /> 
               <button
-                onClick={() =>
+                onClick={() =>{
+                    updateCart(medicine._id, "add", medsQuantities)
                   updateCart(medicine._id, "addToCart", medsQuantities, patient)
+           
+                }
                 }
               >
                 Add to Cart
