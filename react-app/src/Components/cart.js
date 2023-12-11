@@ -24,43 +24,57 @@ const CartPage = () => {
 
   useEffect(() => {
     // Fetch cart items when the component mounts
-   const fetchCartItems = async () => {
-    const response = await fetch("http://localhost:4002/patients/currentPatient", {
-  method: "GET",
-  headers: {
-    Authorization: "Bearer " + localStorage.getItem("token"),
-    "Content-Type": "application/json",
-  },
-});
+    const fetchCartItems = async () => {
+      const response = await fetch("http://localhost:4002/patients/currentPatient", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      });
 
-const data = await response.json();
-console.log(data);
-const patientId = data.data.patient.userID;
-  try {
-    const id = patientId;
-    const response = await axios.get(`http://localhost:4002/patients/viewcartitems/${id}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
+      const data = await response.json();
+      console.log(data);
+      const patientId = data.data.patient.userID;
 
-    console.log(response);
+      try {
+        const id = patientId;
+        const response = await axios.get(`http://localhost:4002/patients/viewcartitems/${id}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
-    if (response.status !== 200) {
-      // Handle error
-      console.error("Error fetching cart items:", response.statusText);
-      return;
-    }
+        console.log(response);
 
-    const data = response.data; // Use response.data instead of calling .json()
+        if (response.status !== 200) {
+          // Handle error
+          console.error("Error fetching cart items:", response.statusText);
+          return;
+        }
 
-    setCartItems(data.cart.items);
-    setTotalPrice(data.cart.totalAmount);
-  } catch (error) {
-    console.error("Error fetching cart items:", error);
-  }
-};
+        const data = response.data;
+        // Use response.data instead of calling .json()
 
+        // Group and sum quantities by medicine ID
+        const groupedCart = data.cart.items.reduce((acc, item) => {
+          const itemId = item.medicine._id;
+
+          if (acc[itemId]) {
+            acc[itemId].quantity += item.quantity;
+          } else {
+            acc[itemId] = { ...item };
+          }
+
+          return acc;
+        }, {});
+
+        setCartItems(Object.values(groupedCart));
+        setTotalPrice(data.cart.totalAmount);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
 
     fetchCartItems();
   }, [updateCart]); // Add dependencies as needed
