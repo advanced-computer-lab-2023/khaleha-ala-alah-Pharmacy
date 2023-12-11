@@ -3,6 +3,7 @@ import axios from 'axios';
 import NavBar from "../Elements/NavBarPharmacist";
 import Header from "../Elements/HeaderDoctor";
 import styles from './addMedicine.module.css';
+import { Switch } from 'antd';
 
 const AddMedicine = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const AddMedicine = () => {
     availableQuantity: '',
     activeIngredients: [''], // Start with one empty ingredient field
     medicalUse: '', // Medical Use field
+    isPrescription: false,
   });
 
   const handleChange = (e) => {
@@ -34,12 +36,19 @@ const AddMedicine = () => {
     // Add a new empty ingredient field when the "Add Ingredient" button is clicked
     setFormData({ ...formData, activeIngredients: [...formData.activeIngredients, ''] });
   };
+  const handleSwitchChange = (checked) => {
+    setFormData({ ...formData, isPrescription: checked });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:4002/pharmacists/addMedicine', formData); // Replace with your API endpoint
+      const response = await axios.post('http://localhost:4002/pharmacists/addMedicine', formData,{
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
+      }); // Replace with your API endpoint
       console.log('Medicine added:', response.data);
     } catch (error) {
       console.error('Error adding medicine:', error);
@@ -93,6 +102,10 @@ const AddMedicine = () => {
           <button type="button" onClick={handleAddIngredient} className={styles.addInButton}>
             + add another Ingredient
           </button>
+        </div>
+        <div className={styles.inputContainer}>
+          <label className={styles.labelToLeft}>Is Prescription</label>
+          <Switch checked={formData.isPrescription} onChange={handleSwitchChange} />
         </div>
         <button type="submit" className={styles.button}>Save Medicine</button> 
       </form>

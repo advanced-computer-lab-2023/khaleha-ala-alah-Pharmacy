@@ -43,6 +43,10 @@ const medicineSchema = new mongoose.Schema({
         type:String,
         required: true,
     },
+    isPrescription: {
+        type: Boolean,
+        required: true,
+    },
     // You can add more fields as needed
 });
 
