@@ -141,6 +141,7 @@ const AvailableMedicines = () => {
           </div>
           <div className={styles.viewPendingDoctors}>
             <h4>click on any row to show the medicine description</h4>
+            <div className={styles.ViewAvailableMedicine}>
             <div className={styles.tableWrapper}>
               <Table
                 data={data}
@@ -150,6 +151,7 @@ const AvailableMedicines = () => {
                   handleViewDescription(record.medicine);
                 }}
               />
+              </div>
               {showMedicineDescription && (
                 <OverlayWindow
                   message={medicineToDescribe.description}
