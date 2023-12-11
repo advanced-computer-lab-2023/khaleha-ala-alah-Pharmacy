@@ -13,7 +13,7 @@ const AddressList = ({ userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/patients/${id}/get-all-addresses`);
+        const response = await axios.get(`http://localhost:4002/patients/${id}/get-all-addresses`);
         setAddresses(response.data.addresses);
       } catch (error) {
         console.error('Error fetching addresses:', error);
@@ -26,12 +26,12 @@ const AddressList = ({ userId }) => {
   const handleAddAddress = async () => {
     try {
       // Make a POST request to add a new address
-      await axios.post(`http://localhost:4000/patients/${id}/add-address`, {
+      await axios.post(`http://localhost:4002/patients/${id}/add-address`, {
         address: newAddress,
       });
 
       // Fetch updated addresses after adding a new address
-      const response = await axios.get(`http://localhost:4000/patients/${id}/get-all-addresses`);
+      const response = await axios.get(`http://localhost:4002/patients/${id}/get-all-addresses`);
       setAddresses(response.data.addresses);
       setNewAddress(''); // Clear the input field
     } catch (error) {
@@ -42,10 +42,10 @@ const AddressList = ({ userId }) => {
   const handleDeleteAddress = async (index) => {
     try {
       // Make a DELETE request to delete the address at the specified index
-      await axios.delete(`http://localhost:4000/patients/${id}/delete-address/${index}`);
+      await axios.delete(`http://localhost:4002/patients/${id}/delete-address/${index}`);
 
       // Fetch updated addresses after deleting an address
-      const response = await axios.get(`http://localhost:4000/patients/${id}/get-all-addresses`);
+      const response = await axios.get(`http://localhost:4002/patients/${id}/get-all-addresses`);
       setAddresses(response.data.addresses);
       // Clear the selected address if the deleted address was selected
       if (index === selectedAddressIndex) {

@@ -1,50 +1,164 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "./cart-context";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 const CartPage = () => {
-  const location = useLocation();
+  const { updateCart } = useContext(CartContext);
   const navigate = useNavigate();
-  const { cart, updateCart } = useContext(CartContext);
-  const patient = location.state?.patient;
+  const [cartItems, setCartItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleIncrement = (itemId) => {
-    updateCart(itemId, "addInCart");
+  const handleIncrementApi = async (itemId, currentQuantity) => {
+    // Call the API to increment the quantity
+    try {
+      await axios.put(
+        `http://localhost:4002/patients/change-item-quantity/${itemId}`,
+        {
+          quantity: currentQuantity + 1, // Increment by the current quantity
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      // After successfully updating the quantity, update the local cart state
+      updateCart(itemId, "addInCart");
+    } catch (error) {
+      console.error("Error incrementing quantity:", error);
+    }
   };
 
-  const handleDecrement = (itemId) => {
-    updateCart(itemId, "subtractInCart");
+  const handleDecrementApi = async (itemId, currentQuantity) => {
+    // Call the API to decrement the quantity
+    try {
+      await axios.put(
+        `http://localhost:4002/patients/change-item-quantity/${itemId}`,
+        {
+          quantity: currentQuantity - 1, // Decrement by the current quantity
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      // After successfully updating the quantity, update the local cart state
+      updateCart(itemId, "subtractInCart");
+    } catch (error) {
+      console.error("Error decrementing quantity:", error);
+    }
   };
 
-  // Calculate the total price
-  const totalPrice = Object.values(cart).reduce((total, item) => {
-    return total + item.quantity * item.price;
-  }, 0);
+  const handleRemoveFromCartApi = async (itemId) => {
+    // Call the API to remove the item from the cart
+    try {
+      await axios.delete(
+        `http://localhost:4002/patients/remove-from-cart/${itemId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      // After successfully removing the item, update the local cart state
+      updateCart(itemId, "removeFromCart");
+    } catch (error) {
+      console.error("Error removing item from cart:", error);
+    }
+  };
+
+  const handleIncrement = (itemId, currentQuantity) => {
+    handleIncrementApi(itemId, currentQuantity);
+  };
+
+  const handleDecrement = (itemId, currentQuantity) => {
+    handleDecrementApi(itemId, currentQuantity);
+  };
+
+  const handleRemoveFromCart = (itemId) => {
+    handleRemoveFromCartApi(itemId);
+  };
+
   const handleCheckoutClick = () => {
-    // Optionally, you can do some logic before navigating
-    // For example, you might want to validate something before allowing the navigation
-
-    // Navigate to the "/checkout" route
-    navigate("/checkout", { state: { amount: totalPrice, patient: patient } });
+    // Navigate to the "/checkout" route with cart items and total price
+    navigate("/checkout", { state: { cartItems, totalPrice } });
   };
+
+  useEffect(() => {
+    // Fetch cart items when the component mounts
+    const fetchCartItems = async () => {
+      const response = await fetch("http://localhost:4002/patients/currentPatient", {
+        method: "GET",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      console.log(data);
+      const patientId = data.data.patient.userID;
+
+      try {
+        const id = patientId;
+        const response = await axios.get(`http://localhost:4002/patients/viewcartitems/${id}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        console.log(response);
+
+        if (response.status !== 200) {
+          // Handle error
+          console.error("Error fetching cart items:", response.statusText);
+          return;
+        }
+
+        const data = response.data;
+        // Use response.data instead of calling .json()
+
+        // Group and sum quantities by medicine ID
+        const groupedCart = data.cart.items.reduce((acc, item) => {
+          const itemId = item.medicine._id;
+
+          if (acc[itemId]) {
+            acc[itemId].quantity += item.quantity;
+          } else {
+            acc[itemId] = { ...item };
+          }
+
+          return acc;
+        }, {});
+
+        setCartItems(Object.values(groupedCart));
+        setTotalPrice(data.cart.totalAmount);
+      } catch (error) {
+        console.error("Error fetching cart items:", error);
+      }
+    };
+
+    fetchCartItems();
+  }, [updateCart]); // Add dependencies as needed
+
   return (
     <div>
       <h1>Your Cart</h1>
       <ul>
-        {Object.values(cart).map(
-          (item) =>
-            // Display items with quantity > 0
-            item.quantity > 0 && (
-              <li key={item.id}>
-                <span>{item.name}</span>
-                <button onClick={() => handleDecrement(item.id)}>-</button>
-                <span>{item.quantity}</span>
-                <button onClick={() => handleIncrement(item.id)}>+</button>
-              </li>
-            )
-        )}
+        {cartItems.map((item) => (
+          <li key={item.medicine._id}>
+            <span>{item.medicine.name}</span>
+            <button onClick={() => handleDecrement(item.medicine._id, item.quantity)}>-</button>
+            <span>{item.quantity}</span>
+            <button onClick={() => handleIncrement(item.medicine._id, item.quantity)}>+</button>
+            <button onClick={() => handleRemoveFromCart(item.medicine._id)}>Remove from Cart</button>
+          </li>
+        ))}
       </ul>
       <div>
         <strong>Total Price: ${totalPrice.toFixed(2)}</strong>

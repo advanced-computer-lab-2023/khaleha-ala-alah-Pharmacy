@@ -15,7 +15,7 @@ const PendingDoctors = () => {
     const fetchPendingPharmacists = async () => {
       try {
         const response = await fetch(
-          "http://localhost:4000/admins/pendingDoctors",
+          "http://localhost:4002/admins/pendingDoctors",
           {
             method: "GET",
             headers: {
@@ -44,7 +44,7 @@ const PendingDoctors = () => {
       username: username,
     };
     await axios
-      .post(`http://localhost:4000/admins/approveOrRejectDoctor`, data, {
+      .post(`http://localhost:4002/admins/approveOrRejectDoctor`, data, {
         headers: {
           authorization: "Bearer " + localStorage.getItem("token"),
           type: action,

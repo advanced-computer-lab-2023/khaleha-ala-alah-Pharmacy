@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import NavBar from "../Elements/NavBarPharmacist";
+import Header from "../Elements/HeaderDoctor";
+import styles from './addMedicine.module.css';
+import { Switch } from 'antd';
 
 const AddMedicine = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +14,7 @@ const AddMedicine = () => {
     availableQuantity: '',
     activeIngredients: [''], // Start with one empty ingredient field
     medicalUse: '', // Medical Use field
+    isPrescription: false,
   });
 
   const handleChange = (e) => {
@@ -31,46 +36,57 @@ const AddMedicine = () => {
     // Add a new empty ingredient field when the "Add Ingredient" button is clicked
     setFormData({ ...formData, activeIngredients: [...formData.activeIngredients, ''] });
   };
+  const handleSwitchChange = (checked) => {
+    setFormData({ ...formData, isPrescription: checked });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:4000/pharmacists/addMedicine', formData); // Replace with your API endpoint
+      const response = await axios.post('http://localhost:4002/pharmacists/addMedicine', formData,{
+        headers: {
+          authorization: `Bearer ${localStorage.getItem('token')}`,
+        }
+      }); // Replace with your API endpoint
       console.log('Medicine added:', response.data);
     } catch (error) {
       console.error('Error adding medicine:', error);
     }
   };
 
-
   return (
-    <div>
-      <h1>Add Medicine</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} />
+    <div >
+      <Header/>
+      <NavBar/>
+      <form onSubmit={handleSubmit} className={styles.addMedicinecontainer}>
+        <div className={styles.inputContainer}>
+          <label className={styles.label}>Name</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} className={styles.input} placeholder='Medicine Name' />
         </div>
-        <div>
-          <label>Picture URL</label>
-          <input type="text" name="pictureUrl" value={formData.pictureUrl} onChange={handleChange} />
+        <div className={styles.inputContainer}>
+          <label className={styles.labelToLeft}>Picture URL</label>
+          <input type="text" name="pictureUrl" value={formData.pictureUrl} onChange={handleChange} className={styles.inputToLeft} placeholder='Medicine Img URL'/>
         </div>
-        <div>
-          <label>Price</label>
-          <input type="number" name="price" value={formData.price} onChange={handleChange} />
+        <div className={styles.inputContainer}>
+          <label className={styles.label}>Price</label>
+          <input type="number" name="price" value={formData.price} onChange={handleChange} className={styles.input} placeholder='EGP'/>
         </div>
-        <div>
-          <label>Description</label>
-          <input type="text" name="description" value={formData.description} onChange={handleChange} />
+        <div className={styles.inputContainer}>
+          <label className={styles.labelToLeft}>Description</label>
+          <input type="text" name="description" value={formData.description} onChange={handleChange} className={styles.inputToLeft} placeholder='Medicine Description'/>
         </div>
-        <div>
-          <label>Available Quantity</label>
-          <input type="number" name="availableQuantity" value={formData.availableQuantity} onChange={handleChange} />
+        
+        <div className={styles.inputContainer}>
+          <label className={styles.label}>Available Quantity</label>
+          <input type="number" name="availableQuantity" value={formData.availableQuantity} onChange={handleChange} className={styles.input} placeholder='Avaliable Quantity'/>
         </div>
-     
-        <div>
-          <label>Active Ingredients</label>
+        <div className={styles.inputContainer}>
+          <label className={styles.labelToLeft}>Medical Use</label>
+          <input type="text" name="medicalUse" value={formData.medicalUse} onChange={handleChange} className={styles.inputToLeft} placeholder='Medical Usage' />
+        </div>
+        <div className={styles.addInContainer}>
+          <label className={styles.label}>Active Ingredients</label>
           {formData.activeIngredients.map((ingredient, index) => (
             <input
               key={index}
@@ -78,21 +94,26 @@ const AddMedicine = () => {
               name="activeIngredients"
               value={ingredient}
               onChange={handleChange}
-              data-index={index} // Add data-index attribute for indexing
+              data-index={index}
+              className={styles.inputActiveIn}
+              placeholder='Medicine Active Ingredient'
             />
           ))}
-          <button type="button" onClick={handleAddIngredient}>
-            Add Ingredient
+          <button type="button" onClick={handleAddIngredient} className={styles.addInButton}>
+            + add another Ingredient
           </button>
         </div>
-           <div>
-          <label>Medical Use</label>
-          <input type="text" name="medicalUse" value={formData.medicalUse} onChange={handleChange} />
+        <div className={styles.inputContainer}>
+          <label className={styles.labelToLeft}>Is Prescription</label>
+          <Switch checked={formData.isPrescription} onChange={handleSwitchChange} />
         </div>
-        <button type="submit">Add Medicine</button>
+        <button type="submit" className={styles.button}>Save Medicine</button> 
       </form>
     </div>
   );
 };
 
 export default AddMedicine;
+
+
+

@@ -1,23 +1,24 @@
 .service-item {
-    background: #1f7a8c;
+    /* background: #1f7a8c; */
     padding: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
+    border-radius: 10px; 
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.267);
     text-align: left;
     display: relative;
     margin-bottom: 20px; /* Adjust as needed */
     width: 330px;
-    height: 200px;
+    height: 260px;
     transition: transform 0.3s ease;
-    cursor: pointer;
-    border: 2px solid #022b3a; /* Border color */
-    border-radius: 8px;
+    /* cursor: pointer; */
+    /* border: 2px solid #022b3a; Border ; */
+    /* border-radius: 8px; */
     padding: 20px;  
   }
 
 
 .service-item:hover {
-  transform: scale(1.05); /* Slight scale effect on hover */
+  transform: scale(1.07); /* Slight scale effect on hover */
+  box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.267);
 }
   
   .image-container {
@@ -35,18 +36,37 @@
     align-items: right;
   }
   .service-title {
-    color: #022b3a; /* Adjust the color as needed */
-    margin-top: -2px;
+    color: black;
+    margin-top: 6px;
     margin-bottom: 5px; /* Adjust as needed */
-    font-size: 27px;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 18pt;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
   }
-  
+ 
   .service-description {
+    padding: 12px;
+    padding-top: 16px;;
     margin-top: 25px;
-    color: white; /* Adjust the color as needed */
-    font-size: 15px; /* Adjust the size as needed */
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    color: rgba(0, 0, 0, 0.575); /* Adjust the color as needed */
+    font-size: 12pt; /* Adjust the size as needed */
+    font-family: Arial, sans-serif;
+    font-weight: bold;
   }
-  
+  .button-Style{
+    font-weight: bold;
+  width: 150px;
+  background-color: white;
+  color: #007bff;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 15pt;
+  font-family:Arial;
+  }
+
+  .button-Style:hover{
+    background-color: white;
+  }
  

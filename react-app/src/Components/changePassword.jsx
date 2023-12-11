@@ -2,8 +2,8 @@
 
 import React, { useState } from 'react';
 import axios from 'axios';
-import NavBar from "../Elements/NavBar.jsx";
-import Header from "../Elements/Header";
+import NavBar from "../Elements/NavBarPharmacist.jsx";
+import Header from "../Elements/HeaderDoctor";
 
 import styles from "./changePassword.module.css"
 
@@ -37,7 +37,7 @@ const ChangePasswordForm = () => {
 
       // Call the changePassword API
       const response = await axios.post(
-        'http://localhost:4000/users/changePassword',
+        'http://localhost:4002/users/changePassword',
         {
           oldPassword,
           newPassword,

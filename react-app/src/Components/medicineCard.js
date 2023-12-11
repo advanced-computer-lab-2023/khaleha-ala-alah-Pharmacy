@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Button, Card } from "antd";
+import { Alert, Avatar, Button, Card } from "antd";
 import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons/lib";
 import { useState } from "react";
 
@@ -13,10 +13,14 @@ const Department = ({
   handleViewDescription,
 }) => {
   const [hovered, setHovered] = useState(false);
+   const hideAlert = () => {
+    setCartAlert(false);
+  };
+   const [cartAlert, setCartAlert] = useState(false);
   return (
     <div style={{ minWidth: "27vw" }}>
       <Card
-        className={`department ${className}`}
+         style={{ border: "none" }}
         cover={
           <>
             <h3 className="h4 mt-0" style={{ textAlign: "center" }}>
@@ -25,49 +29,50 @@ const Department = ({
             <img
               alt={`${medicine.name} avatar`}
               src={medicine.pictureUrl}
-              style={{ width: "326px", height: "260px" }}
+              style={{ width: "326px", height: "260px" , marginLeft: "1.75rem"}}
             />
+            
           </>
         }
       >
         <>
-          <div className="team d-flex align-items-center mb-4">
-            <p>Price: ${medicine.price}</p>
-            <p>Available Quantity: {medicine.availableQuantity}</p>
-            <p>Sales: {medicine.sales}</p>
+          <div className="textStyling">
+            <label style={{ fontSize: '16pt', textAlign: 'left'}}>{medicine.price} EGP</label>
+            <label style={{ color: 'rgb(128, 128, 128)'}}>Available Quantity: {medicine.availableQuantity}</label>
+            <label style={{ color: 'rgb(128, 128, 128)'}}>Sale: {medicine.sales}% </label>
           </div>
-          <div className="button-box pb-2">
-            <Button
-              type="primary"
-              onClick={() => {
-                handleViewDescription(medicine);
-              }}
-            >
-              View Medicine Description <FileDoneOutlined className="ml-2" />
-            </Button>
-          </div>
-          <div>
-            <button
-              onClick={() =>
-                updateCart(medicine._id, "subtract", medsQuantities)
-              }
-            >
-              -
-            </button>
-            <span>{medsQuantities[medicine._id]}</span>
-            <button
-              onClick={() => updateCart(medicine._id, "add", medsQuantities)}
-            >
-              +
-            </button>
-            <br />
-            <button
-              onClick={() =>
-                updateCart(medicine._id, "addToCart", medsQuantities, patient)
-              }
-            >
-              Add to Cart
-            </button>
+          <div className="button-container">
+            <div className="button-box">
+              <button
+                type="primary"
+                onClick={() => {
+                  handleViewDescription(medicine);
+                }}
+              >
+                Details <FileDoneOutlined className="ml-2" />
+                </button>
+            </div>
+            <div className="button-box">
+        
+            <br /> 
+              <button
+                onClick={() =>{
+                    updateCart(medicine._id, "add", medsQuantities,patient)
+                       setCartAlert(true);
+                
+                }
+                }
+              >
+                Add to Cart
+              </button>
+               {/* Alert component */}
+      {cartAlert && (
+        <div>
+          <p>Added to Cart successfully</p>
+          <button onClick={hideAlert}>Close</button>
+        </div>
+      )}
+            </div>
           </div>
         </>
       </Card>

@@ -22,7 +22,7 @@ const DeleteDoctor = () => {
   const fetchAllPharmacists = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4000/pharmacists/allpharmacists"
+        "http://localhost:4002/pharmacists/allpharmacists"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch data");
@@ -119,7 +119,7 @@ const DeleteDoctor = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.delete('http://localhost:4000/admins/delAdminpharmacistPatient', {
+      const response = await axios.delete('http://localhost:4002/admins/delAdminpharmacistPatient', {
         data: { role: "pharmacist", name: username },
       });
 

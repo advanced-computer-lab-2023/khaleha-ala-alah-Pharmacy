@@ -85,7 +85,7 @@
   padding: 10px;
   text-align: left;
   background-color: white;
-  width: 100%; /* Full width of the parent */
+  width: 150px; /* Full width of the parent */
   box-sizing: border-box;
   text-decoration: none;
   color: black; /* Text color */
@@ -95,6 +95,8 @@
 
 .dropdownItem:hover {
   background-color: #f5f5f5; /* Hover effect for dropdown items */
+  color:#007bff;
+  cursor: pointer;
 }
 
 .navbarLink:hover {
@@ -186,15 +188,20 @@
 
 .searchInputWrapper {
   display: flex;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: none;
   overflow: hidden; /* Ensures the child elements are contained within the wrapper's border */
 }
-
 .searchInput {
-  padding: 8px 12px;
-  border: none;
+  padding: 12px;
+  border: 2px solid #dddddd; /* Grey border */
   width: 100%; /* Full width of the wrapper */
+  background-color: #ffffff; /* White background color */
+  color: black; /* Black text color */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Grey shadow */
+  font-size: 12pt;
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;;
+  font-family:Arial, Helvetica, sans-serif;
 }
 
 .searchIcon {
@@ -204,6 +211,8 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  border-top-right-radius: 25px; /* Match the border radius of the search input */
+  border-bottom-right-radius: 25px; /* Match the border radius of the search input */
 }
 
 .searchIcon img {

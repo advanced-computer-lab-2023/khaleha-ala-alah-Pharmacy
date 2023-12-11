@@ -117,10 +117,8 @@ exports.addAddress = async (req, res) => {
 const Wallet = require("../models/wallet");
 exports.getAmountInWallet = async (req, res) => {
   try {
-    const userID = req.params.userID.trim();
-
+    const userID = req.user._id;
     const userWallet = await Wallet.findOne({ userID });
-
     if (userWallet) {
       // Retrieve the current amount in the wallet
       const amountInWallet = userWallet.amount;
@@ -343,7 +341,8 @@ exports.addFamilyMembers = async function (req, res) {
     });
   }
 };
-/*exports.addToCart = async function (req, res) {
+
+exports.addToCart = async function (req, res) {
   const medicineId = req.body.medicineId;
   const quantity = parseInt(req.body.quantity);
 
@@ -352,80 +351,28 @@ exports.addFamilyMembers = async function (req, res) {
       .status(400)
       .json({ error: "Quantity must be a positive number." });
   }
+  console.log("ALLL");
   try {
-    const patient = await Patient.find({ userID: req.user._id });
-
-    if (!patient) {
+    const patientId = req.user._id; // Accept patient ID as input
+    console.log(patientId);
+    if (!patientId) {
       return res.status(404).json({
         status: "fail",
         message: "Patient not found",
       });
     }
-
-    // Find the medicine by ID
-    const medicine = await Medicine.findById(medicineId);
-
-    if (!medicine) {
-      return res.status(404).json({ error: "Medicine not found." });
-    }
-
-    // Calculate the total price for the cart item
-    const totalItemPrice = medicine.price * quantity;
-
-    // Check if the patient already has a cart
-    let cart = await Cart.findOne({ user: req.user._id });
-
-    if (!cart) {
-      // Create a new cart if the patient doesn't have one
-      cart = new Cart({
-        user: req.user._id,
-        items: [],
-        totalAmount: 0,
-      });
-    }
-
-    // Add the medicine to the cart
-    const cartItem = {
-      medicine: medicineId,
-      quantity: quantity,
-      totalPrice: totalItemPrice,
-    };
-
-    cart.items.push(cartItem);
-    cart.totalAmount += totalItemPrice;
-
-    // Save the cart
-    await cart.save();
-
-    res.status(200).json({ message: "Medicine added to cart successfully." });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ error: "An error occurred while adding medicine to the cart." });
-  }
-};*/
-exports.addToCart = async function (req, res) {
-  const patientId = req.body.patientId; // Accept patient ID as input
-  const medicineId = req.body.medicineId;
-  const quantity = parseInt(req.body.quantity);
-
-  if (isNaN(quantity) || quantity <= 0) {
-    return res
-      .status(400)
-      .json({ error: "Quantity must be a positive number." });
-  }
-
-  try {
+    console.log("patient found");
     // Find the patient by ID (replace this with your actual patient model and field)
-    const patient = await Patient.findById(patientId);
-
+    console.log(patientId);
+    const patient = await Patient.findOne({ userID: patientId });
+    //console.log(patient);
     if (!patient) {
       return res.status(404).json({ error: "Patient not found." });
     }
 
     // Find the medicine by ID
     const medicine = await Medicine.findById(medicineId);
-
+    console.log(medicine);
     if (!medicine) {
       return res.status(404).json({ error: "Medicine not found." });
     }
@@ -434,12 +381,12 @@ exports.addToCart = async function (req, res) {
     const totalItemPrice = medicine.price * quantity;
 
     // Check if the patient already has a cart
-    let cart = await Cart.findOne({ user: patient._id });
+    let cart = await Cart.findOne({ user: patientId });
 
     if (!cart) {
       // Create a new cart if the patient doesn't have one
       cart = new Cart({
-        user: patient._id,
+        user: patientId,
         items: [],
         totalAmount: 0,
       });
@@ -464,6 +411,7 @@ exports.addToCart = async function (req, res) {
       };
       cart.items.push(cartItem);
     }
+
     // Update the totalAmount in the cart
     cart.totalAmount = cart.items.reduce(
       (total, item) => total + item.totalPrice,
@@ -479,33 +427,32 @@ exports.addToCart = async function (req, res) {
       .json({ error: "An error occurred while adding medicine to the cart." });
   }
 };
-//view cart items
 exports.viewCartItems = async function (req, res) {
-  const patientId = req.params.patientId;
-  console.log("ALLL");
   try {
-    const patient = await Patient.findById(patientId);
+     const patientId = req.params.id;
+ 
+
+    const patient = await Patient.findOne({ userID: patientId });
 
     if (!patient) {
       return res.status(404).json({ error: "Patient not found." });
     }
-    console.log("ALLL");
-    const cart = await Cart.findOne({ user: patientId }).populate(
-      "items.medicine"
-    );
-    // console.log(cart);
+
+    const cart = await Cart.findOne({ user: patientId }).populate("items.medicine");
+
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
     }
 
-    res.status(200).json({ cart });
+    res.status(200).json({ success: true, cart: cart });
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error("Error fetching cart items:", error);
+    res.status(500).json({ success: false, error: "Internal server error." });
   }
 };
 //remove an item from the cart
 exports.removeItemFromCart = async function (req, res) {
-  const patientId = req.params.patientId;
+  const patientId = req.user._id;
   const medicineId = req.params.medicineId;
 
   try {
@@ -546,7 +493,7 @@ exports.removeItemFromCart = async function (req, res) {
 };
 // change the amount of an item in the cart
 exports.changeItemQuantity = async function (req, res) {
-  const patientId = req.params.patientId;
+  const patientId = req.user._id;
   const medicineId = req.params.medicineId;
   const newQuantity = parseInt(req.body.quantity);
 
@@ -557,6 +504,7 @@ exports.changeItemQuantity = async function (req, res) {
   }
 
   try {
+    //check if the patient exists
     // Find the patient's cart
     const cart = await Cart.findOne({ user: patientId });
 
@@ -596,7 +544,7 @@ exports.changeItemQuantity = async function (req, res) {
 };
 
 exports.checkout = async function (req, res) {
-  const patientId = req.params.patientId.trim();
+  const patientId = req.user._id;
 
   try {
     // Retrieve cart items from the request body
@@ -608,14 +556,14 @@ exports.checkout = async function (req, res) {
 
     // Calculate total amount based on cart items
     const totalAmount = cartItems.reduce((total, item) => {
-      return total + item.price * item.quantity;
+      return total + item.price /** item.quantity*/;
     }, 0);
-
+    console.log(totalAmount);
     // Create an array to store order items
     const orderItems = cartItems.map((cartItem) => ({
       medicine: cartItem.id,
       quantity: cartItem.quantity,
-      totalPrice: cartItem.price * cartItem.quantity,
+      totalPrice: cartItem.price /** cartItem.quantity*/,
     }));
 
     // Create a new order
@@ -629,6 +577,12 @@ exports.checkout = async function (req, res) {
 
     // Save the order
     await order.save();
+
+    // Empty the cart                                               the logic is that now i can access the cart from pending orders
+    const cart = await Cart.findOne({ user: patientId });
+    cart.items = [];
+    cart.totalAmount = 0;
+    await cart.save();
 
     res.status(200).json({ message: "Order placed successfully." });
   } catch (error) {
@@ -702,10 +656,16 @@ exports.getOrderDetails = async function (req, res) {
 
 exports.cancelOrder = async function (req, res) {
   try {
-    const order = await Order.findById(req.query.id);
+    console.log(req.params.orderID);
+    const order = await Order.findOne({ orderID: req.params.id });
+    const orderAmount = order.totalAmount;
     order.status = "Cancelled";
     await order.save();
-
+    const wallet = await Wallet.findOne({ userID: req.user._id });
+    console.log(req.user._id);
+    console.log(wallet);
+    wallet.amount += orderAmount;
+    await wallet.save();
     res.status(204).json({
       status: "success",
       data: order,
@@ -720,20 +680,26 @@ exports.cancelOrder = async function (req, res) {
 
 exports.getMyOrders = async function (req, res) {
   try {
-    const userID = req.user._id; // Assuming you extract the userID from the request parameters
+    const userID = req.user._id;
+    let orders; // Use a different name for the array
+    console.log(req.params);
 
-    console.log("ALLOOOO");
-    // Fetch orders for the specific userID
-    const orders = await Order.find({ userID: userID });
-    console.log(userID);
-    // Process orders
+    if (req.params.status === "all") {
+      orders = await Order.find({ userID: userID });
+    } else {
+      orders = await Order.find({ userID: userID, status: req.params.status });
+    }
+    console.log(orders);
+
     let result = [];
     for (let i = 0; i < orders.length; i++) {
-      let order = orders[i];
+      let currentOrder = orders[i]; // Use a different name for the loop variable
       let items = [];
-      for (let j = 0; j < order.items.length; j++) {
-        let item = order.items[j];
-        if (item.quantity === 0) continue; // Skip items with quantity 0 (removed from cart
+
+      for (let j = 0; j < currentOrder.items.length; j++) {
+        let item = currentOrder.items[j];
+        if (item.quantity === 0) continue;
+
         let medicine = await Medicine.findById(item.medicine);
         items.push({
           medicine: medicine,
@@ -741,12 +707,13 @@ exports.getMyOrders = async function (req, res) {
           totalPrice: item.totalPrice,
         });
       }
+
       result.push({
-        orderID: order._id,
+        orderID: currentOrder._id,
         items: items,
-        totalAmount: order.totalAmount,
-        address: order.address,
-        status: order.status,
+        totalAmount: currentOrder.totalAmount,
+        address: currentOrder.address,
+        status: currentOrder.status,
       });
     }
 
@@ -762,7 +729,7 @@ exports.getMyOrders = async function (req, res) {
   } catch (err) {
     res.status(500).json({
       status: "error",
-      message: "An error occurred while fetching orders.",
+      message: err.message,
     });
   }
 };

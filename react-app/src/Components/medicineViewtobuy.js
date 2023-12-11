@@ -59,7 +59,7 @@ const PatientHomePagebuy = () => {
   const fetchAvailableMedicines = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/admins/available-medicines"
+        "http://localhost:4002/admins/available-medicines"
       );
       updateMedicines(response.data);
       const medsQuantities = {};
@@ -126,7 +126,7 @@ const PatientHomePagebuy = () => {
   const fetchCurrentPatient = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4000/patients/currentPatient",
+        "http://localhost:4002/patients/currentPatient",
         {
           method: "GET", // Method is optional because GET is the default value
           headers: {

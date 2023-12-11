@@ -6,6 +6,14 @@ import alertIcon from "../Images/alert.png";
 import searchIcon from "../Images/searchIcon.png";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
+import { BellOutlined, MessageOutlined } from "@ant-design/icons";
+import { Badge } from "antd";
+import axios from "axios";
+import { useWebSocket } from '../WebSocketContext';
+import { useAuth } from "../AuthContext";
+
+
 
 const Header = () => {
   const navigate = useNavigate();
@@ -13,6 +21,64 @@ const Header = () => {
   const [dropdownVisibleAlert, setDropdownVisibleAlert] = useState(false);
   const [numOfNotifications, setnumOfNotifications] = useState(8);
   const [searchValue, setSearchValue] = useState("");
+  const [dropdownVisibleMessages, setDropdownVisibleMessages] = useState(false);
+  const [hasNewMessages, setHasNewMessages] = useState(false);
+  const [messages, setMessages] = useState([]);
+  const socket=useWebSocket();
+  const initialized = useRef(false);
+  const { role } = useAuth();
+
+  useEffect(() => {
+      axios
+      .get("http://localhost:4002/messages/notifications", {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        const pharmacistMessages = res.data.messages.filter(
+          (message) => message.senderRole === "pharmacist"
+        );
+
+        setMessages(pharmacistMessages);
+        if (pharmacistMessages.length > 0) {
+          setHasNewMessages(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+  
+  useEffect(() => {
+      if (!initialized.current){
+        if(socket){
+          initialized.current = true
+          socket.on("getMessage", (data) => {
+            axios.post("http://localhost:4002/users/getUser", {
+              userID: data.senderId,
+            }, {
+              headers: {
+                authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }).then((res) => {
+              if (res.data.user.role === "pharmacist") {
+                const message = {
+                  senderId: data.senderId,
+                  senderName: res.data.user.name,
+                  senderRole: res.data.user.role,
+                  receiverId: res.data.myID,
+                };
+                setMessages((prev) => [...prev, message]);
+                setHasNewMessages(true);
+              }
+            }).catch((err) => {
+              console.log(err);
+            });
+          });
+          }
+      };
+  }, [role]);
 
   const toggleDropdownforSettings = () => {
     setDropdownVisible(!dropdownVisible);
@@ -21,6 +87,20 @@ const Header = () => {
   const toggleDropdownforNotification = () => {
     setDropdownVisibleAlert(!dropdownVisibleAlert);
   };
+  const toggleDropdownforMessages = () => {
+    setDropdownVisibleMessages(!dropdownVisibleMessages);
+    setHasNewMessages(false);
+  };
+  const handleMessageItemClick = (message) => {
+    const updatedMessages = messages.filter(
+      (message) => message._id !== message._id
+    );
+    setMessages(updatedMessages);
+    const senderId = message.senderId;
+    navigate(`/messenger`, { state: {senderId} });
+    setDropdownVisibleMessages(false);
+
+  };
 
   const handleLogout = () => {
     localStorage.clear();
@@ -28,8 +108,16 @@ const Header = () => {
   };
 
   const handlePassword = () => {
-    navigate("/changePassword");
+    navigate("/changePasswordPatient");
   };
+
+  const handleUserProfile = () => {
+    navigate("/patientUserprofile");
+  };
+
+  const handleEditAccount = () =>{
+    navigate("/patientEditAcc");
+  }
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -50,11 +138,11 @@ const Header = () => {
         <div className={styles.navbarSearch}>
           <div
             className={styles.searchInputWrapper}
-            style={{ width: "45%", marginLeft: "-40px" }}
+            style={{ width: "35%", marginLeft: "-40px" }}
           >
             <input
               type="text"
-              placeholder="Search..."
+              placeholder="Search for Medicine ...."
               value={searchValue}
               onChange={handleSearchChange}
               className={styles.searchInput}
@@ -67,6 +155,37 @@ const Header = () => {
         </div>
 
         <div className={styles.navbarRight}>
+        <a
+            href="#messages"
+            className={styles.navbarLink}
+            onClick={toggleDropdownforMessages}
+          >
+            {hasNewMessages && (
+              <Badge dot>
+                <MessageOutlined
+                  style={{ fontSize: "20px" }}
+                />
+              </Badge>
+            )}
+            {!hasNewMessages && (
+              <MessageOutlined
+                style={{ fontSize: "20px" }}
+              />
+            )}
+          </a>
+          {dropdownVisibleMessages && (
+            <div className={styles.dropdownMenu}>
+              {messages.map((message, index) => (
+                <button
+                  className={styles.dropdownItem}
+                  key={index}
+                  onClick={() => handleMessageItemClick(message)}
+                >
+                  {message.senderName}
+                </button>
+              ))}
+            </div>
+          )}
           <a
             href="#notifications"
             className={styles.navbarLink}
@@ -93,14 +212,19 @@ const Header = () => {
           </a>
           {dropdownVisible && (
             <div className={styles.dropdownMenu}>
-              <button className={styles.dropdownItem}>My Account</button>
-              <button className={styles.dropdownItem} onClick={handlePassword}>
-                Change Password
-              </button>
-              <button className={styles.dropdownItem} onClick={handleLogout}>
-                Log Out
-              </button>
-            </div>
+            <button className={styles.dropdownItem} onClick={handleEditAccount}>
+              Edit Account
+            </button>
+            <button className={styles.dropdownItem} onClick={handleUserProfile}>
+              User Profile
+            </button>
+            <button className={styles.dropdownItem} onClick={handlePassword}>
+              Change Password
+            </button>
+            <button className={styles.dropdownItem} onClick={handleLogout}>
+              Log Out
+            </button>
+          </div>
           )}
         </div>
       </div>

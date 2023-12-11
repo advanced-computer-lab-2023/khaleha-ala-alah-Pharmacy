@@ -7,7 +7,7 @@ import "../Elements/AppointmentCard.css";
 import LoadingPage from "./LoadingPageForOverlay.jsx";
 import { useNavigate } from "react-router-dom";
 import { CloseOutlined } from "@ant-design/icons"; // Importing a close icon from Ant Design
-const backendUrl = "http://localhost:4000";
+const backendUrl = "http://localhost:4002";
 
 const EditPackage = ({
   onCancel,
@@ -59,7 +59,7 @@ const EditPackage = ({
       formData.id = selectedID;
 
       const response = await fetch(
-        "http://localhost:4000/packages/updatePackage",
+        "http://localhost:4002/packages/updatePackage",
         {
           method: "PUT",
           headers: {

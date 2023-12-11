@@ -4,10 +4,6 @@ import axios from "axios";
 // Create a context with initial values
 export const CartContext = createContext();
 
-// Function to generate a default cart
-
-// C// ... (previous code)
-
 // Cart provider component
 export const CartProvider = ({ children }) => {
   const getDefaultCart = async () => {
@@ -16,7 +12,7 @@ export const CartProvider = ({ children }) => {
     try {
       // Fetch available medicines from the API
       const response = await axios.get(
-        "http://localhost:4000/admins/available-medicines"
+        "http://localhost:4002/admins/available-medicines"
       );
       const availableMedicines = response.data;
 
@@ -36,32 +32,26 @@ export const CartProvider = ({ children }) => {
 
     return cart;
   };
+
   const [cart, setCart] = useState({});
   const [address, setAddress] = useState("");
 
   const updateAddress = (ad) => {
     setAddress(ad);
   };
+
   // Function to update the cart by adding or subtracting quantity
-  const updateCart = (
-    itemId,
-    action,
-    medsQuantities = null,
-    patient = null
-  ) => {
-    //console.log(quantityy);
+  const updateCart = async (itemId, action, medsQuantities = null, patient = null) => {
     setCart((prevCart) => {
       const updatedCart = { ...prevCart };
 
       if (action === "add") {
         // Add 1 to the previous quantity
-
         medsQuantities[itemId] = medsQuantities[itemId] + 1;
       } else if (action === "subtract") {
         // Decrement 1 from the previous quantity
         medsQuantities[itemId] = medsQuantities[itemId] - 1;
       } else if (action === "addToCart") {
-        console.log(medsQuantities);
         if (medsQuantities[itemId] > 0) {
           updatedCart[itemId] = {
             ...updatedCart[itemId],
@@ -81,9 +71,23 @@ export const CartProvider = ({ children }) => {
           quantity: updatedCart[itemId].quantity - 1,
         };
       }
-      console.log(updatedCart);
+
       return updatedCart;
     });
+
+    // Make API call to update the cart on the backend
+ try{ await axios.post("http://localhost:4002/patients/add-to-cart", {
+        medicineId: itemId,
+        quantity: medsQuantities[itemId],
+      }, {
+        headers: {
+           authorization: `Bearer ${localStorage.getItem("token")}`,
+        
+        },
+      });
+    }   catch (error) {
+      console.error("Error updating cart on the backend:", error);
+    }
   };
 
   // Initialize the cart when the component mounts

@@ -3,11 +3,13 @@ const patientModel = require('../models/users/patientModel');
 const userVerificationModel = require('../models/userVerification');
 const pharmacistModel = require('../models/users/pharmacist');
 const resetPasswordModel = require("../models/resetPasswordModel");
+const doctorModel = require("../models/users/doctorModel");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { validateName,validateEmail,validatePassword,validateMobileNumber,validateGender,validateDateOfBirth,validateRole}= require('../utilities/validations');
 const nodeMailer = require('nodemailer');
 const crypto = require("crypto");
+const conversationModel = require('../models/conversationModel');
 
 
 //generate token
@@ -297,6 +299,9 @@ exports.login = async (req, res) => {
           .json({ error: "pharmacist rejected", token: token, role: user.role });
       }
     }
+    if(user.role === "doctor"){
+      return res.status(400).json({ error: "doctor is not able to login"});
+    }
     res
       .status(200)
       .json({
@@ -406,6 +411,49 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+exports.getUsers = async (req, res) => {
+  try {
+    const userID = req.user._id;
+    const role = req.user.role;
+    let users;
+
+    if (role === "patient") {
+      users = await pharmacistModel.find({ status: "accepted" }).select('name username userID');
+    } else if (role === "pharmacist") {
+      users = await doctorModel.find({}).select('name username userID');
+      const conversations = await conversationModel.find({ members: { $in: [userID] } });
+      const patientPromises = [];
+      for (const conversation of conversations) {
+        const IDs = conversation.members.filter((member) => member !== userID);
+        for (const ID of IDs) {
+          const patientPromise = patientModel.findOne({ userID: ID }).select('name username userID');
+          patientPromises.push(patientPromise);
+        }
+      }
+      const patients = await Promise.all(patientPromises);
+      const validPatients = patients.filter((patient) => patient !== null);
+      const patientsWithRole = validPatients.map((patient) => ({ ...patient._doc, role: 'patient' }));
+      users.push(...patientsWithRole);
+    } else {
+      return res.status(400).json({ error: "Invalid role" });
+    }
+    return res.status(200).json({ users: users, userID: userID });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//get userID
+exports.getUserID = async (req, res) => {
+  try {
+    const userID = req.user._id;
+    return res.status(200).json({ userID: userID });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+
 //validate token
 exports.validateToken = async (req, res) => {
   try {
@@ -436,6 +484,21 @@ exports.validateToken = async (req, res) => {
     return res.status(500).json({ error: "internal server error" });
   }
 };
+
+//get user name and role from id
+exports.getUser = async (req, res) => {
+  try {
+    const { userID } = req.body;
+    const user=await userModel.findOne({_id:userID}).select('name role');
+    if(!user){
+      return res.status(400).json({ error: "User does not exists" });
+    }
+  
+    return res.status(200).json({ user: user, myID: req.user._id });
+  } catch (error) {
+    return res.status(500).json({ error: "internal server error" });
+  }
+}
 
 
 

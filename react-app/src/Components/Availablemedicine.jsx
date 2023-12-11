@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import LoadingPage from "./LoadingPage.jsx";
 import Table from "./table.jsx";
-import styles from "./viewPendingDoctors.module.css";
+import styles from "./Availablemedicine.module.css";
 import OverlayWindow from "./overlayWindow.jsx";
 import ToggleSwitch from "./toggleSwitch"; // Assuming you've created this component
 import NavBarPharmacist from "../Elements/NavBarPharmacist";
@@ -37,7 +37,7 @@ const AvailableMedicines = () => {
   const fetchAvailableMedicines = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:4000/admins/available-medicines"
+        "http://localhost:4002/admins/available-medicines"
       );
       setMedicines(response.data);
       setIsLoading(false);
@@ -51,6 +51,34 @@ const AvailableMedicines = () => {
   const handleMedicineClick = (medicine) => {
     setSelectedMedicine(medicine);
   };
+
+  const handleArchiveMedicine = (medicine) =>{
+    try {
+      const response = axios.patch(
+        "http://localhost:4002/pharmacists/archiveMedicine",
+        {
+          medicineName: medicine.name
+        }
+      );
+      alert("Medicine archived successfully");
+    } catch (error) {
+      console.error("Error archiving medicine:", error);
+    }
+  }
+  const handleUnArchiveMedicine = (medicine) =>{
+    try {
+      const response = axios.patch(
+        "http://localhost:4002/pharmacists/unarchiveMedicine",
+        {
+          medicineName: medicine.name
+        }
+      );
+      alert("Medicine unarchived successfully");
+    } catch (error) {
+      alert(error);
+      console.error("Error archiving medicine:", error);
+    }
+  }
 
   useEffect(() => {
     fetchAvailableMedicines();
@@ -106,6 +134,32 @@ const AvailableMedicines = () => {
       key: "sales",
       className: styles.tableHeader,
     },
+    {
+      title: "Archive",
+      key: "Archive",
+      className: styles.tableHeader,
+      render: (text, record) => (
+        <button
+          className={styles.button}
+          onClick={() => handleArchiveMedicine(record.medicine)}
+        >
+          Archive
+        </button>
+      ),
+    },
+    {
+      title: "Unarchive",
+      key: "Unarchive",
+      className: styles.tableHeader,
+      render: (text, record) => (
+        <button
+          className={styles.button}
+          onClick={() => handleUnArchiveMedicine(record.medicine)}
+        >
+          Unarchive
+        </button>
+      ),
+    }
   ];
 
   
@@ -123,7 +177,8 @@ const AvailableMedicines = () => {
         <LoadingPage />
       ) : (
         <>
-          <h1 className={styles.headerOfMedicineList}>Available Medicines</h1>
+          {/* <h1 className={styles.headerOfMedicineList}>Available Medicines</h1> */}
+          <div className={styles.components}>
           <div className={styles.radioGroup}>
             <h3 className={styles.options}> Show Available Medicines </h3>
             <ToggleSwitch isOn={showAll} handleToggle={handleToggleChange} />
@@ -161,8 +216,11 @@ const AvailableMedicines = () => {
               )}
             </div>
           </div>
+        </div>
+
         </>
       )}
+      
     </div>
     </>
   );

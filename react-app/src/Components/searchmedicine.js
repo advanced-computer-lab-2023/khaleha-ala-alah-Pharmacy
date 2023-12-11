@@ -9,7 +9,7 @@ const MedicineSearch = () => {
   const fetchMedicines = async () => {
     try {
       // Fetch all available medicines from the API
-      const response = await axios.get('http://localhost:4000/admins/available-medicines');
+      const response = await axios.get('http://localhost:4002/admins/available-medicines');
       // Filter the medicines to only include those with quantity > 0
       const filteredMedicines = response.data.filter((medicine) => medicine.availableQuantity > 0);
 
