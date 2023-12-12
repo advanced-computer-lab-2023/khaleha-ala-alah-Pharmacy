@@ -3,6 +3,8 @@ const Cart = require("../models/Cart"); // Import the Cart model
 const Medicine = require("../models/medicine");
 const Order = require("../models/order");
 const pharmacist = require("../models/users/pharmacist");
+const prescriptionModel = require("../models/prescriptionModel");
+const doctorModel = require("../models/users/doctorModel");
 //const Appointments = require("./../models/appointmentModel");
 //const Prescriptions = require("./../models/presecriptionsModel.js");
 
@@ -801,10 +803,23 @@ exports.setMedicinePhoto = async function (req, res) {
 exports.getCurrentPatient = async function (req, res) {
   try {
     const patient = await Patient.findOne({ userID: req.user._id });
+    let prescriptions = await prescriptionModel.find({
+      patientID: patient.userID,
+    });
+
+    const doctorNamePromises = prescriptions.map(async (prescription) => {
+      const doctorName = await doctorModel.findOne({ userID: prescription.doctorID }).select("name");
+      return {
+        ...prescription.toObject(), 
+        doctorName: doctorName.name,
+      };
+    });
+    prescriptions = await Promise.all(doctorNamePromises);
     res.status(200).json({
       status: "success",
       data: {
         patient,
+        prescriptions,
       },
     });
   } catch (err) {
