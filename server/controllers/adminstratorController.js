@@ -11,7 +11,7 @@ exports.getAvailableMedicines = async (req, res) => {
   try {
     // Find medicines where availableQuantity is greater than 0
     const availableMedicines = await Medicine.find().select(
-      "availableQuantity sales name price description pictureUrl medicalUse"
+      "availableQuantity sales name price description pictureUrl medicalUse isPrescription"
     );
 
     res.status(200).json(availableMedicines);
@@ -27,7 +27,7 @@ exports.getMedicinesByMedicalUse = async (req, res) => {
     const availableMedicines = await Medicine.find({
       medicalUse: medicalUse, // Filter by the selected medical use
     }).select(
-      "availableQuantity medicalUse sales name price description pictureUrl"
+      "availableQuantity medicalUse sales name price description pictureUrl isPrescription"
     );
 
     res.status(200).json(availableMedicines);

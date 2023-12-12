@@ -36,6 +36,7 @@ const PatientHomePagebuy = () => {
   const [filteredMedicines, setFilteredMedicines] = useState([]);
   const [selectedMedicalUse, setSelectedMedicalUse] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
+  const [prescriptions, setPrescriptions] = useState([]);
 
   const handlePageChange = (page) => {
     console.log(page);
@@ -144,6 +145,7 @@ const PatientHomePagebuy = () => {
       const currentPatient = await response.json();
       console.log(currentPatient.data.patient);
       setPatient(currentPatient.data.patient);
+      setPrescriptions(currentPatient.data.prescriptions);
       console.log("ALoooooooooooooooooooooO");
     } catch (error) {
       console.log("AA");
@@ -218,6 +220,7 @@ const PatientHomePagebuy = () => {
                       medsQuantities={allmedsQuantities}
                       patient={patient}
                       handleViewDescription={handleViewDescription}
+                      prescriptions={prescriptions}
                     />
                   </div>
                 ))}

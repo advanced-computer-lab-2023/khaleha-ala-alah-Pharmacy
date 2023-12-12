@@ -30,6 +30,8 @@ export const WebSocketProvider = ({ children }) => {
       }).
       then((res) => {
       setUserID(res.data.userID);
+    }).catch((err) => {
+      console.log(err);
     });
     }
   }, [role]);
