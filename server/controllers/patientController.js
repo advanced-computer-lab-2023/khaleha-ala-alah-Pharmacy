@@ -383,9 +383,6 @@ exports.addToCart = async function (req, res) {
       return res
         .status(400)
         .json({ error: "Medicine Quantity is not available." });
-    } else {
-      medicine.availableQuantity -= quantity;
-      await medecine.save();
     }
     // Calculate the total price for the cart item
     const totalItemPrice = medicine.price * quantity;
@@ -473,7 +470,7 @@ exports.removeItemFromCart = async function (req, res) {
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
     }
-    const medicine = await Medicine.findById(medicineId);
+    // const medicine = await Medicine.findById(medicineId);
 
     // Find the cart item to remove
     const cartItem = cart.items.find(
@@ -483,8 +480,8 @@ exports.removeItemFromCart = async function (req, res) {
     if (!cartItem) {
       return res.status(404).json({ error: "Cart item not found." });
     }
-    medicine.availableQuantity += cartItem.quantity;
-    await medicine.save();
+    // medicine.availableQuantity += cartItem.quantity;
+    // await medicine.save();
 
     // Remove the cart item from the cart
     cart.items = cart.items.filter(
@@ -539,6 +536,13 @@ exports.changeItemQuantity = async function (req, res) {
     const medicine = await Medicine.findById(medicineId);
     cartItem.quantity = newQuantity;
     cartItem.totalPrice = medicine.price * newQuantity;
+
+    // Update the quantity
+    if (medicine.availableQuantity < newQuantity) {
+      return res
+        .status(400)
+        .json({ error: "Medicine Quantity is not available." });
+    }
 
     // Update the totalAmount in the cart
     cart.totalAmount = cart.items.reduce(
