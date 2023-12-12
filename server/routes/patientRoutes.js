@@ -46,7 +46,7 @@ router.post("/save-stripe-token", paymentController.payForPackage);
 router.post("/add-to-cart", CheckAuth, patientController.addToCart);
 
 //router for the removeItemFromCart
-router.patch(
+router.delete(
   "/remove-from-cart/:medicineId",
   CheckAuth,
   patientController.removeItemFromCart
