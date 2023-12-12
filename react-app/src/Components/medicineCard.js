@@ -1,8 +1,7 @@
-import React, { useRef } from "react";
-import { Alert, Avatar, Button, Card,Select,Modal } from "antd";
+import React from "react";
+import { Alert, Avatar, Button, Card } from "antd";
 import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons/lib";
 import { useState } from "react";
-const { Option } = Select;
 
 const Department = ({
   medicine,
@@ -12,38 +11,8 @@ const Department = ({
   medsQuantities,
   patient,
   handleViewDescription,
-  prescriptions,
 }) => {
   const [hovered, setHovered] = useState(false);
-  const selectedPrescription=useRef(null);
-
-  const handleAddToCart = () => {
-    if (medicine.isPrescription === true ) {
-      if (!selectedPrescription.current) {
-        Modal.error({
-          title: "Prescription required",
-          content: "Please select a valid prescription to add this medicine to your cart",
-        });
-        return;
-      }else{
-       const medications = prescriptions.find((prescription) => prescription._id === selectedPrescription.current).medications;
-       const medicines = medications.map((medication) => medication.medicine);
-       if(!medicines.find((med) => med.toLowerCase() === medicine.name.toLowerCase())){
-        Modal.error({
-          title: "medicine not found in prescription",
-          content: "Please select a valid prescription to add this medicine to your cart",
-        });
-        return;
-       }else{
-        updateCart(medicine._id, "add", medsQuantities);
-        updateCart(medicine._id, "addToCart", medsQuantities, patient, selectedPrescription);
-       }
-      }
-    } else {
-      updateCart(medicine._id, "add", medsQuantities);
-      updateCart(medicine._id, "addToCart", medsQuantities, patient, selectedPrescription);
-    }
-  };
   return (
     <div style={{ minWidth: "27vw" }}>
       <Card
@@ -67,26 +36,6 @@ const Department = ({
             <label style={{ fontSize: '16pt', textAlign: 'left'}}>{medicine.price} EGP</label>
             <label style={{ color: 'rgb(128, 128, 128)'}}>Available Quantity: {medicine.availableQuantity}</label>
             <label style={{ color: 'rgb(128, 128, 128)'}}>Sale: {medicine.sales}% </label>
-            {medicine.isPrescription === true && (
-              <>
-              <label style={{ color: 'rgb(128, 128, 128)'}}>Prescription required </label>
-              <Select
-              placeholder="Select Prescription"
-              style={{ width: "100%" }}
-              onChange={(value) => {
-                selectedPrescription.current = value;
-                console.log("Selected Prescription:", value);
-              }}
-            >
-              {prescriptions.map((prescription) => (
-                <Option key={prescription._id} value={prescription._id}>
-                  {"Dr. " + prescription.doctorName + " " + new Date(prescription.date).toLocaleDateString("en-GB")}
-                </Option>
-              ))}
-            </Select>
-            </>
-            )}
-            
           </div>
           <div className="button-container">
             <div className="button-box">
@@ -102,7 +51,14 @@ const Department = ({
             <div className="button-box">
         
             <br /> 
-            <button onClick={handleAddToCart}>
+              <button
+                onClick={() =>{
+                    updateCart(medicine._id, "add", medsQuantities)
+                  updateCart(medicine._id, "addToCart", medsQuantities, patient)
+           
+                }
+                }
+              >
                 Add to Cart
               </button>
             </div>
