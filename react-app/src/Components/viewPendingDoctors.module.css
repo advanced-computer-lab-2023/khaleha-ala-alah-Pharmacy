@@ -79,3 +79,15 @@
     justify-content: center;
     justify-items: center;
   }
+
+  .ViewAvailableMedicine{
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+  }
+
+  .viewPendingDoctors > h4 {
+    text-align: center; /* if you want to center the text */
+    color: #333; /* example to change the color */
+    /* etc... */
+  }

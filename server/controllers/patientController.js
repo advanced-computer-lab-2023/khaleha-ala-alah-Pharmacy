@@ -3,6 +3,8 @@ const Cart = require("../models/Cart"); // Import the Cart model
 const Medicine = require("../models/medicine");
 const Order = require("../models/order");
 const pharmacist = require("../models/users/pharmacist");
+const prescriptionModel = require("../models/prescriptionModel");
+const doctorModel = require("../models/users/doctorModel");
 //const Appointments = require("./../models/appointmentModel");
 //const Prescriptions = require("./../models/presecriptionsModel.js");
 
@@ -376,7 +378,14 @@ exports.addToCart = async function (req, res) {
     if (!medicine) {
       return res.status(404).json({ error: "Medicine not found." });
     }
-
+    // Check if the medicine is available
+    if (medicine.availableQuantity === 0) {
+      return res.status(400).json({ error: "Medicine is not available." });
+    } else if (medicine.availableQuantity < quantity) {
+      return res
+        .status(400)
+        .json({ error: "Medicine Quantity is not available." });
+    }
     // Calculate the total price for the cart item
     const totalItemPrice = medicine.price * quantity;
 
@@ -429,8 +438,7 @@ exports.addToCart = async function (req, res) {
 };
 exports.viewCartItems = async function (req, res) {
   try {
-     const patientId = req.params.id;
- 
+    const patientId = req.params.id;
 
     const patient = await Patient.findOne({ userID: patientId });
 
@@ -438,7 +446,9 @@ exports.viewCartItems = async function (req, res) {
       return res.status(404).json({ error: "Patient not found." });
     }
 
-    const cart = await Cart.findOne({ user: patientId }).populate("items.medicine");
+    const cart = await Cart.findOne({ user: patientId }).populate(
+      "items.medicine"
+    );
 
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
@@ -462,6 +472,7 @@ exports.removeItemFromCart = async function (req, res) {
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
     }
+    // const medicine = await Medicine.findById(medicineId);
 
     // Find the cart item to remove
     const cartItem = cart.items.find(
@@ -471,6 +482,8 @@ exports.removeItemFromCart = async function (req, res) {
     if (!cartItem) {
       return res.status(404).json({ error: "Cart item not found." });
     }
+    // medicine.availableQuantity += cartItem.quantity;
+    // await medicine.save();
 
     // Remove the cart item from the cart
     cart.items = cart.items.filter(
@@ -525,6 +538,13 @@ exports.changeItemQuantity = async function (req, res) {
     const medicine = await Medicine.findById(medicineId);
     cartItem.quantity = newQuantity;
     cartItem.totalPrice = medicine.price * newQuantity;
+
+    // Update the quantity
+    if (medicine.availableQuantity < newQuantity) {
+      return res
+        .status(400)
+        .json({ error: "Medicine Quantity is not available." });
+    }
 
     // Update the totalAmount in the cart
     cart.totalAmount = cart.items.reduce(
@@ -798,10 +818,23 @@ exports.setMedicinePhoto = async function (req, res) {
 exports.getCurrentPatient = async function (req, res) {
   try {
     const patient = await Patient.findOne({ userID: req.user._id });
+    let prescriptions = await prescriptionModel.find({
+      patientID: patient.userID,
+    });
+
+    const doctorNamePromises = prescriptions.map(async (prescription) => {
+      const doctorName = await doctorModel.findOne({ userID: prescription.doctorID }).select("name");
+      return {
+        ...prescription.toObject(), 
+        doctorName: doctorName.name,
+      };
+    });
+    prescriptions = await Promise.all(doctorNamePromises);
     res.status(200).json({
       status: "success",
       data: {
         patient,
+        prescriptions,
       },
     });
   } catch (err) {

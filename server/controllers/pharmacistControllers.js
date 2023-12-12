@@ -73,6 +73,7 @@ const addMedicine = async (req, res) => {
       availableQuantity,
       activeIngredients,
       medicalUse,
+      isPrescription
     } = req.body;
 
     // Create a new medicine document
@@ -85,6 +86,7 @@ const addMedicine = async (req, res) => {
       activeIngredients,
       medicalUse,
       userID: req.user._id,
+      isPrescription,
     });
 
     // Save the new medicine to the database
