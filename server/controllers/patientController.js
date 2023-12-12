@@ -376,7 +376,17 @@ exports.addToCart = async function (req, res) {
     if (!medicine) {
       return res.status(404).json({ error: "Medicine not found." });
     }
-
+    // Check if the medicine is available
+    if (medicine.availableQuantity === 0) {
+      return res.status(400).json({ error: "Medicine is not available." });
+    } else if (medicine.availableQuantity < quantity) {
+      return res
+        .status(400)
+        .json({ error: "Medicine Quantity is not available." });
+    } else {
+      medicine.availableQuantity -= quantity;
+      await medecine.save();
+    }
     // Calculate the total price for the cart item
     const totalItemPrice = medicine.price * quantity;
 
@@ -429,8 +439,7 @@ exports.addToCart = async function (req, res) {
 };
 exports.viewCartItems = async function (req, res) {
   try {
-     const patientId = req.params.id;
- 
+    const patientId = req.params.id;
 
     const patient = await Patient.findOne({ userID: patientId });
 
@@ -438,7 +447,9 @@ exports.viewCartItems = async function (req, res) {
       return res.status(404).json({ error: "Patient not found." });
     }
 
-    const cart = await Cart.findOne({ user: patientId }).populate("items.medicine");
+    const cart = await Cart.findOne({ user: patientId }).populate(
+      "items.medicine"
+    );
 
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
@@ -462,6 +473,7 @@ exports.removeItemFromCart = async function (req, res) {
     if (!cart) {
       return res.status(404).json({ error: "Cart not found." });
     }
+    const medicine = await Medicine.findById(medicineId);
 
     // Find the cart item to remove
     const cartItem = cart.items.find(
@@ -471,6 +483,8 @@ exports.removeItemFromCart = async function (req, res) {
     if (!cartItem) {
       return res.status(404).json({ error: "Cart item not found." });
     }
+    medicine.availableQuantity += cartItem.quantity;
+    await medicine.save();
 
     // Remove the cart item from the cart
     cart.items = cart.items.filter(
