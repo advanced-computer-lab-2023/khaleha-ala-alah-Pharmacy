@@ -5,6 +5,9 @@ import axios from "axios";
 import Separator from "./separator.jsx";
 import styles from "./cart.module.css";
 import LoadingPage from "./LoadingPage.jsx";
+import NavBar from "../Elements/NavBar.jsx";
+import Header from "../Elements/Header.jsx";
+import trashIcon from "../Images/trash.png";
 
 const CartPage = () => {
   const { updateCart } = useContext(CartContext);
@@ -13,7 +16,7 @@ const CartPage = () => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [isLoading, setLoading] = useState(true);
   const [promoCode, setPromoCode] = useState("");
-  const [priceFlag , setPriceFlag] = useState(false);
+  const [priceFlag, setPriceFlag] = useState(false);
 
   const handleContinueShopping = () => {
     navigate("/patientHome");
@@ -172,8 +175,7 @@ const CartPage = () => {
     if (promoCode === "nadaebrahim" && totalPrice > 500) {
       setTotalPrice(totalPrice - 500);
       alert("Successfully applied");
-    }
-    else {
+    } else {
       alert("Invalid promo code");
     }
   };
@@ -182,7 +184,7 @@ const CartPage = () => {
     const deliveryFees = 20;
     const tax = total * 0.05; // 12% of total
     const subtotal = total + deliveryFees + tax;
-    if (priceFlag == false){
+    if (priceFlag == false) {
       setPriceFlag(true);
       setTotalPrice(subtotal);
     }
@@ -195,6 +197,8 @@ const CartPage = () => {
         <LoadingPage />
       ) : (
         <>
+          <Header />
+          <NavBar />
           <div className={styles.wholeCartContainer}>
             <h1>Your Cart</h1>
           </div>
@@ -245,7 +249,11 @@ const CartPage = () => {
                     onClick={() => handleRemoveFromCart(item.medicine._id)}
                     className={styles.removeButton}
                   >
-                    Remove
+                    <img src={trashIcon} alt="Remove" 
+                    style={{
+                      width:'20px',
+                      height:'20px'
+                    }}/>
                   </button>
                 </div>
               ))}

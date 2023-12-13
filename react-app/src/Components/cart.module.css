@@ -17,7 +17,7 @@
 }
 
 .continueShoppingButton{
-    transform: translateX(180px) translateY(15px);
+    transform: translateX(195px) translateY(15px);
     background: none;
     color: gray; /* Standard link color */
     border: none;
@@ -130,7 +130,7 @@ h1 {
 }
 
 .removeButton {
-  background-color: #ff6b6b;
+  background-color: none;
   color: white;
   padding: 10px 15px;
   border: none;

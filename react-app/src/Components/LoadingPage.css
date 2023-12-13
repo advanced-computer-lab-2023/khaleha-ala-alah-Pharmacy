@@ -4,7 +4,6 @@
   align-items: center;
   height: 100vh; /* Full viewport height */
   width: 100vw;
-  background-color: #e1e5f2; /* Light blue background */
 }
 
 .loading-circle {
