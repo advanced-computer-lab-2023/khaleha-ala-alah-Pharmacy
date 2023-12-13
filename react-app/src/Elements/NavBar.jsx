@@ -93,19 +93,6 @@ const NavBar = ({ selectedSection, selectedSubSection = "", patient }) => {
 
           <div
             className={
-              selectedSection === "wallet"
-                ? styles.navbarLinkSelected
-                : styles.navbarLinkSection
-            }
-            onMouseEnter={() => handleSectionMouseEnter("wallet")}
-            onMouseLeave={() => handleSectionMouseLeave()}
-            onClick={(e) => handleSectionClick(e, "wallet", "/wallet")}
-          >
-            Wallet {hasSubsections("wallet")}
-          </div>
-
-          <div
-            className={
               selectedSection === "cart"
                 ? styles.navbarLinkSelected
                 : styles.navbarLinkSection

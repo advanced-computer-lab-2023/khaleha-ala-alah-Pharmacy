@@ -6,7 +6,7 @@ import axios from 'axios';
 import { CircularProgress } from '@mui/material';
 import { useWebSocket } from '../WebSocketContext';
 import { useLocation } from 'react-router-dom';
-
+import Separator from './separator';
 
 function Messenger() {
   const [conversations, setConversations] = useState();
@@ -141,7 +141,7 @@ function Messenger() {
               <CircularProgress />
         </div>
       )}
-      <UserList users={users} onSelectUser={handleSelectUser} />
+      <UserList users={users} onSelectUser={handleSelectUser} selectedUser={userID} />
       {selectedUser && (
         <ChatInterface
           name={selectedUser.name}
