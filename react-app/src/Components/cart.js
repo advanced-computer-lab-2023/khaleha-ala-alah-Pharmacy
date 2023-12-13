@@ -2,12 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import { CartContext } from "./cart-context";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Separator from "./separator.jsx";
+import styles from "./cart.module.css";
+import LoadingPage from "./LoadingPage.jsx";
 
 const CartPage = () => {
   const { updateCart } = useContext(CartContext);
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [isLoading, setLoading] = useState(true);
+  const [promoCode, setPromoCode] = useState("");
+  const [priceFlag , setPriceFlag] = useState(false);
+
+  const handleContinueShopping = () => {
+    navigate("/patientHome");
+  };
 
   const handleIncrementApi = async (itemId, currentQuantity) => {
     // Call the API to increment the quantity
@@ -92,13 +102,16 @@ const CartPage = () => {
   useEffect(() => {
     // Fetch cart items when the component mounts
     const fetchCartItems = async () => {
-      const response = await fetch("http://localhost:4002/patients/currentPatient", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:4002/patients/currentPatient",
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await response.json();
       console.log(data);
@@ -106,11 +119,14 @@ const CartPage = () => {
 
       try {
         const id = patientId;
-        const response = await axios.get(`http://localhost:4002/patients/viewcartitems/${id}`, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        });
+        const response = await axios.get(
+          `http://localhost:4002/patients/viewcartitems/${id}`,
+          {
+            headers: {
+              authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
 
         console.log(response);
 
@@ -138,33 +154,152 @@ const CartPage = () => {
 
         setCartItems(Object.values(groupedCart));
         setTotalPrice(data.cart.totalAmount);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching cart items:", error);
+        setLoading(false);
       }
     };
 
     fetchCartItems();
   }, [updateCart]); // Add dependencies as needed
 
+  const handlePromoCodeChange = (e) => {
+    setPromoCode(e.target.value);
+  };
+
+  const applyPromoCode = () => {
+    if (promoCode === "nadaebrahim" && totalPrice > 500) {
+      setTotalPrice(totalPrice - 500);
+      alert("Successfully applied");
+    }
+    else {
+      alert("Invalid promo code");
+    }
+  };
+
+  const handleFeesAndTax = (total) => {
+    const deliveryFees = 20;
+    const tax = total * 0.05; // 12% of total
+    const subtotal = total + deliveryFees + tax;
+    if (priceFlag == false){
+      setPriceFlag(true);
+      setTotalPrice(subtotal);
+    }
+    return subtotal.toFixed(2);
+  };
+
   return (
     <div>
-      <h1>Your Cart</h1>
-      <ul>
-        {cartItems.map((item) => (
-          <li key={item.medicine._id}>
-            <span>{item.medicine.name}</span>
-            <button onClick={() => handleDecrement(item.medicine._id, item.quantity)}>-</button>
-            <span>{item.quantity}</span>
-            <button onClick={() => handleIncrement(item.medicine._id, item.quantity)}>+</button>
-            <button onClick={() => handleRemoveFromCart(item.medicine._id)}>Remove from Cart</button>
-          </li>
-        ))}
-      </ul>
-      <div>
-        <strong>Total Price: ${totalPrice.toFixed(2)}</strong>
-      </div>
-
-      <button onClick={handleCheckoutClick}>Checkout</button>
+      {isLoading ? (
+        <LoadingPage />
+      ) : (
+        <>
+          <div className={styles.wholeCartContainer}>
+            <h1>Your Cart</h1>
+          </div>
+          <div className={styles.buttonOfContinueShopping}>
+            <button
+              className={styles.continueShoppingButton}
+              onClick={handleContinueShopping}
+            >
+              {" "}
+              Continue shopping
+            </button>
+          </div>
+          <Separator />
+          <div className={styles.cartContainer}>
+            <div className={styles.cartItems}>
+              {cartItems.map((item) => (
+                <div key={item.medicine._id} className={styles.cartItem}>
+                  <div className={styles.itemDetails}>
+                    <span className={styles.itemName}>
+                      {item.medicine.name}
+                    </span>
+                  </div>
+                  <div className={styles.itemControls}>
+                    <div className={styles.quantityControls}>
+                      <button
+                        onClick={() =>
+                          handleDecrement(item.medicine._id, item.quantity)
+                        }
+                      >
+                        -
+                      </button>
+                      <span className={styles.numQuantity}>
+                        {item.quantity}
+                      </span>
+                      <button
+                        onClick={() =>
+                          handleIncrement(item.medicine._id, item.quantity)
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+                  <span className={styles.itemPrice}>
+                    ${(item.medicine.price * item.quantity).toFixed(2)}
+                  </span>
+                  <button
+                    onClick={() => handleRemoveFromCart(item.medicine._id)}
+                    className={styles.removeButton}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className={styles.cartSummary}>
+              <span
+                className={styles.summaryDetails}
+                style={{ fontWeight: "bold" }}
+              >
+                Enter Promo Code
+              </span>
+              <input
+                type="text"
+                placeholder="Promo Code"
+                value={promoCode}
+                onChange={handlePromoCodeChange}
+              />
+              <button
+                onClick={applyPromoCode}
+                className={styles.summaryDetails}
+                style={{
+                  backgroundColor: "rgb(106, 163, 106)",
+                  color: "white",
+                  cursor: "pointer",
+                }}
+              >
+                Apply{" "}
+              </button>
+              <div className={styles.summaryDetails}>
+                <span>Total</span>
+                <span>{totalPrice.toFixed(2)} EGP</span>
+              </div>
+              <div className={styles.summaryDetails}>
+                <span>Delivery Fees</span>
+                <span>20 EGP</span>
+              </div>
+              <div className={styles.summaryDetails}>
+                <span>Tax</span>
+                <span>5%</span>
+              </div>
+              <div className={styles.summaryDetails}>
+                <span>Subtotal</span>
+                <span> {handleFeesAndTax(totalPrice)} EGP</span>
+              </div>
+              <button
+                onClick={handleCheckoutClick}
+                className={styles.checkoutButton}
+              >
+                Checkout
+              </button>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

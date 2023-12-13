@@ -1,0 +1,15 @@
+.separatorDiv{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: -50px;
+}
+
+.separatorOfAdmin {
+    height: 2px; /* Thickness of the separator */
+    background-color: #ddd; /* Color of the separator */
+    margin: 20px 0; /* Vertical spacing around the separator */
+    color: #336cfb;
+    width: 1150px;
+}
