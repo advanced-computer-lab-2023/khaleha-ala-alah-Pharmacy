@@ -11,6 +11,9 @@ import { useNavigate } from "react-router-dom";
 import homeIcon from "../Images/home.png";
 import NavBar from "../Elements/NavBar";
 import Header from "../Elements/Header";
+import NavBar2 from "../Elements/NavBarPharmacist";
+import Header2 from "../Elements/HeaderDoctor";
+import { useAuth } from "../AuthContext";
 
 function Messenger() {
   const [conversations, setConversations] = useState();
@@ -23,8 +26,12 @@ function Messenger() {
   const socket = useWebSocket();
   const location = useLocation();
   const navigate = useNavigate();
+  const { role } = useAuth();
+
 
   useEffect(() => {
+    console.log(role);
+    console.log("&^^^^^");
     getUsers();
     socket.on("getMessage", (data) => {
       setArrivalMessage({
@@ -95,9 +102,7 @@ function Messenger() {
     }
   };
 
-  const handleHomeButton = () => {
-    navigate("/patientHome");
-  };
+
   useEffect(() => {
     const getMessages = async () => {
       try {
@@ -155,8 +160,21 @@ function Messenger() {
           <CircularProgress />
         </div>
       )}
-      <Header/>
-      <NavBar/>
+
+<div>
+      {role === "pharmacist" ? (
+        <>
+          <Header2 />
+          <NavBar2 />
+        </>
+      ) : (
+        <>
+          <Header />
+          <NavBar />
+        </>
+      )}
+    </div>
+
       <UserList
         users={users}
         onSelectUser={handleSelectUser}
