@@ -217,6 +217,11 @@ const CartPage = () => {
               {cartItems.map((item) => (
                 <div key={item.medicine._id} className={styles.cartItem}>
                   <div className={styles.itemDetails}>
+                  <img src={item.medicine.pictureUrl} alt="medicineImg" 
+                    style={{
+                      width:'85px',
+                      height:'85px'
+                    }}/>
                     <span className={styles.itemName}>
                       {item.medicine.name}
                     </span>
