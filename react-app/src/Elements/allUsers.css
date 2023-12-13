@@ -6,7 +6,8 @@
     padding: 0;
     overflow-y: auto; /* Enable scroll if content overflows */
     height: 85vh;
-    width:25vw
+    width:25vw;
+    overflow-y: hidden;
   }
   
   .user-list h2 {
@@ -52,6 +53,34 @@
     background-color: #dedede;
   }
 
+  .containerSwitch{
+    margin-top: 300px;
+    margin-left: 50px;
+  }
+  
+  .containerSwitch span {
+    font-size: 15px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
+
+  .containerPaginationPatients{
+    margin-top: 300px;
+    margin-left: auto;
+  }
+
+  .containerPagination{
+    margin-top: 350px;
+    margin-left: auto;
+  }
+
+  .separatorContainer{
+    height: 2px; /* Thickness of the separator */
+    background-color: #ddd; /* Color of the separator */
+    color: #336cfb;
+    margin-top:-270px ;
+    margin-bottom: 15px;
+    margin-left: -50px;
+  }
   /* .user-list h2 {
     font-size: 24px;
     color: #333;

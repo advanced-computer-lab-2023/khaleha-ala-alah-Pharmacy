@@ -27,10 +27,11 @@ function Messenger() {
   const location = useLocation();
   const navigate = useNavigate();
   const { role } = useAuth();
-
+  const [toView , setToView] = useState("patients");
 
   useEffect(() => {
     console.log(role);
+    console.log(toView);
     console.log("&^^^^^");
     getUsers();
     socket.on("getMessage", (data) => {
@@ -179,6 +180,7 @@ function Messenger() {
         users={users}
         onSelectUser={handleSelectUser}
         selectedUser={userID}
+        toView = {toView}
       />
       {selectedUser && (
         <ChatInterface
@@ -189,6 +191,8 @@ function Messenger() {
           loading={loading}
         />
       )}
+
+
     </div>
   );
 }

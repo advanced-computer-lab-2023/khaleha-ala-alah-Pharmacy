@@ -106,13 +106,13 @@ const NavBar = ({ selectedSection, selectedSubSection = "", patient }) => {
 
           <div
             className={
-              selectedSection === "chatwithdoctor"
+              selectedSection === "chat"
                 ? styles.navbarLinkSelected
                 : styles.navbarLinkSection
             }
-            onMouseEnter={() => handleSectionMouseEnter("chatwithdoctor")}
+            onMouseEnter={() => handleSectionMouseEnter("chat")}
             onMouseLeave={() => handleSectionMouseLeave()}
-            onClick={(e) => handleSectionClick(e, "chatwithdoctor", "/messenger")}
+            onClick={(e) => handleSectionClick(e, "chat", "/messenger")}
           >
             Chat With Doctor {hasSubsections("cart")}
           </div>
