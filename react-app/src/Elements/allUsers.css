@@ -5,7 +5,7 @@
     margin: 0;
     padding: 0;
     overflow-y: auto; /* Enable scroll if content overflows */
-    height: 100vh;
+    height: 85vh;
     width:25vw
   }
   

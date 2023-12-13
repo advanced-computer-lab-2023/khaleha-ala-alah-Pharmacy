@@ -1,25 +1,29 @@
-import React, { useEffect, useRef, useState } from 'react';
-import ChatInterface from '../Elements/chat';
+import React, { useEffect, useRef, useState } from "react";
+import ChatInterface from "../Elements/chat";
 import "./messenger.css";
-import UserList from '../Elements/allUsers';
-import axios from 'axios';
-import { CircularProgress } from '@mui/material';
-import { useWebSocket } from '../WebSocketContext';
-import { useLocation } from 'react-router-dom';
-import Separator from './separator';
+import UserList from "../Elements/allUsers";
+import axios from "axios";
+import { CircularProgress } from "@mui/material";
+import { useWebSocket } from "../WebSocketContext";
+import { useLocation } from "react-router-dom";
+import Separator from "./separator";
+import { useNavigate } from "react-router-dom";
+import homeIcon from "../Images/home.png";
+import NavBar from "../Elements/NavBar";
+import Header from "../Elements/Header";
 
 function Messenger() {
   const [conversations, setConversations] = useState();
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState();
-  const[arrivalMessage, setArrivalMessage]=useState([]);
-  const [loading, setLoading] = useState(false); 
-  const[userID, setUserID]=useState();
-  const socket=useWebSocket();
+  const [arrivalMessage, setArrivalMessage] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [userID, setUserID] = useState();
+  const socket = useWebSocket();
   const location = useLocation();
- 
-  
+  const navigate = useNavigate();
+
   useEffect(() => {
     getUsers();
     socket.on("getMessage", (data) => {
@@ -35,7 +39,7 @@ function Messenger() {
 
   useEffect(() => {
     if (location.state) {
-    handleSelectUser(location.state.senderId);
+      handleSelectUser(location.state.senderId);
     }
   }, [users]);
 
@@ -44,52 +48,66 @@ function Messenger() {
       conversations?.members.includes(arrivalMessage.sender) &&
       setMessages((prev) => [...prev, arrivalMessage]);
 
-      if(conversations?.members.includes(arrivalMessage.sender)){
-       setTimeout(() => {
-          axios.post(`http://localhost:4002/conversations/deleteMessagesNotification`, {senderId: arrivalMessage.sender, receiverId: userID})
+    if (conversations?.members.includes(arrivalMessage.sender)) {
+      setTimeout(() => {
+        axios
+          .post(
+            `http://localhost:4002/conversations/deleteMessagesNotification`,
+            { senderId: arrivalMessage.sender, receiverId: userID }
+          )
           .then((res) => {
             console.log(res.data);
-          }).catch((err) => {
+          })
+          .catch((err) => {
             console.log(err);
           });
-       }, 1000);
-      }
+      }, 1000);
+    }
   }, [arrivalMessage, conversations]);
 
   const getUsers = async () => {
-   try {
-     const res = await axios.get('http://localhost:4002/users/getUsers',{
+    try {
+      const res = await axios.get("http://localhost:4002/users/getUsers", {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
         },
-     });
+      });
       setUserID(res.data.userID);
-     const allUsers = res.data.users;
-     const filteredUsers = allUsers.filter((user) => user.userID !== userID);
-     setUsers(filteredUsers);
-    
-   }catch (err) {
-     console.log(err);
-   }
-  }
+      const allUsers = res.data.users;
+      const filteredUsers = allUsers.filter((user) => user.userID !== userID);
+      setUsers(filteredUsers);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-  const handleSelectUser = async(userId) => {
+  const handleSelectUser = async (userId) => {
     try {
       setLoading(true);
       setSelectedUser(users.find((user) => user.userID === userId));
-      const res = await axios.post(`http://localhost:4002/conversations`, {senderId: userID, receiverId: userId});
+      const res = await axios.post(`http://localhost:4002/conversations`, {
+        senderId: userID,
+        receiverId: userId,
+      });
       setConversations(res.data.conversation);
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  const handleHomeButton = () => {
+    navigate("/patientHome");
+  };
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get(`http://localhost:4002/messages/${conversations._id}`);
+        const res = await axios.get(
+          `http://localhost:4002/messages/${conversations._id}`
+        );
         const messages = res.data.messages;
         messages.forEach((message) => {
-          message.sender = message.sender === userID ? "You" : selectedUser.name;
+          message.sender =
+            message.sender === userID ? "You" : selectedUser.name;
         });
         setLoading(false);
         setMessages(messages);
@@ -97,22 +115,20 @@ function Messenger() {
         console.log(error);
       }
     };
-    
+
     getMessages();
-  }
-  , [conversations]);
+  }, [conversations]);
 
   const handleSendMessage = (message) => {
-    
     const formData = new FormData();
-    formData.append('conversationId', conversations._id);
-    formData.append('senderId', userID);
-    formData.append('text', message.text);
-    formData.append('file', message.file);
+    formData.append("conversationId", conversations._id);
+    formData.append("senderId", userID);
+    formData.append("text", message.text);
+    formData.append("file", message.file);
     if (message.voiceNote) {
-      formData.append('file', message.voiceNote.blob, 'voiceNote.wav');
+      formData.append("file", message.voiceNote.blob, "voiceNote.wav");
     }
-    
+
     socket.emit("sendMessage", {
       senderId: userID,
       receiverId: selectedUser.userID,
@@ -123,25 +139,29 @@ function Messenger() {
     });
 
     try {
-      const res = axios.post(`http://localhost:4002/messages`,formData, {
+      const res = axios.post(`http://localhost:4002/messages`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
-        }
+          "Content-Type": "multipart/form-data",
+        },
       });
       setMessages([...messages, res.data.message]);
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   return (
     <div className="messenger-container">
-       {loading && (
+      {loading && (
         <div className="loading">
-              <CircularProgress />
+          <CircularProgress />
         </div>
       )}
-      <UserList users={users} onSelectUser={handleSelectUser} selectedUser={userID} />
+      <Header/>
+      <NavBar/>
+      <UserList
+        users={users}
+        onSelectUser={handleSelectUser}
+        selectedUser={userID}
+      />
       {selectedUser && (
         <ChatInterface
           name={selectedUser.name}
