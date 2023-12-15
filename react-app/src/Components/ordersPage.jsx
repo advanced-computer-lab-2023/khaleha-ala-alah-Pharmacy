@@ -18,40 +18,35 @@ const OrdersPage = ({ userID }) => {
   const [error, setError] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("all");
   //useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch(
-          `http://localhost:4002/patients/myOrders/${selectedStatus}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-              "Content-Type": "application/json",
-            },
-            //body: JSON.stringify({ status: selectedStatus }), // Include status in the request body
-            
-          }
-        );
-        if (!response.ok) {
-          throw new Error(`Failed to fetch orders. Status: ${response.status}`);
+  const fetchOrders = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:4002/patients/myOrders/${selectedStatus}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
+          //body: JSON.stringify({ status: selectedStatus }), // Include status in the request body
         }
-        const data = await response.json();
-        console.log(data.data.result);
-        setMyOrders(data.data.result);
-        
-
-    
-        // ... rest of the function ...
-    
-      } catch (error) {
-        alert(error);
-      } finally {
-        setIsLoading(false);
+      );
+      if (!response.ok) {
+        throw new Error(`Failed to fetch orders. Status: ${response.status}`);
       }
-    };
-    
+      const data = await response.json();
+      console.log(data.data.result);
+      setMyOrders(data.data.result);
 
-    // fetchOrders();
+      // ... rest of the function ...
+    } catch (error) {
+      alert(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // fetchOrders();
   //}, []);
   useEffect(() => {
     fetchOrders();
@@ -82,6 +77,7 @@ const OrdersPage = ({ userID }) => {
     }
     try {
       setIsLoading(true);
+      console.log("ALOOOO");
       const response = await fetch(
         `http://localhost:4002/patients/cancel-order/${order.orderID}`,
         {
@@ -95,7 +91,7 @@ const OrdersPage = ({ userID }) => {
           // No body is needed for this PATCH request as per your API design
         }
       );
-
+      console.log("AFFTERRRR");
       //const data = await response.json();
       if (response.ok) {
         console.log("Order cancelled successfully:");
@@ -110,7 +106,13 @@ const OrdersPage = ({ userID }) => {
       setMyOrders((prevOrders) =>
         prevOrders.map((o) => {
           if (o.orderID === order.orderID) {
-            return { ...o, order: { ...o.order, status: "Cancelled" } };
+            console.log(o);
+            console.log("HOLAAA");
+            return {
+              ...o,
+              order: { ...o.order, status: "Cancelled" },
+              status: "Cancelled",
+            };
           }
           return o;
         })
@@ -146,12 +148,24 @@ const OrdersPage = ({ userID }) => {
             />
           )}
         </div>
-        
       ) : (
         <div className="orders-page">
           <Header />
           <NavBar />
+
           <div className="orders-container">
+            <div className="filter-container">
+              <label>Filter by Status:</label>
+              <select
+                value={selectedStatus}
+                onChange={(e) => handleStatusChange(e.target.value)}
+              >
+                <option value="all">All</option>
+                <option value="pending">Pending</option>
+                <option value="processing">Processing</option>
+                <option value="delivered">Delivered</option>
+              </select>
+            </div>
             {myOrders.map((order, index) => (
               <>
                 <OrderCard
@@ -165,18 +179,7 @@ const OrdersPage = ({ userID }) => {
               </>
             ))}
           </div>
-          <div className="filter-container">
-        <label>Filter by Status:</label>
-        <select
-          value={selectedStatus}
-          onChange={(e) => handleStatusChange(e.target.value)}
-        >
-          <option value="all">All</option>
-          <option value="pending">Pending</option>
-          <option value="processing">Processing</option>
-          <option value="delivered">Delivered</option>
-        </select>
-      </div>
+
           {showMessage && (
             <FeedbackMessage
               type={messageType}

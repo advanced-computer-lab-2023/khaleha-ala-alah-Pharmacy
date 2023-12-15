@@ -564,26 +564,32 @@ exports.changeItemQuantity = async function (req, res) {
 };
 
 exports.checkout = async function (req, res) {
-  const patientId = req.user._id;
-
   try {
+    console.log("HOLAAA");
+    const patientId = req.user._id;
     // Retrieve cart items from the request body
     const cartItems = req.body.cartItems;
+
+    console.log(cartItems);
 
     if (!cartItems || cartItems.length === 0) {
       return res.status(400).json({ error: "Cart items are required." });
     }
 
     // Calculate total amount based on cart items
-    const totalAmount = cartItems.reduce((total, item) => {
-      return total + item.price /** item.quantity*/;
-    }, 0);
+    let totalAmount = 0;
+    for (let i = 0; i < cartItems.length; i++) {
+      console.log(cartItems[i]);
+      console.log("HOLrerer");
+      totalAmount += cartItems[i].totalPrice;
+    }
+
     console.log(totalAmount);
     // Create an array to store order items
     const orderItems = cartItems.map((cartItem) => ({
       medicine: cartItem.id,
       quantity: cartItem.quantity,
-      totalPrice: cartItem.price /** cartItem.quantity*/,
+      totalPrice: cartItem.totalPrice /** cartItem.quantity*/,
     }));
 
     // Create a new order
@@ -676,10 +682,14 @@ exports.getOrderDetails = async function (req, res) {
 
 exports.cancelOrder = async function (req, res) {
   try {
+    console.log("HOLAAA");
     console.log(req.params.orderID);
-    const order = await Order.findOne({ orderID: req.params.id });
+    const order = await Order.findById(req.params.orderID);
+    console.log("ALOYREOUROWEUROWE");
+    console.log(order);
     const orderAmount = order.totalAmount;
     order.status = "Cancelled";
+    console.log("LUV U");
     await order.save();
     const wallet = await Wallet.findOne({ userID: req.user._id });
     console.log(req.user._id);
@@ -823,9 +833,11 @@ exports.getCurrentPatient = async function (req, res) {
     });
 
     const doctorNamePromises = prescriptions.map(async (prescription) => {
-      const doctorName = await doctorModel.findOne({ userID: prescription.doctorID }).select("name");
+      const doctorName = await doctorModel
+        .findOne({ userID: prescription.doctorID })
+        .select("name");
       return {
-        ...prescription.toObject(), 
+        ...prescription.toObject(),
         doctorName: doctorName.name,
       };
     });
