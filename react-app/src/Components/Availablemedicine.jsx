@@ -7,6 +7,10 @@ import OverlayWindow from "./overlayWindow.jsx";
 import ToggleSwitch from "./toggleSwitch"; // Assuming you've created this component
 import NavBarPharmacist from "../Elements/NavBarPharmacist";
 import HeaderDoctor from "../Elements/HeaderDoctor";
+import HeaderAdmin from "../Elements/HeaderAdmin.jsx";
+import NavBarAdmin from "../Elements/NavBarAdmin.jsx";
+import { useAuth } from "../AuthContext.js";
+
 
 
 const AvailableMedicines = () => {
@@ -17,6 +21,7 @@ const AvailableMedicines = () => {
   const [medicineToDescribe, setMedicineToDescribe] = useState(null);
   const [showMedicineDescription, setShowMedicineDescription] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); // State to hold the search query
+  const { role } = useAuth();
   const filteredMedicines = medicines
   .filter(
     (medicine) => showAll || medicine.availableQuantity > 0
@@ -145,27 +150,30 @@ const AvailableMedicines = () => {
       key: "action",
       className: styles.tableHeader,
       render: (text, record) => (
-        record.medicine.isArchived
-          ? <button
-              className={styles.Unarchivebutton}
-              onClick={async () => {
-                await handleUnArchiveMedicine(record.medicine);
-                window.location.reload();
-              }}
-            >
-              Unarchive
-            </button>
-          : <button
-              className={styles.Archivebutton}
-              onClick={async () => {
-                await handleArchiveMedicine(record.medicine);
-                window.location.reload();
-              }}
-            >
-              Archive
-            </button>
-      ),
+        role === "pharmacists" && (
+          record.medicine.isArchived
+            ? <button
+                className={styles.Unarchivebutton}
+                onClick={async () => {
+                  await handleUnArchiveMedicine(record.medicine);
+                  window.location.reload();
+                }}
+              >
+                Unarchive
+              </button>
+            : <button
+                className={styles.Archivebutton}
+                onClick={async () => {
+                  await handleArchiveMedicine(record.medicine);
+                  window.location.reload();
+                }}
+              >
+                Archive
+              </button>
+        )
+      ), 
     }
+    
     // {
     //   title: "Archive",
     //   key: "Archive",
@@ -202,8 +210,20 @@ const AvailableMedicines = () => {
 
   return (
     <>
-    <HeaderDoctor />
-      <NavBarPharmacist/>
+   
+<div>
+      {role === "pharmacist" ? (
+        <>
+          <HeaderDoctor />
+          <NavBarPharmacist/>
+        </>
+      ) : (
+        <>
+          <HeaderAdmin />
+          <NavBarAdmin />
+        </>
+      )}
+    </div>
     <div className={styles.ContainerOfAvailableMedicines}>
       {isLoading ? (
         <LoadingPage />

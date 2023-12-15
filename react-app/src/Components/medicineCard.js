@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Alert, Avatar, Button, Card } from "antd";
 import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons/lib";
 import axios from "axios";
+import "./medicineCard.css";
 
 const Department = ({
   medicine,
@@ -12,6 +13,7 @@ const Department = ({
   medsQuantities,
   patient,
   handleViewDescription,
+  role,
 }) => {
   const [hovered, setHovered] = useState(false);
   const [cartAlert, setCartAlert] = useState(false);
@@ -22,13 +24,16 @@ const Department = ({
 
   const fetchPatientId = async () => {
     try {
-      const response = await fetch("http://localhost:4002/patients/currentPatient", {
-        method: "GET",
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        "http://localhost:4002/patients/currentPatient",
+        {
+          method: "GET",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       const data = await response.json();
       console.log(data);
@@ -43,11 +48,14 @@ const Department = ({
     try {
       const patientId = await fetchPatientId();
 
-      const response = await axios.get(`http://localhost:4002/patients/viewcartitems/${patientId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+      const response = await axios.get(
+        `http://localhost:4002/patients/viewcartitems/${patientId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
 
       console.log(response);
 
@@ -73,12 +81,12 @@ const Department = ({
     try {
       const patientId = await fetchPatientId();
 
-      const url = 'http://localhost:4002/patients/add-to-cart';
+      const url = "http://localhost:4002/patients/add-to-cart";
 
       const response = await fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({ medicineId, quantity, patientId }),
@@ -98,30 +106,39 @@ const Department = ({
 
       setCartAlert(true);
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error("Error:", error.message);
       // Handle the error, e.g., show an error message to the user
     }
   }
 
   return (
     <div style={{ minWidth: "27vw" }}>
-      <Card style={{ border: "none" }} cover={
-        <>
-          <h3 className="h4 mt-0" style={{ textAlign: "center" }}>
-            {medicine.name}
-          </h3>
-          <img
-            alt={`${medicine.name} avatar`}
-            src={medicine.pictureUrl}
-            style={{ width: "326px", height: "260px", marginLeft: "1.75rem" }}
-          />
-        </>
-      }>
+      <Card
+        style={{ border: "none" }}
+        cover={
+          <>
+            <h3 className="h4 mt-0" style={{ textAlign: "center" }}>
+              {medicine.name}
+            </h3>
+            <img
+              alt={`${medicine.name} avatar`}
+              src={medicine.pictureUrl}
+              style={{ width: "326px", height: "260px", marginLeft: "1.75rem" }}
+            />
+          </>
+        }
+      >
         <>
           <div className="textStyling">
-            <label style={{ fontSize: '16pt', textAlign: 'left' }}>{medicine.price} EGP</label>
-            <label style={{ color: 'rgb(128, 128, 128)' }}>Available Quantity: {medicine.availableQuantity}</label>
-            <label style={{ color: 'rgb(128, 128, 128)' }}>Sale: {medicine.sales}% </label>
+            <label style={{ fontSize: "16pt", textAlign: "left" }}>
+              {medicine.price} EGP
+            </label>
+            <label style={{ color: "rgb(128, 128, 128)" }}>
+              Available Quantity: {medicine.availableQuantity}
+            </label>
+            <label style={{ color: "rgb(128, 128, 128)" }}>
+              Sale: {medicine.sales}%{" "}
+            </label>
           </div>
           <div className="button-container">
             <div className="button-box">
@@ -136,14 +153,17 @@ const Department = ({
             </div>
             <div className="button-box">
               <br />
-              <button
-                onClick={() => {
-                  call_add_to_cart(medicine._id, 1);
-                  handleAddToCart(medicine);
-                }}
-              >
-                Add to Cart
-              </button>
+              {(role === "patients" || role === "pharmacists") && (
+                <button
+                  onClick={() => {
+                    call_add_to_cart(medicine._id, 1);
+                    handleAddToCart(medicine);
+                  }}
+                >
+                  Add to Cart
+                </button>
+              )}
+
               {/* Alert component */}
               {/* {cartAlert && (
                 <div>

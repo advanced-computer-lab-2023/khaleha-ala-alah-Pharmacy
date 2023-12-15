@@ -15,7 +15,7 @@ import familymember from "../Images/FamilyMember.jpg";
 import appointments from "../Images/appointments.jpg";
 import packages from "../Images/Packages.jpg";
 import doctors from "../Images/SearchDoctor.jpg";
-import HeaderDoctor from "../Elements/HeaderDoctor";
+import Header from "../Elements/HeaderAdmin";
 import ServiceItem from "../Elements/ServiceItem";
 import NavBar from "../Elements/NavBarAdmin";
 import ImageCarousel from "../Elements/ImageCarousel";
@@ -37,7 +37,7 @@ export  const AdminHome = () => {
   ];
   return (
     <>
-    <HeaderDoctor />
+    <Header />
     <NavBar/>
     <div style={{ backgroundColor: "white", height: "100vh", width: "99.9vw" }}>
 

@@ -8,6 +8,11 @@ import MedicineCard from "./medicineCard";
 import { CartContext } from "./cart-context";
 import Header from "../Elements/Header";
 import NavBar from "../Elements/NavBar";
+import Header2 from "../Elements/HeaderDoctor";
+import NavBar2 from "../Elements/NavBarPharmacist";
+import Header3 from "../Elements/HeaderAdmin";
+import NavBar3 from "../Elements/NavBarAdmin";
+import { useAuth } from "../AuthContext";
 
 const SearchResults = () => {
   const [searchResults, setSearchResults] = useState([]);
@@ -37,7 +42,7 @@ const SearchResults = () => {
   const useQuery = () => {
     return new URLSearchParams(location.search);
   };
-
+  const {role}=useAuth();
   const query = useQuery().get("query");
 
   useEffect(() => {
@@ -162,8 +167,26 @@ const SearchResults = () => {
         <LoadingPage />
       ) : (
         <>
-          <Header />
-          <NavBar />
+          <div>
+    {role === "patient" ? (
+      <>
+        <Header />
+        <NavBar />
+      </>
+    ) : role === "pharmacist" ? (
+      <>
+        <Header2 />
+        <NavBar2 />
+      </>
+    ) : role === "admin" ? (
+      <>
+        <Header3 />
+        <NavBar3 />
+      </>
+    ) : (
+      <div>Unauthorized Access</div>
+    )}
+  </div>
           <div className="page-container">
             <aside className="sidebar">
               <h3>Medical Uses</h3>
@@ -200,6 +223,7 @@ const SearchResults = () => {
                       medsQuantities={allmedsQuantities}
                       patient={patient}
                       handleViewDescription={handleViewDescription}
+                      role= {role}
                     />
                   </div>
                 ))}

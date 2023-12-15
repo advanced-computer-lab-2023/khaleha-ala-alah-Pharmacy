@@ -149,6 +149,17 @@ const NavBar = ({ selectedSection, selectedSubSection = "", patient }) => {
           >
             Manage Pending Pharmacists {hasSubsections("pendingpharmacist")}
           </div>
+          <div className={
+              selectedSection === "viewmedicines"
+                ? styles.navbarLinkSelected
+                : styles.navbarLinkSection
+            }
+            onMouseEnter={() => handleSectionMouseEnter("viewmedicines")}
+            onMouseLeave={() => handleSectionMouseLeave()}
+            onClick={(e) => handleSectionClick(e, "viewmedicines", "/viewMedicines")}
+          >
+            View Medicines {hasSubsections("pendingpharmacist")}
+          </div>
         </div>
       </div>
     </nav>

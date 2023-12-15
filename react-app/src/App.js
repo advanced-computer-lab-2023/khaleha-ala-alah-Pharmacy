@@ -124,7 +124,7 @@ function App() {
                 <Route path="/viewMedicines" element={<AvailableMedicines />} />
 
                 <Route path="/notification" element={<Notification />} />
-
+                <Route path="/searchResults" element={<SearchResults />} />
                 <Route path="/messenger" element={<Messenger />} />
 
               </>
@@ -154,6 +154,7 @@ function App() {
                   path="/ManagePharmacists"
                   element={<AdminDeleteDoctor />}
                 />
+                <Route path="/searchResults" element={<SearchResults />} />
                 <Route path="/ManagePatients" element={<AdminDeltePatient />} />
               </>
             )}
