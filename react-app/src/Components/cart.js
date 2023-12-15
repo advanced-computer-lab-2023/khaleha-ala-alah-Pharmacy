@@ -37,6 +37,8 @@ const CartPage = () => {
         }
       );
 
+      console.log(totalPrice);
+
       // After successfully updating the quantity, update the local cart state
       updateCart(itemId, "addInCart");
     } catch (error) {
@@ -98,6 +100,7 @@ const CartPage = () => {
   };
 
   const handleCheckoutClick = () => {
+    console.log(cartItems);
     // Navigate to the "/checkout" route with cart items and total price
     navigate("/checkout", { state: { cartItems, totalPrice } });
   };
@@ -217,11 +220,14 @@ const CartPage = () => {
               {cartItems.map((item) => (
                 <div key={item.medicine._id} className={styles.cartItem}>
                   <div className={styles.itemDetails}>
-                  <img src={item.medicine.pictureUrl} alt="medicineImg" 
-                    style={{
-                      width:'85px',
-                      height:'85px'
-                    }}/>
+                    <img
+                      src={item.medicine.pictureUrl}
+                      alt="medicineImg"
+                      style={{
+                        width: "85px",
+                        height: "85px",
+                      }}
+                    />
                     <span className={styles.itemName}>
                       {item.medicine.name}
                     </span>
@@ -254,11 +260,14 @@ const CartPage = () => {
                     onClick={() => handleRemoveFromCart(item.medicine._id)}
                     className={styles.removeButton}
                   >
-                    <img src={trashIcon} alt="Remove" 
-                    style={{
-                      width:'20px',
-                      height:'20px'
-                    }}/>
+                    <img
+                      src={trashIcon}
+                      alt="Remove"
+                      style={{
+                        width: "20px",
+                        height: "20px",
+                      }}
+                    />
                   </button>
                 </div>
               ))}

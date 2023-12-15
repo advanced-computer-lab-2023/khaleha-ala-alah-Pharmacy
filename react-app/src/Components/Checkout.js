@@ -11,6 +11,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
   const { cart, updateCart } = useContext(CartContext);
   const { address, updateAddress } = useContext(CartContext);
   const amount22 = location.state?.amount;
+  const cartItems = location.state?.cartItems;
   const [patientt, setPatient] = useState(null);
   useEffect(() => {
     fetchCurrentPatient();
@@ -68,16 +69,17 @@ const StripePaymentButton = ({ amount, patientId }) => {
       .then(async (data) => {
         console.log(data);
         if (data.success) {
+          console.log(cartItems);
           // Payment successful, proceed to place the order
           const orderResponse = await fetch(
-            `http://localhost:4002/patients/checkout/${patientId}`,
+            `http://localhost:4002/patients/checkout`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                cartItems: Object.values(cart),
+                cartItems: cartItems,
                 address: address, // Replace with the actual chosen address
               }),
             }
@@ -137,7 +139,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              cartItems: Object.values(cart),
+              cartItems: cartItems,
               address: address, // Replace with the actual chosen address
             }),
           }
@@ -167,20 +169,19 @@ const StripePaymentButton = ({ amount, patientId }) => {
 
   const handleCashOnDelivery = async () => {
     try {
+      console.log(cartItems);
       // Call the checkout API to place the order with cash on delivery
-      const response = await fetch(
-        `http://localhost:4002/patients/checkout/${patientId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            cartItems: Object.values(cart),
-            address: address, // Replace with the actual chosen address
-          }),
-        }
-      );
+      const response = await fetch(`http://localhost:4002/patients/checkout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({
+          cartItems: cartItems,
+          address: address, // Replace with the actual chosen address
+        }),
+      });
 
       if (response.ok) {
         // Order placed successfully
