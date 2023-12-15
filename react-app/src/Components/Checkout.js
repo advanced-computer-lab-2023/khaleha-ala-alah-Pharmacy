@@ -10,7 +10,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
   const location = useLocation();
   const { cart, updateCart } = useContext(CartContext);
   const { address, updateAddress } = useContext(CartContext);
-  const amount22 = location.state?.amount;
+  const amount22 = location.state?.totalPrice;
   const cartItems = location.state?.cartItems;
   const [patientt, setPatient] = useState(null);
   useEffect(() => {
@@ -114,6 +114,17 @@ const StripePaymentButton = ({ amount, patientId }) => {
   const handlePayWithWallet = async () => {
     try {
       // Call the API to decrement the amount from the wallet
+      console.log(cartItems);
+      let newCartItems = [];
+      for (let i = 0; i < cartItems.length; i++) {
+        newCartItems.push({
+          id: cartItems[i].medicine,
+          quantity: cartItems[i].quantity,
+          totalPrice: cartItems[i].totalPrice,
+        });
+      }
+      console.log(patientId);
+      console.log(amount22);
       const walletResponse = await fetch(
         "http://localhost:4002/patients/remove-from-wallet",
         {
@@ -130,16 +141,18 @@ const StripePaymentButton = ({ amount, patientId }) => {
 
       if (walletResponse.ok) {
         // Wallet amount decremented successfully
+
         // Now, proceed to create an order using a similar approach to Cash on Delivery
         const orderResponse = await fetch(
-          `http://localhost:4002/patients/checkout/${patientId}`,
+          `http://localhost:4002/patients/checkout`,
           {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
             body: JSON.stringify({
-              cartItems: cartItems,
+              cartItems: newCartItems,
               address: address, // Replace with the actual chosen address
             }),
           }
