@@ -17,7 +17,7 @@ import packages from "../Images/Packages.jpg";
 import doctors from "../Images/SearchDoctor.jpg";
 import HeaderDoctor from "../Elements/HeaderDoctor";
 import ServiceItem from "../Elements/ServiceItem";
-import NavBar from "../Elements/NavBar";
+import NavBar from "../Elements/NavBarAdmin";
 import ImageCarousel from "../Elements/ImageCarousel";
 
 export  const AdminHome = () => {
@@ -38,6 +38,7 @@ export  const AdminHome = () => {
   return (
     <>
     <HeaderDoctor />
+    <NavBar/>
     <div style={{ backgroundColor: "white", height: "100vh", width: "99.9vw" }}>
 
       <div className="all-containers">
@@ -74,12 +75,6 @@ export  const AdminHome = () => {
             title="View Medicines"
             description="View all medicines"
             navigateTo="/viewMedicines"
-          />,
-          
-              <ServiceItem
-         
-            title="chang password"
-            navigateTo="/changePassword"
           />
         </div>
       </div>

@@ -5,7 +5,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../AuthContext";
 import "./login.css";
-import logoImage from "../Images/logo-home.png"; // Adjust the path accordingly
+import logoImage from "../Images/kaa.png"; // Adjust the path accordingly
 
  const Login = () => {
   const {role} = useAuth();
