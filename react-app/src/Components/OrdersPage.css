@@ -2,10 +2,9 @@
   padding: 20px;
   min-height: 100vh;
   justify-content: center; /* Center the content horizontally */
-  align-items: center; /* Center the content vertically */
+  align-items: start; /* Center the content vertically */
   display: flex;
   margin-top: 8rem;
-  
 }
 .orders-container {
   justify-content: center;

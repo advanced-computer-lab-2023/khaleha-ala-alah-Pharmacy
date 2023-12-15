@@ -5,6 +5,14 @@ import FeedbackMessage from "./feedbackMessage";
 import ConfirmationDialog from "./ConfirmationDialog";
 import NavBar from "../Elements/NavBar.jsx";
 import Header from "../Elements/Header";
+import { DatePicker, Select } from "antd";
+import { Input, Button, Space, Menu } from "antd";
+import { SearchOutlined } from "@ant-design/icons"; // Import SearchOutlined
+import { CalendarOutlined, FilterOutlined } from "@ant-design/icons"; // Import Ant Design icons
+import LoadingPage from "./LoadingPage";
+import { Pagination } from "antd";
+
+const { Option } = Select;
 
 const OrdersPage = ({ userID }) => {
   // userID = "652b512450d1b797fa0a42ef";
@@ -12,16 +20,19 @@ const OrdersPage = ({ userID }) => {
   let [message, setMessage] = useState("");
   let [messageType, setMessageType] = useState("");
   let [showMessage, setShowMessage] = useState(false);
-  let [isLoading, setIsLoading] = useState(false);
+  let [isLoading, setIsLoading] = useState(true);
   const [showConfirmationDialog, setShowConfirmationDialog] = useState(false);
   const [orderToCancel, setOrderToCancel] = useState(null);
   const [error, setError] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Set the number of items per page
+
   //useEffect(() => {
   const fetchOrders = async () => {
     try {
       const response = await fetch(
-        `http://localhost:4002/patients/myOrders/${selectedStatus}`,
+        `http://localhost:4002/patients/myOrders/all`,
         {
           method: "GET",
           headers: {
@@ -50,12 +61,22 @@ const OrdersPage = ({ userID }) => {
   //}, []);
   useEffect(() => {
     fetchOrders();
-  }, [selectedStatus]);
+  }, [currentPage]);
 
   const handleStatusChange = (status) => {
     setSelectedStatus(status);
   };
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    const indexOfLastOrder = page * itemsPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - itemsPerPage;
+  };
+
+  // Calculate the currently visible orders
+  const indexOfLastOrder = currentPage * itemsPerPage;
+  const indexOfFirstOrder = indexOfLastOrder - itemsPerPage;
+  const currentOrders = myOrders.slice(indexOfFirstOrder, indexOfLastOrder);
   const handleCancelOrderConfirm = async (order) => {
     console.log(order);
     if (order.status !== "Pending") {
@@ -134,7 +155,7 @@ const OrdersPage = ({ userID }) => {
     <>
       {isLoading ? (
         <div>
-          Loading...
+          <LoadingPage />
           {showMessage && (
             <FeedbackMessage
               type={messageType}
@@ -155,29 +176,60 @@ const OrdersPage = ({ userID }) => {
 
           <div className="orders-container">
             <div className="filter-container">
-              <label>Filter by Status:</label>
-              <select
+              <Select
                 value={selectedStatus}
-                onChange={(e) => handleStatusChange(e.target.value)}
+                onChange={handleStatusChange}
+                style={{ width: "150px", marginBottom: "1rem" }}
+                suffixIcon={<FilterOutlined />}
               >
-                <option value="all">All</option>
-                <option value="pending">Pending</option>
-                <option value="processing">Processing</option>
-                <option value="delivered">Delivered</option>
-              </select>
+                <Option value="all">All</Option>
+                <Option value="pending">Pending</Option>
+                <Option value="processing">Processing</Option>
+                <Option value="delivered">Delivered</Option>
+                <Option value="cancelled">Cancelled</Option>
+              </Select>
+              {/* <Button
+                type="primary"
+                onClick={() => {}}
+                icon={<SearchOutlined />}
+                style={{ marginLeft: "1rem" }}
+              >
+                Filter
+              </Button> */}
             </div>
-            {myOrders.map((order, index) => (
-              <>
-                <OrderCard
-                  key={index}
-                  order={order}
-                  handleCancelOrder={handleCancelOrderConfirm}
-                  setShowMessage={setShowMessage}
-                  setMessageType={setMessageType}
-                  setMessage={setMessage}
-                />
-              </>
-            ))}
+            {myOrders
+              .filter(
+                (order) =>
+                  order.status.toLowerCase() === selectedStatus ||
+                  selectedStatus === "all"
+              )
+              .slice(indexOfFirstOrder, indexOfLastOrder)
+              .map((order, index) => (
+                <>
+                  <OrderCard
+                    key={index}
+                    order={order}
+                    handleCancelOrder={handleCancelOrderConfirm}
+                    setShowMessage={setShowMessage}
+                    setMessageType={setMessageType}
+                    setMessage={setMessage}
+                  />
+                </>
+              ))}
+            <Pagination
+              current={currentPage}
+              onChange={handlePageChange}
+              total={
+                myOrders.filter(
+                  (order) =>
+                    order.status.toLowerCase() === selectedStatus ||
+                    selectedStatus === "all"
+                ).length
+              }
+              pageSize={itemsPerPage}
+              //showSizeChanger
+              pageSizeOptions={["5", "10", "20", "50"]}
+            />
           </div>
 
           {showMessage && (
