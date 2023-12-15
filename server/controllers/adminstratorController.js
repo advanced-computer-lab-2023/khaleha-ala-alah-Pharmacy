@@ -10,9 +10,7 @@ const Order = require("../models/order");
 exports.getAvailableMedicines = async (req, res) => {
   try {
     // Find medicines where availableQuantity is greater than 0
-    const availableMedicines = await Medicine.find().select(
-      "availableQuantity sales name price description pictureUrl medicalUse isPrescription"
-    );
+    const availableMedicines = await Medicine.find();
 
     res.status(200).json(availableMedicines);
   } catch (error) {

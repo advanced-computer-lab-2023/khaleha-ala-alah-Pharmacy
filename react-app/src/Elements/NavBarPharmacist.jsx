@@ -114,7 +114,7 @@ const NavBar = ({ selectedSection, selectedSubSection = "", patient }) => {
             onMouseLeave={() => handleSectionMouseLeave()}
             onClick={(e) => handleSectionClick(e, "chat", "/messenger")}
           >
-            Chat With Doctor {hasSubsections("cart")}
+            Chat{hasSubsections("cart")}
           </div>
         </div>
       </div>

@@ -97,6 +97,7 @@ const addMedicine = async (req, res) => {
     res.status(500).json({ error: "Error adding medicine" });
   }
 };
+
 const archiveMedicine = async (req, res) => {
   try {
     const medicineName = req.body.medicineName;
@@ -104,13 +105,19 @@ const archiveMedicine = async (req, res) => {
     if (!medicine) {
       return res.status(404).json({ error: "Medicine not found" });
     }
+    console.log("LUV ADHAM");
+    console.log(medicine);
     medicine.isArchived = true;
+    console.log(medicine);
     await medicine.save();
+    console.log("LEH");
     res.status(200).json(medicine);
   } catch (error) {
+    console.log(error.message);
     res.status(500).json({ error: "Error archiving medicine" });
   }
 };
+
 const unarchiveMedicine = async (req, res) => {
   try {
     const medicineName = req.body.medicineName;

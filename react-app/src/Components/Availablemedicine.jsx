@@ -39,6 +39,7 @@ const AvailableMedicines = () => {
       const response = await axios.get(
         "http://localhost:4002/admins/available-medicines"
       );
+      console.log(response.data);
       setMedicines(response.data);
       setIsLoading(false);
     } catch (error) {
@@ -52,15 +53,19 @@ const AvailableMedicines = () => {
     setSelectedMedicine(medicine);
   };
 
-  const handleArchiveMedicine = (medicine) =>{
+  const handleArchiveMedicine = async (medicine) =>{
+    setIsLoading(true);
     try {
-      const response = axios.patch(
+      const response = await axios.patch(
         "http://localhost:4002/pharmacists/archiveMedicine",
         {
           medicineName: medicine.name
         }
       );
       alert("Medicine archived successfully");
+      console.log(response);
+      console.log(medicine);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error archiving medicine:", error);
     }
@@ -74,6 +79,7 @@ const AvailableMedicines = () => {
         }
       );
       alert("Medicine unarchived successfully");
+      setIsLoading(false);
     } catch (error) {
       alert(error);
       console.error("Error archiving medicine:", error);
@@ -135,31 +141,57 @@ const AvailableMedicines = () => {
       className: styles.tableHeader,
     },
     {
-      title: "Archive",
-      key: "Archive",
+      title: "Action",
+      key: "action",
       className: styles.tableHeader,
       render: (text, record) => (
-        <button
-          className={styles.button}
-          onClick={() => handleArchiveMedicine(record.medicine)}
-        >
-          Archive
-        </button>
-      ),
-    },
-    {
-      title: "Unarchive",
-      key: "Unarchive",
-      className: styles.tableHeader,
-      render: (text, record) => (
-        <button
-          className={styles.button}
-          onClick={() => handleUnArchiveMedicine(record.medicine)}
-        >
-          Unarchive
-        </button>
+        record.medicine.isArchived
+          ? <button
+              className={styles.Unarchivebutton}
+              onClick={async () => {
+                await handleUnArchiveMedicine(record.medicine);
+                window.location.reload();
+              }}
+            >
+              Unarchive
+            </button>
+          : <button
+              className={styles.Archivebutton}
+              onClick={async () => {
+                await handleArchiveMedicine(record.medicine);
+                window.location.reload();
+              }}
+            >
+              Archive
+            </button>
       ),
     }
+    // {
+    //   title: "Archive",
+    //   key: "Archive",
+    //   className: styles.tableHeader,
+    //   render: (text, record) => (
+    //     <button
+    //       className={styles.button}
+    //       onClick={() => handleArchiveMedicine(record.medicine)}
+    //     >
+    //       Archive
+    //     </button>
+    //   ),
+    // },
+    // {
+    //   title: "Unarchive",
+    //   key: "Unarchive",
+    //   className: styles.tableHeader,
+    //   render: (text, record) => (
+    //     <button
+    //       className={styles.button}
+    //       onClick={() => handleUnArchiveMedicine(record.medicine)}
+    //     >
+    //       Unarchive
+    //     </button>
+    //   ),
+    // }
   ];
 
   
@@ -194,7 +226,7 @@ const AvailableMedicines = () => {
               className={styles.searchInput}
             />
           </div>
-          <div className={styles.viewPendingDoctors}>
+          <div className={styles.viewAllMedicines}>
             <h4>click on any row to show the medicine description</h4>
             <div className={styles.ViewAvailableMedicine}>
             <div className={styles.tableWrapper}>
