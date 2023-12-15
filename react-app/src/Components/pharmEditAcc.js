@@ -5,78 +5,79 @@ import Header from "../Elements/HeaderDoctor";
 import styles from './pharmEditAcc.module.css';
 
 const PharmEditProfileForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    pictureUrl: '',
-    price: '',
-    description: '',
-    availableQuantity: '',
-    activeIngredients: [''], // Start with one empty ingredient field
-    medicalUse: '', // Medical Use field
-  });
+  // Define state variables for the doctor's information
+  const [email, setEmail] = useState('');
+  const [hourlyRate, setHourlyRate] = useState('');
+  const [affiliation, setAffiliation] = useState('');
+  const [error, setError] = useState(null);
 
-  const handleChange = (e) => {
-    const { name, value, dataset } = e.target;
-
-    if (name === 'activeIngredients') {
-      // If the change is in the activeIngredients array, update it accordingly
-      const updatedIngredients = [...formData.activeIngredients];
-      const index = dataset.index; // Get the index from the data-index attribute
-      updatedIngredients[index] = value;
-      setFormData({ ...formData, activeIngredients: updatedIngredients });
-    } else {
-      // Otherwise, update the field directly
-      setFormData({ ...formData, [name]: value });
-    }
-  };
-
-  const handleAddIngredient = () => {
-    // Add a new empty ingredient field when the "Add Ingredient" button is clicked
-    setFormData({ ...formData, activeIngredients: [...formData.activeIngredients, ''] });
-  };
-
-  const handleSubmit = async (e) => {
+  // Function to handle form submission
+  const handleUpdateProfile = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:4000/pharmacists/addMedicine', formData); // Replace with your API endpoint
-      console.log('Medicine added:', response.data);
-    } catch (error) {
-      console.error('Error adding medicine:', error);
+      // Send a PUT request to update the doctor's profile
+      const response = await fetch('http://localhost:4002/pharmacists/updatePharmacist', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'authorization': 'Bearer ' + localStorage.getItem('token'),
+        },
+        body: JSON.stringify({
+          email,
+          hourlyRate,
+          affiliation,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update profile');
+      }
+
+      // Handle successful update, e.g., display a success message
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
-    <div >
-      <Header/>
+    <div className={styles.container}>
+      <Header />
       <NavBar/>
-      <form onSubmit={handleSubmit} className={styles.addMedicinecontainer}>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Name</label>
-          <input type="text" name="name" value={formData.name} onChange={handleChange} className={styles.input} placeholder='Name' />
+      {error && <p>Error: {error}</p>}
+      <form onSubmit={handleUpdateProfile}>
+          <div>
+          <label className={styles.labelF}>Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className={styles.inputFields}
+            placeholder="Email"
+          />
+          
+          </div>
+       <div>
+          <label className={styles.labelF}>Hourly Rate</label>
+          <input
+            type="number"
+            value={hourlyRate}
+            onChange={(e) => setHourlyRate(e.target.value)}
+            className={styles.inputFields}
+            placeholder="Hourly rate"
+          />
         </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.labelToLeft}>Email</label>
-          <input type="text" name="pictureUrl" value={formData.pictureUrl} onChange={handleChange} className={styles.inputToLeft} placeholder='Email'/>
+        <div>
+          <label className={styles.labelF}>Affiliation</label>
+          <input
+            type="text"
+            value={affiliation}
+            onChange={(e) => setAffiliation(e.target.value)}
+            className={styles.inputFields}
+            placeholder="Affiliation"
+          />
         </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Birth Date</label>
-          <input type="date" name="price" value={formData.price} onChange={handleChange} className={styles.input} placeholder='Date Of Birth'/>
-        </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.labelToLeft}>Affiliation</label>
-          <input type="text" name="description" value={formData.description} onChange={handleChange} className={styles.inputToLeft} placeholder='Affiliation'/>
-        </div>
-        
-        <div className={styles.inputContainer}>
-          <label className={styles.label}>Educational Background</label>
-          <input type="text" name="availableQuantity" value={formData.availableQuantity} onChange={handleChange} className={styles.input} placeholder='Educational Background'/>
-        </div>
-        <div className={styles.inputContainer}>
-          <label className={styles.labelToLeft}>Hourly Rate</label>
-          <input type="text" name="medicalUse" value={formData.medicalUse} onChange={handleChange} className={styles.inputToLeft} placeholder='EGP' />
-        </div>
-        <button type="submit" className={styles.button}>Update Profile</button> 
+        <button type="submit" className={styles.button}>Save Changes</button>
       </form>
     </div>
   );

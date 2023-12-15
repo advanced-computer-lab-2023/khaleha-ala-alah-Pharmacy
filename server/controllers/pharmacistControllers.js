@@ -3,6 +3,79 @@ const Medicine = require("../models/medicine"); // Import the Medicine model
 // Import the Medicine model
 const pharmacist = require("../models/users/pharmacist"); // Import the Medicine model
 const Order = require("../models/order");
+const getPharmacistDetails = async (req,res)=>{
+  try {
+    console.log(req.user);
+    const Pharmacist = await pharmacist.findOne({ userID: req.user._id });
+    console.log("hiiiiii");
+    console.log(Pharmacist);
+    if(!Pharmacist){
+      return res.status(404).json({
+        status:"fail",
+        message:"Pharmacist not found"
+      })
+    }
+    console.log("hiiiiii");
+    res.status(200).json({
+      status:"success",
+      data:{
+        Pharmacist
+      }
+    })
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching pharmacist" });
+  }
+}
+const updatePharmacist = async (req,res)=>{
+  // validate input name , email , phone number and birthdate , affiliation , speciality , Educational Background , Hourly Rate if any of them
+  // is not valid return error
+  // else update the doctor
+  // return the updated doctor
+  try{
+    const Pharmacist = await pharmacist.findOne({userID:req.user._id});
+    if(!Pharmacist){
+      return res.status(404).json({
+        status:"fail",
+        message:"Pharmacist not found"
+      })
+    }
+    const {name,email,phoneNumber,birthDate,affiliation,speciality,educationalBackground,hourlyRate} = req.body;
+    if(name){
+      Pharmacist.name = name;
+    }
+    if(email){
+      Pharmacist.email = email;
+    }
+    if(birthDate){
+      Pharmacist.birthDate = birthDate;
+    }
+    if(affiliation){
+      Pharmacist.affiliation = affiliation;
+    }
+    if(speciality){
+      Pharmacist.speciality = speciality;
+    }
+    if(educationalBackground){
+      Pharmacist.educationalBackground = educationalBackground;
+    }
+    if(hourlyRate){
+      Pharmacist.hourlyRate = hourlyRate;
+    }
+    await Pharmacist.save();
+    res.status(200).json({
+      status:"success",
+      data:{
+        Pharmacist
+      }
+    })
+  }
+  catch(err){
+    res.status(500).json({
+      status:"error",
+      message:err.message
+    })
+  }
+}
 const getMedicineDetails = async (req, res) => {
   try {
     const { medicineId } = req.params; // Get the medicine ID from the route parameters
@@ -202,4 +275,6 @@ module.exports = {
   archiveMedicine,
   unarchiveMedicine,
   getMedicineSalesReport,
+  getPharmacistDetails,
+  updatePharmacist
 };
