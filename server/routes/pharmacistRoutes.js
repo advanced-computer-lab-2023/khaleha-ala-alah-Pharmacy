@@ -9,6 +9,10 @@ router.get(
   "/:medicineId/medicine-details",
   pharmacistController.getMedicineDetails
 );
+// get pharmacist
+router.get("/1234", CheckAuth ,pharmacistController.getPharmacistDetails);
+//update 
+router.patch("/updatePharmacist", CheckAuth, pharmacistController.updatePharmacist);
 router.put("/:medicineId/edit-medicine", pharmacistController.updateMedicine);
 router.get("/allpharmacists", pharmacistController.allpharmacists);
 router.patch("/archiveMedicine", pharmacistController.archiveMedicine);
