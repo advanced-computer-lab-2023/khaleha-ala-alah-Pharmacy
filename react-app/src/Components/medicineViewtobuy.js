@@ -13,6 +13,8 @@ import OverlayWindow from "./overlayWindow.jsx";
 import { Pagination } from "antd";
 import "./patientHomePhar.css";
 import LoadingPage from "./LoadingPage.jsx";
+import CartAlert from "./cartAlert.jsx";
+import { useNavigate } from "react-router-dom";
 
 const PatientHomePagebuy = () => {
   const { medicines, updateMedicines } = useMedicines();
@@ -30,14 +32,15 @@ const PatientHomePagebuy = () => {
   const [indexOfFirstMedicine, setIndexOfFirstMedicine] = useState(
     indexOfLastMedicine - medicinesPerPage + 1
   );
-
+  const [totalQuant, setTotalQuant] = useState(0); // State to keep track of total items in the cart
   const [medicalUses, setMedicalUses] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [filteredMedicines, setFilteredMedicines] = useState([]);
   const [selectedMedicalUse, setSelectedMedicalUse] = useState("all");
   const [isLoading, setIsLoading] = useState(true);
   const [prescriptions, setPrescriptions] = useState([]);
-
+  const [showCartAlert, setShowCartAlert] = useState(false);
+  const navigate = useNavigate();
   const handlePageChange = (page) => {
     console.log(page);
     console.log(filteredMedicines);
@@ -153,6 +156,11 @@ const PatientHomePagebuy = () => {
     }
   };
 
+  useEffect(() => {
+    // Calculate the total items in the cart
+    setTotalQuant(Object.values(cart).reduce((acc, item) => acc + item.quantity, 0));
+  }, [cart]);
+
   const handleViewDescription = (medicine) => {
     setShowMedicineDescription(true);
     setMedicineToDescribe(medicine);
@@ -176,6 +184,19 @@ const PatientHomePagebuy = () => {
     }
 
     handlePageChange(1); // Reset to first page
+  };
+
+  const handleAddToCart = (medicine) => {
+    setShowCartAlert(true);
+  };
+
+  const hideCartAlert = () => {
+    setShowCartAlert(false);
+  };
+
+  
+  const handleviewCart = () => {
+    navigate("/cart");
   };
 
   return (
@@ -215,6 +236,7 @@ const PatientHomePagebuy = () => {
                   <div key={medicine._id} className="medicine-card-container">
                     <MedicineCard
                       medicine={medicine}
+                      handleAddToCart={handleAddToCart}
                       updateCart={updateCart}
                       cart={cart}
                       medsQuantities={allmedsQuantities}
@@ -224,6 +246,13 @@ const PatientHomePagebuy = () => {
                     />
                   </div>
                 ))}
+
+                {showCartAlert && (
+                  <CartAlert
+                    hideAlert={hideCartAlert}
+                    viewCart={handleviewCart}
+                  />
+                )}
               </div>
               {showMedicineDescription && (
                 <OverlayWindow

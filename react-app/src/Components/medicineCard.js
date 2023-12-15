@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Department = ({
   medicine,
+  handleAddToCart,
   className = "",
   updateCart,
   cart,
@@ -138,17 +139,18 @@ const Department = ({
               <button
                 onClick={() => {
                   call_add_to_cart(medicine._id, 1);
+                  handleAddToCart(medicine);
                 }}
               >
                 Add to Cart
               </button>
               {/* Alert component */}
-              {cartAlert && (
+              {/* {cartAlert && (
                 <div>
                   <p>Added to Cart successfully</p>
                   <button onClick={hideAlert}>Close</button>
                 </div>
-              )}
+              )} */}
             </div>
           </div>
         </>
