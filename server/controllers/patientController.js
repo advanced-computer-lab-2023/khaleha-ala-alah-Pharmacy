@@ -591,7 +591,7 @@ exports.checkout = async function (req, res) {
       quantity: cartItem.quantity,
       totalPrice: cartItem.totalPrice /** cartItem.quantity*/,
     }));
-
+    console.log(orderItems);
     // Create a new order
     const order = new Order({
       userID: patientId,

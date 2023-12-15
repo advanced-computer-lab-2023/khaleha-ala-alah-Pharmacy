@@ -10,10 +10,9 @@ import { useEffect, useRef } from "react";
 import { BellOutlined, MessageOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
 import axios from "axios";
-import { useWebSocket } from '../WebSocketContext';
+import { useWebSocket } from "../WebSocketContext";
 import { useAuth } from "../AuthContext";
-
-
+import ToggleButton from "../Components/ToggleButton";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -24,12 +23,12 @@ const Header = () => {
   const [dropdownVisibleMessages, setDropdownVisibleMessages] = useState(false);
   const [hasNewMessages, setHasNewMessages] = useState(false);
   const [messages, setMessages] = useState([]);
-  const socket=useWebSocket();
+  const socket = useWebSocket();
   const initialized = useRef(false);
   const { role } = useAuth();
 
   useEffect(() => {
-      axios
+    axios
       .get("http://localhost:4002/messages/notifications", {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -49,19 +48,25 @@ const Header = () => {
         console.log(err);
       });
   }, []);
-  
+
   useEffect(() => {
-      if (!initialized.current){
-        if(socket){
-          initialized.current = true
-          socket.on("getMessage", (data) => {
-            axios.post("http://localhost:4002/users/getUser", {
-              userID: data.senderId,
-            }, {
-              headers: {
-                authorization: `Bearer ${localStorage.getItem("token")}`,
+    if (!initialized.current) {
+      if (socket) {
+        initialized.current = true;
+        socket.on("getMessage", (data) => {
+          axios
+            .post(
+              "http://localhost:4002/users/getUser",
+              {
+                userID: data.senderId,
               },
-            }).then((res) => {
+              {
+                headers: {
+                  authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            )
+            .then((res) => {
               if (res.data.user.role === "pharmacist") {
                 const message = {
                   senderId: data.senderId,
@@ -72,12 +77,13 @@ const Header = () => {
                 setMessages((prev) => [...prev, message]);
                 setHasNewMessages(true);
               }
-            }).catch((err) => {
+            })
+            .catch((err) => {
               console.log(err);
             });
-          });
-          }
-      };
+        });
+      }
+    }
   }, [role]);
 
   const toggleDropdownforSettings = () => {
@@ -97,9 +103,8 @@ const Header = () => {
     );
     setMessages(updatedMessages);
     const senderId = message.senderId;
-    navigate(`/messenger`, { state: {senderId} });
+    navigate(`/messenger`, { state: { senderId } });
     setDropdownVisibleMessages(false);
-
   };
 
   const handleLogout = () => {
@@ -115,9 +120,9 @@ const Header = () => {
     navigate("/patientUserprofile");
   };
 
-  const handleEditAccount = () =>{
+  const handleEditAccount = () => {
     navigate("/patientEditAcc");
-  }
+  };
 
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
@@ -134,6 +139,9 @@ const Header = () => {
         <div className={styles.navbarLogo}>
           <img src={logopng} alt="Logo" />
         </div>
+        <h3 className={styles.options}> Pharmacy </h3>
+        <ToggleButton style={{ marginLeft: "5px", marginRight: "5px" }} />
+        <h3 className={styles.options}> Clinic </h3>
 
         <div className={styles.navbarSearch}>
           <div
@@ -155,22 +163,18 @@ const Header = () => {
         </div>
 
         <div className={styles.navbarRight}>
-        <a
+          <a
             href="#messages"
             className={styles.navbarLink}
             onClick={toggleDropdownforMessages}
           >
             {hasNewMessages && (
               <Badge dot>
-                <MessageOutlined
-                  style={{ fontSize: "20px" }}
-                />
+                <MessageOutlined style={{ fontSize: "20px" }} />
               </Badge>
             )}
             {!hasNewMessages && (
-              <MessageOutlined
-                style={{ fontSize: "20px" }}
-              />
+              <MessageOutlined style={{ fontSize: "20px" }} />
             )}
           </a>
           {dropdownVisibleMessages && (
@@ -212,19 +216,25 @@ const Header = () => {
           </a>
           {dropdownVisible && (
             <div className={styles.dropdownMenu}>
-            <button className={styles.dropdownItem} onClick={handleEditAccount}>
-              Edit Account
-            </button>
-            <button className={styles.dropdownItem} onClick={handleUserProfile}>
-              User Profile
-            </button>
-            <button className={styles.dropdownItem} onClick={handlePassword}>
-              Change Password
-            </button>
-            <button className={styles.dropdownItem} onClick={handleLogout}>
-              Log Out
-            </button>
-          </div>
+              <button
+                className={styles.dropdownItem}
+                onClick={handleEditAccount}
+              >
+                Edit Account
+              </button>
+              <button
+                className={styles.dropdownItem}
+                onClick={handleUserProfile}
+              >
+                User Profile
+              </button>
+              <button className={styles.dropdownItem} onClick={handlePassword}>
+                Change Password
+              </button>
+              <button className={styles.dropdownItem} onClick={handleLogout}>
+                Log Out
+              </button>
+            </div>
           )}
         </div>
       </div>

@@ -170,6 +170,14 @@ const StripePaymentButton = ({ amount, patientId }) => {
   const handleCashOnDelivery = async () => {
     try {
       console.log(cartItems);
+      let newCartItems = [];
+      for (let i = 0; i < cartItems.length; i++) {
+        newCartItems.push({
+          id: cartItems[i].medicine,
+          quantity: cartItems[i].quantity,
+          totalPrice: cartItems[i].totalPrice,
+        });
+      }
       // Call the checkout API to place the order with cash on delivery
       const response = await fetch(`http://localhost:4002/patients/checkout`, {
         method: "POST",
@@ -178,7 +186,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
         body: JSON.stringify({
-          cartItems: cartItems,
+          cartItems: newCartItems,
           address: address, // Replace with the actual chosen address
         }),
       });
