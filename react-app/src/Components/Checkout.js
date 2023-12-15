@@ -70,16 +70,25 @@ const StripePaymentButton = ({ amount, patientId }) => {
         console.log(data);
         if (data.success) {
           console.log(cartItems);
+          let newCartItems = [];
+          for (let i = 0; i < cartItems.length; i++) {
+            newCartItems.push({
+              id: cartItems[i].medicine,
+              quantity: cartItems[i].quantity,
+              totalPrice: cartItems[i].totalPrice,
+            });
+          }
           // Payment successful, proceed to place the order
           const orderResponse = await fetch(
             `http://localhost:4002/patients/checkout`,
             {
               method: "POST",
               headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                cartItems: cartItems,
+                cartItems: newCartItems,
                 address: address, // Replace with the actual chosen address
               }),
             }
