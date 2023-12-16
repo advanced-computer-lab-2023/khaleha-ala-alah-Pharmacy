@@ -1028,11 +1028,17 @@ We welcome contributions from the community and are pleased to have you join us.
  **Quickstart:**
  
 -Fork the repository.
+
 -Clone your fork and create a new branch: git checkout -b my-branch-name.
+
 -Make your changes, test them, and ensure they follow the project's coding standards.
+
 -Commit your changes with a clear and detailed commit message.
+
 -Push your changes to your forked repository.
+
 -Open a pull request to the main branch of the original repository.
+
 -Provide as much information as possible with the pull request description.
 
 If you need help, don't hesitate to ask questions in the issues section or reach out directly via our contact channels.
