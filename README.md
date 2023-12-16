@@ -1025,7 +1025,8 @@ The provided image showcases a POST request to the /patients/checkout endpoint m
 # Contribute
 We welcome contributions from the community and are pleased to have you join us. If you wish to contribute code and you have not yet done so, please review our contribution guide.
 
-## Quickstart:
+ **Quickstart:**
+ 
 -Fork the repository.
 -Clone your fork and create a new branch: git checkout -b my-branch-name.
 -Make your changes, test them, and ensure they follow the project's coding standards.
