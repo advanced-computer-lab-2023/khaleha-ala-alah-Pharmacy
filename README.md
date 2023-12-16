@@ -983,7 +983,7 @@ DELETE /:userId/delete-address/:addressIndex: Delete address
 
 GET /:userId/get-all-addresses: Get all addresses for a user
 
-## Cart and Payments
+Cart and Payments
 
 GET /viewcartitems/:id: View cart items (Authenticated)
 
