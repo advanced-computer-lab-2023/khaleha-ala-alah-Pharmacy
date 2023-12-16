@@ -1027,19 +1027,19 @@ We welcome contributions from the community and are pleased to have you join us.
 
 ## Quickstart:
  
--Fork the repository.
+1- Fork the repository.
 
--Clone your fork and create a new branch: git checkout -b my-branch-name.
+2- Clone your fork and create a new branch: git checkout -b my-branch-name.
 
--Make your changes, test them, and ensure they follow the project's coding standards.
+3- Make your changes, test them, and ensure they follow the project's coding standards.
 
--Commit your changes with a clear and detailed commit message.
+4- Commit your changes with a clear and detailed commit message.
 
--Push your changes to your forked repository.
+5- Push your changes to your forked repository.
 
--Open a pull request to the main branch of the original repository.
+6- Open a pull request to the main branch of the original repository.
 
--Provide as much information as possible with the pull request description.
+7- Provide as much information as possible with the pull request description.
 
 
 
