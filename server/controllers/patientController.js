@@ -344,6 +344,9 @@ exports.addFamilyMembers = async function (req, res) {
   }
 };
 
+
+
+
 exports.addToCart = async function (req, res) {
   const medicineId = req.body.medicineId;
   const quantity = parseInt(req.body.quantity);
@@ -434,6 +437,96 @@ exports.addToCart = async function (req, res) {
     res
       .status(500)
       .json({ error: "An error occurred while adding medicine to the cart." });
+  }
+};
+exports.addToCartWithMedicines = async function (req, res) {
+  try {
+    const medicinesWithQuantities = req.body.medicinesWithQuantities;
+
+    if (!Array.isArray(medicinesWithQuantities) || medicinesWithQuantities.length === 0) {
+      return res
+        .status(400)
+        .json({ error: "Invalid or empty array of medicines and quantities." });
+    }
+
+    const patientId = req.user._id;
+    if (!patientId) {
+      return res.status(404).json({
+        status: "fail",
+        message: "Patient not found",
+      });
+    }
+
+    const patient = await Patient.findOne({ userID: patientId });
+    if (!patient) {
+      return res.status(404).json({ error: "Patient not found." });
+    }
+
+    let cart = await Cart.findOne({ user: patientId });
+
+    if (!cart) {
+      cart = new Cart({
+        user: patientId,
+        items: [],
+        totalAmount: 0,
+      });
+    }
+
+    for (const item of medicinesWithQuantities) {
+      const medicineName = Object.keys(item)[0]; // Extract the medicineName from the object key
+      const quantity = parseInt(item[medicineName]);
+
+      if (isNaN(quantity) || quantity <= 0) {
+        return res
+          .status(400)
+          .json({ error: "Quantity must be a positive number for medicine: " + medicineName });
+      }
+
+      const medicine = await Medicine.findOne({ name: medicineName });
+
+      if (!medicine) {
+        return res.status(404).json({ error: `Medicine '${medicineName}' not found.` });
+      }
+
+      if (medicine.availableQuantity === 0) {
+        return res.status(400).json({ error: `Medicine '${medicineName}' is not available.` });
+      } else if (medicine.availableQuantity < quantity) {
+        return res
+          .status(400)
+          .json({ error: `Medicine '${medicineName}' quantity is not available.` });
+      }
+
+      const totalItemPrice = medicine.price * quantity;
+
+      const existingCartItem = cart.items.find(
+        (cartItem) => cartItem.medicine.toString() === medicine._id.toString()
+      );
+
+      if (existingCartItem) {
+        existingCartItem.quantity += quantity;
+        existingCartItem.totalPrice += totalItemPrice;
+      } else {
+        const cartItem = {
+          medicine: medicine._id,
+          quantity: quantity,
+          totalPrice: totalItemPrice,
+        };
+        cart.items.push(cartItem);
+      }
+    }
+
+    cart.totalAmount = cart.items.reduce(
+      (total, item) => total + item.totalPrice,
+      0
+    );
+
+    await cart.save();
+
+    res.status(200).json({ message: "Medicines added to cart successfully." });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "An error occurred while adding medicines to the cart." });
   }
 };
 exports.viewCartItems = async function (req, res) {
