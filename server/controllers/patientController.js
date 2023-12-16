@@ -825,6 +825,23 @@ exports.setMedicinePhoto = async function (req, res) {
   }
 };
 
+exports.currentPatient = async function (req, res) {
+  try {
+    const patient = await Patient.findOne({ userID: req.user._id });
+    res.status(200).json({
+      status: "success",
+      data: {
+        patient,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      status: "error",
+      message: "An error occurred while fetching patient.",
+    });
+  }
+};
+
 exports.getCurrentPatient = async function (req, res) {
   try {
     const patient = await Patient.findOne({ userID: req.user._id });
@@ -850,6 +867,7 @@ exports.getCurrentPatient = async function (req, res) {
       },
     });
   } catch (err) {
+    console.log(err.message);
     res.status(500).json({
       status: "error",
       message: "An error occurred while fetching patient.",

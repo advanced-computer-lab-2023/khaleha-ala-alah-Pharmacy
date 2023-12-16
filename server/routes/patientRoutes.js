@@ -8,6 +8,7 @@ router.post("/checkout", CheckAuth, patientController.checkout);
 
 router.route("/").get(patientController.getAllPatients);
 router.get("/currentPatient", CheckAuth, patientController.getCurrentPatient);
+router.get("/thisPatient", CheckAuth, patientController.currentPatient);
 //  .post(patientController.createPatient);
 router.get("/filterMedicine", patientController.filterMedicine);
 router.get("/searchmedicine", patientController.searchMedicineByName);

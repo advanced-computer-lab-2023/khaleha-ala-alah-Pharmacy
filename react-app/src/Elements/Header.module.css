@@ -225,3 +225,13 @@
   font-size: medium;
   color: rgb(88, 88, 88);
 }
+.walletContainer {
+  display: flex;
+  align-items: center;
+  margin-right: 20px; /* Adjust spacing as needed */
+}
+
+.walletValue {
+  margin-left: 10px; /* Space between icon and text */
+  /* Add any additional styling for the wallet value text here */
+}

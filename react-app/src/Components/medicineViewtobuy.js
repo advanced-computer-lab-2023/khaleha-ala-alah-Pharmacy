@@ -15,6 +15,7 @@ import "./patientHomePhar.css";
 import LoadingPage from "./LoadingPage.jsx";
 import CartAlert from "./cartAlert.jsx";
 import { useNavigate } from "react-router-dom";
+import Header from "../Elements/Header";
 import { useAuth } from "../AuthContext";
 
 const PatientHomePagebuy = () => {
@@ -60,6 +61,7 @@ const PatientHomePagebuy = () => {
     );
     console.log(currentMediciness);
     setCurrentMedicines(currentMediciness);
+    window.scrollTo(0, 0); // Scrolls to the top of the page
   };
 
   const fetchAvailableMedicines = async () => {
@@ -132,7 +134,7 @@ const PatientHomePagebuy = () => {
   const fetchCurrentPatient = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4002/patients/currentPatient",
+        "http://localhost:4002/patients/thisPatient",
         {
           method: "GET", // Method is optional because GET is the default value
           headers: {
@@ -160,7 +162,9 @@ const PatientHomePagebuy = () => {
 
   useEffect(() => {
     // Calculate the total items in the cart
-    setTotalQuant(Object.values(cart).reduce((acc, item) => acc + item.quantity, 0));
+    setTotalQuant(
+      Object.values(cart).reduce((acc, item) => acc + item.quantity, 0)
+    );
   }, [cart]);
 
   const handleViewDescription = (medicine) => {
@@ -196,7 +200,6 @@ const PatientHomePagebuy = () => {
     setShowCartAlert(false);
   };
 
-  
   const handleviewCart = () => {
     navigate("/cart");
   };
@@ -207,6 +210,7 @@ const PatientHomePagebuy = () => {
         <LoadingPage />
       ) : (
         <>
+          <Header patient={patient} />
           <div className="page-container">
             <aside className="sidebar">
               <h3>Medical Uses</h3>

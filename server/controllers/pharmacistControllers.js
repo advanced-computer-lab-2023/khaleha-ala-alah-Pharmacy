@@ -3,79 +3,87 @@ const Medicine = require("../models/medicine"); // Import the Medicine model
 // Import the Medicine model
 const pharmacist = require("../models/users/pharmacist"); // Import the Medicine model
 const Order = require("../models/order");
-const getPharmacistDetails = async (req,res)=>{
+const getPharmacistDetails = async (req, res) => {
   try {
     console.log(req.user);
     const Pharmacist = await pharmacist.findOne({ userID: req.user._id });
     console.log("hiiiiii");
     console.log(Pharmacist);
-    if(!Pharmacist){
+    if (!Pharmacist) {
       return res.status(404).json({
-        status:"fail",
-        message:"Pharmacist not found"
-      })
+        status: "fail",
+        message: "Pharmacist not found",
+      });
     }
     console.log("hiiiiii");
     res.status(200).json({
-      status:"success",
-      data:{
-        Pharmacist
-      }
-    })
+      status: "success",
+      data: {
+        Pharmacist,
+      },
+    });
   } catch (error) {
     res.status(500).json({ error: "Error fetching pharmacist" });
   }
-}
-const updatePharmacist = async (req,res)=>{
+};
+const updatePharmacist = async (req, res) => {
   // validate input name , email , phone number and birthdate , affiliation , speciality , Educational Background , Hourly Rate if any of them
   // is not valid return error
   // else update the doctor
   // return the updated doctor
-  try{
-    const Pharmacist = await pharmacist.findOne({userID:req.user._id});
-    if(!Pharmacist){
+  try {
+    const Pharmacist = await pharmacist.findOne({ userID: req.user._id });
+    if (!Pharmacist) {
       return res.status(404).json({
-        status:"fail",
-        message:"Pharmacist not found"
-      })
+        status: "fail",
+        message: "Pharmacist not found",
+      });
     }
-    const {name,email,phoneNumber,birthDate,affiliation,speciality,educationalBackground,hourlyRate} = req.body;
-    if(name){
+    const {
+      name,
+      email,
+      phoneNumber,
+      birthDate,
+      affiliation,
+      speciality,
+      educationalBackground,
+      hourlyRate,
+    } = req.body;
+    if (name) {
       Pharmacist.name = name;
     }
-    if(email){
+    if (email) {
       Pharmacist.email = email;
     }
-    if(birthDate){
+    if (birthDate) {
       Pharmacist.birthDate = birthDate;
     }
-    if(affiliation){
+    if (affiliation) {
       Pharmacist.affiliation = affiliation;
     }
-    if(speciality){
+    if (speciality) {
       Pharmacist.speciality = speciality;
     }
-    if(educationalBackground){
+    if (educationalBackground) {
       Pharmacist.educationalBackground = educationalBackground;
     }
-    if(hourlyRate){
+    if (hourlyRate) {
       Pharmacist.hourlyRate = hourlyRate;
     }
     await Pharmacist.save();
     res.status(200).json({
-      status:"success",
-      data:{
-        Pharmacist
-      }
-    })
-  }
-  catch(err){
+      status: "success",
+      data: {
+        Pharmacist,
+      },
+    });
+  } catch (err) {
     res.status(500).json({
-      status:"error",
-      message:err.message
-    })
+      status: "error",
+      message: err.message,
+    });
   }
-}
+};
 const getMedicineDetails = async (req, res) => {
   try {
     const { medicineId } = req.params; // Get the medicine ID from the route parameters
@@ -146,7 +154,7 @@ const addMedicine = async (req, res) => {
       availableQuantity,
       activeIngredients,
       medicalUse,
-      isPrescription
+      isPrescription,
     } = req.body;
 
     // Create a new medicine document
@@ -216,12 +224,23 @@ const getMedicineSalesReport = async (req, res) => {
   try {
     const salesReport = await Order.aggregate([
       {
+        $lookup: {
+          from: "medicines",
+          localField: "items.medicine",
+          foreignField: "_id",
+          as: "medicineDetails",
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
         $match: {
           createdAt: { $gte: startDate, $lte: endDate },
           status: "Pending",
+          "medicineDetails.userID": req.user._id, // Filter by userID
         },
       },
-      { $unwind: "$items" },
       {
         $group: {
           _id: "$items.medicine",
@@ -235,6 +254,88 @@ const getMedicineSalesReport = async (req, res) => {
           localField: "_id",
           foreignField: "_id",
           as: "medicineDetails",
+        },
+      },
+      {
+        $match: {
+          "medicineDetails.0.userID": req.user._id, // Ensure the medicine has the correct userID
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          medicine: { $arrayElemAt: ["$medicineDetails", 0] },
+          totalQuantity: 1,
+          totalSales: 1,
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          totalSalesForAllMedicines: { $sum: "$totalSales" },
+          medicines: { $push: "$$ROOT" },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          totalSalesForAllMedicines: 1,
+          medicines: 1,
+        },
+      },
+    ]);
+
+    res.json(salesReport);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const getMedicineSalesReportByDate = async (req, res) => {
+  const { day, month, year } = req.params;
+  const startDate = new Date(Date.UTC(year, month - 1, day, 0, 0, 0)); // Set time to midnight in UTC
+  const endDate = new Date(Date.UTC(year, month - 1, day, 23, 59, 59));
+
+  console.log("Start Date:", startDate.toISOString());
+  console.log("End Date:", endDate.toISOString());
+  try {
+    const salesReport = await Order.aggregate([
+      {
+        $lookup: {
+          from: "medicines",
+          localField: "items.medicine",
+          foreignField: "_id",
+          as: "medicineDetails",
+        },
+      },
+      {
+        $unwind: "$items",
+      },
+      {
+        $match: {
+          createdAt: { $gte: startDate, $lt: endDate }, // Use $lt to specify the end of the day
+          status: "Pending",
+          "medicineDetails.userID": req.user._id,
+        },
+      },
+      {
+        $group: {
+          _id: "$items.medicine",
+          totalQuantity: { $sum: "$items.quantity" },
+          totalSales: { $sum: "$items.totalPrice" },
+        },
+      },
+      {
+        $lookup: {
+          from: "medicines",
+          localField: "_id",
+          foreignField: "_id",
+          as: "medicineDetails",
+        },
+      },
+      {
+        $match: {
+          "medicineDetails.0.userID": req.user._id,
         },
       },
       {
@@ -276,5 +377,6 @@ module.exports = {
   unarchiveMedicine,
   getMedicineSalesReport,
   getPharmacistDetails,
-  updatePharmacist
+  updatePharmacist,
+  getMedicineSalesReportByDate,
 };

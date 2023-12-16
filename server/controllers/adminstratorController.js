@@ -24,9 +24,7 @@ exports.getMedicinesByMedicalUse = async (req, res) => {
     // Find medicines where availableQuantity is greater than 0 and match the selected medical use
     const availableMedicines = await Medicine.find({
       medicalUse: medicalUse, // Filter by the selected medical use
-    }).select(
-      "availableQuantity medicalUse sales name price description pictureUrl isPrescription"
-    );
+    });
 
     res.status(200).json(availableMedicines);
   } catch (error) {
