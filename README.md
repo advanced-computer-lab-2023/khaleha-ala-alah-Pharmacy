@@ -30,7 +30,7 @@ Features of the Login Screen:
 
 The login interface is the first interaction users have with "Khaleeha Ala Allah" platform, setting the tone for a user-friendly, secure, and professional experience.
 
-![](RackMultipart20231216-1-ujqva1_html_b796587e02c1fd0c.jpg)
+![WhatsApp Image 2023-12-15 at 9 28 00 PM (1)](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/3d482008-93fb-47fe-a38c-0ff1bf427ee0)
 
 The above image illustrates the 'Registration' page for patients on Khaleeha Ala Allah online pharmacy platform. This form is the starting point for patients to create their personal accounts, allowing them to access a wide range of online pharmacy services.
 
