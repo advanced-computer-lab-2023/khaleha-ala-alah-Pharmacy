@@ -49,6 +49,7 @@ router.get("/:userId/get-all-addresses", patientController.getAllAddresses);
 router.get("/viewcartitems/:id", CheckAuth, patientController.viewCartItems);
 router.post("/save-stripe-token", paymentController.payForPackage);
 router.post("/add-to-cart", CheckAuth, patientController.addToCart);
+router.post("/add-to-cart-with-medicines", patientController.addToCartWithMedicines);
 
 //router for the removeItemFromCart
 router.delete(
