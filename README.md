@@ -1025,7 +1025,7 @@ The provided image showcases a POST request to the /patients/checkout endpoint m
 # Contribute
 We welcome contributions from the community and are pleased to have you join us. If you wish to contribute code and you have not yet done so, please review our contribution guide.
 
- **Quickstart:**
+## Quickstart:
  
 -Fork the repository.
 
@@ -1040,6 +1040,8 @@ We welcome contributions from the community and are pleased to have you join us.
 -Open a pull request to the main branch of the original repository.
 
 -Provide as much information as possible with the pull request description.
+
+
 
 If you need help, don't hesitate to ask questions in the issues section or reach out directly via our contact channels.
 
