@@ -442,14 +442,14 @@ exports.addToCart = async function (req, res) {
 exports.addToCartWithMedicines = async function (req, res) {
   try {
     const medicinesWithQuantities = req.body.medicinesWithQuantities;
-
+    const patientId = req.body.patientID;
     if (!Array.isArray(medicinesWithQuantities) || medicinesWithQuantities.length === 0) {
       return res
         .status(400)
         .json({ error: "Invalid or empty array of medicines and quantities." });
     }
 
-    const patientId = req.user._id;
+   
     if (!patientId) {
       return res.status(404).json({
         status: "fail",
