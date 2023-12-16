@@ -214,7 +214,7 @@ The interface is straightforward and user-friendly, consisting of three main fie
 
 Once the necessary fields are filled, the 'Change Password' button at the bottom, highlighted in blue, is designed to be prominent and easily clickable, finalizing the password change process. This system not only upholds security standards but also empowers administrators to regularly update their passwords, thereby enhancing the overall security of the platform.
 
-#**Tech/Framework Used**
+# Tech/Framework Used
 
 **Frontend:**
 
@@ -250,7 +250,7 @@ Once the necessary fields are filled, the 'Change Password' button at the bottom
 
 - Prettier for code formatting
 
-###### **Features**
+# Features
 
  **Patient Features**
 
@@ -315,7 +315,7 @@ Once the necessary fields are filled, the 'Change Password' button at the bottom
 - View a pharmacist's information.
 - View a patient's basic information.
 
- **Code Examples:**
+ # Code Examples
 
 **Example 1 (Log in):**
 
@@ -752,7 +752,7 @@ exports.viewCartItems = async function (req, res) {
   }
 };
 ```
-**Installation**
+# Installation
 
 Follow these steps to set up and run the frontend and backend of the project.
 
@@ -814,7 +814,7 @@ Follow these steps to set up and run the frontend and backend of the project.
 
    The backend server should now be running and listening for requests.
 
-**How to Use**
+# How to Use
 
 In this section, you'll find step-by-step instructions on how to use and configure the project using the provided environment variables.
 
