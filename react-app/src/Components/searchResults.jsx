@@ -223,7 +223,6 @@ const SearchResults = () => {
                       medsQuantities={allmedsQuantities}
                       patient={patient}
                       handleViewDescription={handleViewDescription}
-                      role= {role}
                     />
                   </div>
                 ))}

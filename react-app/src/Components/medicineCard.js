@@ -3,6 +3,7 @@ import { Alert, Avatar, Button, Card } from "antd";
 import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons/lib";
 import axios from "axios";
 import "./medicineCard.css";
+import { useAuth } from "../AuthContext";
 
 const Department = ({
   medicine,
@@ -13,11 +14,11 @@ const Department = ({
   medsQuantities,
   patient,
   handleViewDescription,
-  role,
+  prescriptions,
 }) => {
   const [hovered, setHovered] = useState(false);
   const [cartAlert, setCartAlert] = useState(false);
-
+  const {role} = useAuth();
   const hideAlert = () => {
     setCartAlert(false);
   };
@@ -153,7 +154,7 @@ const Department = ({
             </div>
             <div className="button-box">
               <br />
-              {(role === "patients" || role === "pharmacists") && (
+              {(role === "patient" || role === "pharmacist") && (
                 <button
                   onClick={() => {
                     call_add_to_cart(medicine._id, 1);
