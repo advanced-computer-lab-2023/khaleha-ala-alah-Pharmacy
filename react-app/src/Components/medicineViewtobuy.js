@@ -15,6 +15,7 @@ import "./patientHomePhar.css";
 import LoadingPage from "./LoadingPage.jsx";
 import CartAlert from "./cartAlert.jsx";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContext";
 
 const PatientHomePagebuy = () => {
   const { medicines, updateMedicines } = useMedicines();
@@ -41,6 +42,7 @@ const PatientHomePagebuy = () => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [showCartAlert, setShowCartAlert] = useState(false);
   const navigate = useNavigate();
+  const {role} = useAuth();
   const handlePageChange = (page) => {
     console.log(page);
     console.log(filteredMedicines);
