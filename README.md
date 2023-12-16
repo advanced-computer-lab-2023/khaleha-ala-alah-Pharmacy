@@ -1022,7 +1022,21 @@ The image depicts a GET request to the /patients/myOrders/Pending endpoint using
 The provided image showcases a POST request to the /patients/checkout endpoint made via Postman, indicating the completion of a purchase. The request payload includes the details of cart items, such as the medicine ID, quantity, and total price. The server responded with a 200 OK status, and the response body contains a confirmation message "Order placed successfully." This indicates that the checkout process was completed successfully and the order has been registered in the system.
 
 
+# Contribute
+We welcome contributions from the community and are pleased to have you join us. If you wish to contribute code and you have not yet done so, please review our contribution guide.
 
+## Quickstart:
+-Fork the repository.
+-Clone your fork and create a new branch: git checkout -b my-branch-name.
+-Make your changes, test them, and ensure they follow the project's coding standards.
+-Commit your changes with a clear and detailed commit message.
+-Push your changes to your forked repository.
+-Open a pull request to the main branch of the original repository.
+-Provide as much information as possible with the pull request description.
+
+If you need help, don't hesitate to ask questions in the issues section or reach out directly via our contact channels.
+
+Thank you for your contributions!
 
 
 
