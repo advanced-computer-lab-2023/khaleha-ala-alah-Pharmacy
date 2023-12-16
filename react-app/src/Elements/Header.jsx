@@ -13,8 +13,9 @@ import axios from "axios";
 import { useWebSocket } from "../WebSocketContext";
 import { useAuth } from "../AuthContext";
 import ToggleButton from "../Components/ToggleButton";
+import WalletImage from "../Images/wallet.png";
 
-const Header = () => {
+const Header = (patient = null) => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [dropdownVisibleAlert, setDropdownVisibleAlert] = useState(false);
@@ -26,6 +27,7 @@ const Header = () => {
   const socket = useWebSocket();
   const initialized = useRef(false);
   const { role } = useAuth();
+  console.log(patient);
 
   useEffect(() => {
     axios
@@ -86,6 +88,32 @@ const Header = () => {
     }
   }, [role]);
 
+  const fetchCurrentPatient = async () => {
+    try {
+      const response = await fetch(`http://localhost:4002/patients/`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Current patient fetched successfully:");
+        console.log(data.data.patients[0]);
+        return data;
+      } else {
+        console.error("Failed to fetch current patient:");
+        console.error(data);
+        return null;
+      }
+    } catch (error) {
+      console.error("Failed to fetch current patient:");
+      console.error(error);
+      return null;
+    }
+  };
+
   const toggleDropdownforSettings = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -140,7 +168,7 @@ const Header = () => {
           <img src={logopng} alt="Logo" />
         </div>
         <h3 className={styles.options}> Pharmacy </h3>
-        <ToggleButton style={{ marginLeft: "5px", marginRight: "5px" }} />
+        <ToggleButton />
         <h3 className={styles.options}> Clinic </h3>
 
         <div className={styles.navbarSearch}>
@@ -163,6 +191,12 @@ const Header = () => {
         </div>
 
         <div className={styles.navbarRight}>
+          <div className={styles.walletContainer}>
+            <img src={WalletImage} alt="Wallet" style={{ width: "35px" }} />
+            <p className={styles.walletValue}>
+              EGP {patient.patient.walletValue}
+            </p>
+          </div>
           <a
             href="#messages"
             className={styles.navbarLink}

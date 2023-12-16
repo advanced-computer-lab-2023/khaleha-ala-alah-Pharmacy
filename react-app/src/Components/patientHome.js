@@ -22,7 +22,6 @@ const PatientHomePage = () => {
 
   return (
     <div>
-      <Header />
       <NavBar />
       <MedicinesProvider>
         <PatientHomePagebuy />

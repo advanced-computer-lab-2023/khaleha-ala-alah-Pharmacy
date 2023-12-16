@@ -6,6 +6,7 @@ const medicationSchema = new Schema({
     type: String,
     required: true,
   },
+
   dosage: {
     type: String,
   },
@@ -32,7 +33,7 @@ const prescriptionsSchema = new Schema(
     medications: [medicationSchema],
     pdfFileID: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'uploads.files', 
+      ref: "uploads.files",
     },
   },
   { timestamps: true }
