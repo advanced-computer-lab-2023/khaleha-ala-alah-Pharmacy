@@ -89,7 +89,7 @@ A noteworthy aspect of this page is the 'Filter by Status' dropdown menu located
 
 Each order block also includes the total amount and the status of the order, such as 'Pending', to indicate the current phase of the order process. For orders that are not yet finalized, there is a 'Cancel Order' button, providing customers with the flexibility to modify their orders before they are processed. This user-centric design caters to a convenient and efficient order management system, enhancing the overall customer experience on the platform.
 
-![](RackMultipart20231216-1-ujqva1_html_7925a0d4ea576fcb.jpg)
+![WhatsApp Image 2023-12-15 at 3 24 13 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/526fe472-f8aa-4e8c-bd39-709a129d3640)
 
 The image presents the 'Cart' interface of Khaleeha Ala Allah pharmacy platform, which is part of the upper menu bar navigation. This section provides a clear summary of the products selected for purchase, with each item displayed alongside its name, adjustable quantity selectors, and individual price. The design of the cart enables users to easily increase or decrease the quantity of each item, with the total cost dynamically updating to reflect changes.
 
@@ -97,7 +97,7 @@ Additionally, on the right-hand side, there is a section to 'Enter Promo Code'. 
 
 Below the promo code area, the interface neatly summarizes the financial details of the order: the initial total, delivery fees, applicable taxes, and the final subtotal after any discounts are applied. The 'Checkout' button is prominently displayed, inviting users to proceed with the secure payment process after reviewing their cart. This layout is designed for ease of use, ensuring that all necessary information is transparent, and the checkout process is as intuitive as possible.
 
-![](RackMultipart20231216-1-ujqva1_html_f35e23e27591c2a0.jpg)
+![WhatsApp Image 2023-12-15 at 7 59 41 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/346acbbe-8541-4c65-8acf-aa373f9777ee)
 
 The image depicts the 'Chat' feature of Khaleeha Ala Allah pharmacy platform, a section designed to facilitate direct communication between patients and pharmacists. On the left side of the interface, there is a list of available pharmacists, each with a profile icon and name, making it easy for users to identify and select a professional to converse with.
 
@@ -107,7 +107,7 @@ At the bottom of the chat window, there is a text input field where users can ty
 
 This chat functionality underscores the platform's commitment to providing real-time, personalized support to its users. It enhances the service by offering accessible healthcare advice, thus bridging the gap between online shopping and professional healthcare consultation.
 
-![](RackMultipart20231216-1-ujqva1_html_5fd7c88e522332f3.jpg)
+![WhatsApp Image 2023-12-15 at 8 00 42 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/d94273ce-e46c-43e6-a0b2-b23c70c81e36)
 
 The image shows the 'Change Password' page from Khaleeha Ala Allah pharmacy platform, a crucial part of user account management. This interface is designed for simplicity and security, with clear fields for entering the current password, the new password, and a confirmation of the new password to ensure accuracy.
 
@@ -119,7 +119,7 @@ The process is straightforward:
 
 Once all fields are completed, the user can finalize the update by clicking the 'Change Password' button, which is highlighted in blue to draw attention. This process is integral to maintaining account security, allowing users to regularly update their passwords and safeguard their personal and medical information on the platform.
 
-![](RackMultipart20231216-1-ujqva1_html_8b1f1938977b9825.png)
+![pharmacistHomePage](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/5844aca8-54ab-48d6-8d74-ab904bdd6051)
 
 The above image showcases the home page tailored for pharmacists on Khaleeha Ala Allah online pharmacy platform. This intuitive dashboard is the cornerstone for pharmacists to navigate their professional tasks and interact with the patient community effectively. The 'View Medicines' section on this page is a critical feature, where pharmacists can review and manage the details of medications, keeping abreast of the inventory and information pertinent to patient care.
 
@@ -129,7 +129,7 @@ Navigation is made effortless with a simple top bar, granting easy access to var
 
 The design of the pharmacist home page on Khaleeha Ala Allah platform is a testament to the thoughtful consideration of the pharmacist's workflow, aiming to create a harmonious balance between efficiency and user-centric design, which is paramount in the fast-paced environment of healthcare.
 
-![](RackMultipart20231216-1-ujqva1_html_54da6a349be562ef.png)
+![viewMedecines](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/32d14143-0ade-42be-98e9-0f79ba45c193)
 
 The image provides a detailed view of the 'View Medicines' interface on Khaleeha Ala Allah online pharmacy platform, accessible to pharmacists after logging in. This page is a critical component of the platform, allowing pharmacists to efficiently manage their medicine inventory.
 
@@ -139,7 +139,7 @@ The central part of the screen displays a table that lists the medicines with co
 
 An 'Archive' button accompanies each medicine entry, providing pharmacists with the capability to effortlessly remove products from active listings, an essential feature for maintaining current and accurate stock information. The layout of the 'View Medicines' page is meticulously organized, reflecting the platform's commitment to providing a user-friendly and functional environment for pharmacy professionals to administer their medicinal offerings.
 
-![](RackMultipart20231216-1-ujqva1_html_2e0c09685ef74077.png)
+![chathome](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/53b5fd1c-e6bb-4269-a75a-e949b98daddf)
 
 The image illustrates the "Chat" home page of Khaleeha Ala Allah online pharmacy platform, where communication between healthcare professionals and patients is streamlined. This specific section is designed to facilitate conversation, offering a user-friendly environment for real-time interaction.
 
@@ -149,7 +149,7 @@ For instance, the current view shows "magdy hussien" listed under the "Patients"
 
 The overall design of the "Chat" home page, with its functional clarity and streamlined approach, reflects the platform's dedication to providing a seamless and effective communication tool for its users, ensuring that important conversations can be conducted in a conducive environment.
 
-![](RackMultipart20231216-1-ujqva1_html_49ff59cc71120867.jpg)
+![WhatsApp Image 2023-12-15 at 9 43 04 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/060f03ad-51cc-4cd7-a514-f7387d618781)
 
 The provided image depicts the interactive chat interface of Khaleeha Ala Allah online pharmacy platform, highlighting the actual conversation area where pharmacists and patients engage in dialogue. The left side of the interface maintains a list of conversations, currently displaying "magdy hussien" as an active chat, signifying that pharmacists can easily manage multiple conversations with different patients in one consolidated view.
 
@@ -157,7 +157,7 @@ The main chat window is a clean and focused space where the conversation unfolds
 
 The chat interface is designed to mimic the familiar layout of popular messaging applications, which helps reduce the learning curve and enhances user comfort. It's evident that the platform prioritizes efficient communication, evident by the streamlined design that facilitates clear and quick exchanges between pharmacists and their patients.
 
-![](RackMultipart20231216-1-ujqva1_html_35976ac1118d536a.jpg)
+![WhatsApp Image 2023-12-16 at 4 50 53 AM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/1b17e5a8-af63-4ebd-b5eb-32b652e2a3e5)
 
 The image portrays the home page for administrators on Khaleeha Ala Allah online pharmacy platform. This central dashboard is where administrators can oversee various aspects of the platform's operations. The page is segmented into distinct panels for different administrative functions, each with a 'Details' link providing more in-depth information.
 
@@ -169,7 +169,7 @@ Lastly, the 'View Medicines' panel provides a straightforward route for administ
 
 The design of the admin home page is clean and intuitive, providing a high-level overview of critical management tasks with ease of access, reflecting the platform's commitment to streamlined administration and oversight.
 
-![](RackMultipart20231216-1-ujqva1_html_565d3db4b7efbcef.jpg)
+![WhatsApp Image 2023-12-16 at 4 50 53 AM (1)](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/32dd2137-1c7e-412b-b9d9-17ded438c37e)
 
 The image represents the 'Manage Admins' page within the administrative section of the "Khaleeha Ala Allah" online pharmacy platform. It is a dedicated space for overseeing the platform's administrators, allowing for high-level control and management of backend users.
 
@@ -179,17 +179,18 @@ The central part of the page lists the usernames of current administrators, here
 
 This 'Manage Admins' page is designed with simplicity and functionality in mind, ensuring that the platform's administrative oversight is as efficient and streamlined as possible.
 
-![](RackMultipart20231216-1-ujqva1_html_5e80067ceaa62f1c.jpg)
+![WhatsApp Image 2023-12-16 at 4 50 53 AM (2)](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/48b08ffb-f1dc-4ce7-bcbc-d92761c9f1e2)
 
 The image depicts the 'Manage Pharmacists' page of the Khaleeha Ala Allah online pharmacy platform, providing administrators with a comprehensive view of the pharmacists registered on the platform. This interface is designed for administrative staff to oversee the details of the pharmacists, including their names, usernames, email addresses, gender, specialties, and the current status of their account, whether accepted or pending.
 
-This page is an essential tool for administrators as it enables them to conduct a detailed review of each pharmacist's credentials and professional information. A search bar at the top allows for quick filtering, making it easier to find specific individuals based on username. In the 'Actions' column, administrators have the ability to perform actions such as approving pending applications or editing existing pharmacist profiles.
+This page is an essential tool for administrators as it enables them to conduct a detailed review of each pharmacist's credentials and professional information. A search bar at the top allows for quick filtering, making it easier to find specific individuals based on username. In the 'Actions' column, administrators have the ability to perform actions such as approving pending applications or editing existing pharmacist profiles
 
 The inclusion of gender and specialty columns in the table is particularly helpful for ensuring a diverse range of professionals and expertise are available through the platform. The 'Status' column is crucial for tracking the verification process, allowing administrators to maintain a high standard of service by ensuring that only qualified pharmacists are approved.
 
 Overall, the 'Manage Pharmacists' page is a key component of the platform's administrative backend, crafted to facilitate efficient management and oversight of pharmacist registrations and profiles.
 
-![](RackMultipart20231216-1-ujqva1_html_761c5da252ec011c.jpg)
+![WhatsApp Image 2023-12-16 at 4 50 55 AM (1)](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/80792657-c6ba-4c76-82fe-c8c609ba8d77)
+
 
 The image shows the 'Pending Pharmacists' section of Khaleeha Ala Allah online pharmacy platform, a crucial administrative tool for overseeing and managing new pharmacist registrations. In this interface, administrators can review applications from pharmacists who wish to join the platform, verifying their credentials before granting them access.
 
@@ -199,7 +200,7 @@ On the right side, two options are presented for each entry: 'Approve' and 'Reje
 
 The design of the 'Pending Pharmacists' page is focused on functionality, prioritizing ease of use to facilitate the administrative process and ensure the integrity of the pharmacy services offered through the platform.
 
-![](RackMultipart20231216-1-ujqva1_html_415704c22dff4941.jpg)
+![WhatsApp Image 2023-12-16 at 4 50 55 AM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/81e4396b-cf80-42eb-8113-5609b1471e31)
 
 The image illustrates the 'View Medicines' section of the administrative dashboard on Khaleeha Ala Allah online pharmacy platform, accessible only to administrators. This interface is a vital part of the platform's back-end, where administrators have the ability to oversee the full inventory of medicines.
 
@@ -207,7 +208,7 @@ Administrators are provided with tools to refine their search within the invento
 
 The medicines are presented in a table that lists out key details such as the medicine's image, name, price, the quantity available, and the volume of sales. This organized presentation aids administrators in quickly assessing the status of the pharmacy's inventory. Each row in the table is clickable, likely offering a more detailed view of the medicine's profile and administrative options such as updating or removing listings from the inventory.
 
-![](RackMultipart20231216-1-ujqva1_html_476632a0c8da2e01.jpg)
+![WhatsApp Image 2023-12-16 at 4 50 54 AM (1)](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/c4684fe2-d5cb-4554-ac10-656db25afa4e)
 
 The image displays the 'Change Password' interface for administrators on the "Khaleeha Ala Allah" online pharmacy platform. This secure page is where administrators can update their login credentials, an essential aspect of maintaining the platform's security protocols.
 
