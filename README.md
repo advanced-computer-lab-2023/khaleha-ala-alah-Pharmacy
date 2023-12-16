@@ -1003,7 +1003,7 @@ Throughout the development of our API, we extensively utilized Postman for testi
 
 The screenshot illustrates a successful login attempt using the Postman application. A POST request was sent to the '/users/login' endpoint with a JSON payload containing a username and password. The server responded with a 200 OK status, indicating that the login was successful. The response body contains a message confirming the successful login and a JWT token, which is used for authenticating subsequent requests. Additionally, the role of the logged-in user is identified as "patient" within the response payload.
 
-![TestviewCart](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/edc0304f-aa0d-4c40-80ca-1c3e8bcc90cea
+![TestviewCart](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/edc0304f-aa0d-4c40-80ca-1c3e8bcc90cea)
 
 The image shows a successful GET request made to the /patients/viewcartitems/{patientId} endpoint using Postman. The response, with a 200 OK status, indicates a successful retrieval of cart details for a patient. The JSON payload in the response body includes a success flag set to true, and a cart object containing the ID of the cart, the associated user ID, and an array of items. Each item in the array details a medicine's ID, name, image URL, price, description, sales count, available quantity, active ingredients, medical use, archival status, user ID, prescription requirement, and version number. This demonstrates the API's capability to provide detailed information about items in a patient's cart.
 
