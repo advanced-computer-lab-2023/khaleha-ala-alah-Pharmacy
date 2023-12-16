@@ -45,7 +45,7 @@ Features of the Registration Form:
 
 This registration interface is carefully crafted to ensure that the process of joining Khaleeha Ala Allah online pharmacy is as seamless and user-friendly as possible, setting the stage for a secure and personalized healthcare shopping experience.
 
-![](RackMultipart20231216-1-ujqva1_html_50fe0efea34828f7.jpg)
+![WhatsApp Image 2023-12-15 at 9 27 59 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/7a6a5c99-2d35-4f06-9214-2edecd7b981d)
 
 Displayed above is the 'Registration' page specifically designed for doctors on Khaleeha Ala Allah online pharmacy platform. This interface is crafted to gather detailed professional information from medical practitioners who wish to affiliate with the platform.
 
@@ -59,7 +59,7 @@ Key Elements of the Doctor Registration Form:
 
 This registration form is meticulously tailored to ensure a seamless onboarding process for doctors, facilitating their integration into Khaleeha Ala Allah platform, where they can offer their expertise to a broader patient community.
 
-![](RackMultipart20231216-1-ujqva1_html_1fbc228599054878.jpg)
+![WhatsApp Image 2023-12-15 at 9 27 54 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/360f0094-1123-418c-9738-f9e20aee50fe)
 
 The image above displays the "Forgot Password" recovery page for Khaleeha Ala Allah online pharmacy platform. This feature provides a vital function for users who have lost or forgotten their account password.
 
@@ -72,7 +72,7 @@ Functionality of the Forgot Password Page:
 
 This "Forgot Password" function is an essential aspect of the user experience, providing users with a quick and secure method to regain access to their accounts on SKhaleeha Ala Allah platform.
 
-![](RackMultipart20231216-1-ujqva1_html_3a27b5c1bc97ee85.jpg)
+![WhatsApp Image 2023-12-15 at 3 18 13 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/e2aa02db-d22d-4dcf-ad9c-092ecb8e6c95)
 
 This image showcases the home page of Khaleeha Ala Allah pharmacy platform for patients. It illustrates a user-friendly interface where customers can easily browse and purchase medicines. The page displays a selection of over-the-counter medications, such as 'Comtrex' and 'Panadol', with clear images, prices in EGP (Egyptian Pound), and available quantities. Each product has a dedicated 'Details' button that leads to a more comprehensive description, and an 'Add to Cart' button for straightforward shopping convenience.
 
@@ -80,7 +80,8 @@ The page also contains an innovative feature on the left side of the online phar
 
 The navigation bar at the top allows users to quickly access other sections like Home, Orders, Cart, and Chat, ensuring a seamless online shopping experience. This design emphasizes simplicity and efficiency, aiming to provide a hassle-free process for users to find and buy the medical supplies they need.
 
-![](RackMultipart20231216-1-ujqva1_html_de0fa40c58aee927.jpg)
+![WhatsApp Image 2023-12-15 at 3 19 07 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/cc5960d5-2e90-4868-a43a-22af5586db89)
+
 
 This image presents the 'Orders' section of Khaleeha Ala Allah pharmacy platform, which is accessible via the upper menu bar. It features a clean and organized layout where customers can view their current and past orders. Each order is displayed with a thumbnail image of the product, the medicine's name, the quantity purchased, and the total price.
 
