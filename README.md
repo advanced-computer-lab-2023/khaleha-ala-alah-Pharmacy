@@ -224,6 +224,8 @@ Once the necessary fields are filled, the 'Change Password' button at the bottom
 
 - MUI
 
+- Ant Design
+
 - CSS for styling
 
 **Backend:**
