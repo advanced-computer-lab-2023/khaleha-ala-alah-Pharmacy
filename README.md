@@ -13,7 +13,7 @@ By developing the Khaleeha Ala Allah platform, we aspire to contribute to the mo
 ### Code Style
 The code style is enforced using eslint and prettier. The code style is enforced using pre-commit hooks and pre-commit GitHub action.
 
-#### Screenshots/How to use.
+#### Screenshots
 
 ![WhatsApp Image 2023-12-15 at 9 28 00 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/7032afdd-016c-47a0-b123-e95f021ba59f)
 
