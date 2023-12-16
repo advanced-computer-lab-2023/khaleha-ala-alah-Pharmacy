@@ -2,7 +2,7 @@
 
 The Khaleeha Ala Allah Pharmacy Management System is a comprehensive web application designed to streamline pharmacy operations for administrators, patients, and pharmacists. This project aims to enhance efficiency in medication management, order processing, and inventory control. By providing a user-friendly interface, the system ensures seamless communication between different user roles, ultimately improving the overall pharmacy experience. Join us in modernizing pharmacy management for a more connected and efficient healthcare environment.
 
-## Motivation
+# Motivation
 
 The inspiration for the Khaleeha Ala Allah Pharmacy Management System stemmed from the need to revolutionize and enhance the efficiency of pharmacy operations. In today's dynamic healthcare landscape, a seamless and well-integrated platform is essential for both healthcare providers and patients.
 
@@ -10,10 +10,10 @@ We recognized the challenges faced by administrators, patients, and pharmacists 
 
 By developing the Khaleeha Ala Allah platform, we aspire to contribute to the modernization of pharmacy management, empowering healthcare professionals, and ensuring that patients receive the best possible care. Our commitment lies in creating a solution that not only meets current needs but also anticipates future challenges in the ever-evolving healthcare landscape.
 
-### Code Style
+# Code Style
 The code style is enforced using eslint and prettier. The code style is enforced using pre-commit hooks and pre-commit GitHub action.
 
-#### Screenshots
+# Screenshots
 
 ![WhatsApp Image 2023-12-15 at 9 28 00 PM](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/7032afdd-016c-47a0-b123-e95f021ba59f)
 
