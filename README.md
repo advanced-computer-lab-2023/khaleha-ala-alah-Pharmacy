@@ -1047,6 +1047,28 @@ If you need help, don't hesitate to ask questions in the issues section or reach
 
 Thank you for your contributions!
 
+# Credits
+Our gratitude extends to the following resources and communities that have been instrumental in the development of our project:
+
+-MongoDB Documentation: For offering comprehensive guides and references that serve as the cornerstone for designing our database architecture. [MongoDB Manual](https://www.mongodb.com/docs/)
+
+-W3Schools MongoDB Tutorial: For providing an accessible and practical introduction to MongoDB. [W3Schools MongoDB Tutorial](https://www.w3schools.com/nodejs/nodejs_mongodb.asp)
+
+-Node.js Documentation: For detailed documentation and API references that form the backbone of our server-side application logic. [Node.js Documentation](https://nodejs.org/en/docs/)
+
+-React Documentation: For the official tutorials and guides that have enabled us to build dynamic and high-performing user interfaces. [React Documentation](https://reactjs.org/docs/getting-started.html)
+
+-Ant Design Documentation: For a rich set of React UI components that have enhanced the aesthetic and functional aspects of our application. [Ant Design](https://ant.design/docs/react/introduce)
+
+
+-MUI Documentation: For their robust React components that have allowed us to implement Google's Material Design in our project seamlessly. [MUI Documentation](https://mui.com/getting-started/installation/)
+
+-Postman Documentation: For their collaborative platform and educational resources that have streamlined our API testing processes. [Postman Documentation](https://learning.postman.com/docs/getting-started/introduction/)
+
+-GitHub Docs: For their version control platform and guides that have facilitated our collaborative development efforts. [GitHub Docs](https://docs.github.com/)
+
+Each of these resources has played a pivotal role in our project's success, and we wholeheartedly recommend them to any aspiring or established developers looking to delve into full-stack development.
+
 
 
 
