@@ -11,8 +11,6 @@ import HeaderAdmin from "../Elements/HeaderAdmin.jsx";
 import NavBarAdmin from "../Elements/NavBarAdmin.jsx";
 import { useAuth } from "../AuthContext.js";
 
-
-
 const AvailableMedicines = () => {
   const [medicines, setMedicines] = useState([]);
   const [selectedMedicine, setSelectedMedicine] = useState(null);
@@ -23,12 +21,10 @@ const AvailableMedicines = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State to hold the search query
   const { role } = useAuth();
   const filteredMedicines = medicines
-  .filter(
-    (medicine) => showAll || medicine.availableQuantity > 0
-  )
-  .filter(
-    (medicine) => medicine.name.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+    .filter((medicine) => showAll || medicine.availableQuantity > 0)
+    .filter((medicine) =>
+      medicine.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
   const handleToggleChange = () => {
     setShowAll(!showAll);
@@ -58,13 +54,13 @@ const AvailableMedicines = () => {
     setSelectedMedicine(medicine);
   };
 
-  const handleArchiveMedicine = async (medicine) =>{
+  const handleArchiveMedicine = async (medicine) => {
     setIsLoading(true);
     try {
       const response = await axios.patch(
         "http://localhost:4002/pharmacists/archiveMedicine",
         {
-          medicineName: medicine.name
+          medicineName: medicine.name,
         }
       );
       alert("Medicine archived successfully");
@@ -74,13 +70,13 @@ const AvailableMedicines = () => {
     } catch (error) {
       console.error("Error archiving medicine:", error);
     }
-  }
-  const handleUnArchiveMedicine = (medicine) =>{
+  };
+  const handleUnArchiveMedicine = (medicine) => {
     try {
       const response = axios.patch(
         "http://localhost:4002/pharmacists/unarchiveMedicine",
         {
-          medicineName: medicine.name
+          medicineName: medicine.name,
         }
       );
       alert("Medicine unarchived successfully");
@@ -89,13 +85,11 @@ const AvailableMedicines = () => {
       alert(error);
       console.error("Error archiving medicine:", error);
     }
-  }
+  };
 
   useEffect(() => {
     fetchAvailableMedicines();
   }, []);
-
-
 
   const data = filteredMedicines.map((medicine) => ({
     pictureUrl: (
@@ -149,31 +143,31 @@ const AvailableMedicines = () => {
       title: "Action",
       key: "action",
       className: styles.tableHeader,
-      render: (text, record) => (
-        role === "pharmacists" && (
-          record.medicine.isArchived
-            ? <button
-                className={styles.Unarchivebutton}
-                onClick={async () => {
-                  await handleUnArchiveMedicine(record.medicine);
-                  window.location.reload();
-                }}
-              >
-                Unarchive
-              </button>
-            : <button
-                className={styles.Archivebutton}
-                onClick={async () => {
-                  await handleArchiveMedicine(record.medicine);
-                  window.location.reload();
-                }}
-              >
-                Archive
-              </button>
-        )
-      ), 
-    }
-    
+      render: (text, record) =>
+        role === "pharmacists" &&
+        (record.medicine.isArchived ? (
+          <button
+            className={styles.Unarchivebutton}
+            onClick={async () => {
+              await handleUnArchiveMedicine(record.medicine);
+              window.location.reload();
+            }}
+          >
+            Unarchive
+          </button>
+        ) : (
+          <button
+            className={styles.Archivebutton}
+            onClick={async () => {
+              await handleArchiveMedicine(record.medicine);
+              window.location.reload();
+            }}
+          >
+            Archive
+          </button>
+        )),
+    },
+
     // {
     //   title: "Archive",
     //   key: "Archive",
@@ -202,7 +196,6 @@ const AvailableMedicines = () => {
     // }
   ];
 
-  
   const handleViewDescription = (medicine) => {
     setShowMedicineDescription(true);
     setMedicineToDescribe(medicine);
@@ -210,70 +203,72 @@ const AvailableMedicines = () => {
 
   return (
     <>
-   
-<div>
-      {role === "pharmacist" ? (
-        <>
-          <HeaderDoctor />
-          <NavBarPharmacist/>
-        </>
-      ) : (
-        <>
-          <HeaderAdmin />
-          <NavBarAdmin />
-        </>
-      )}
-    </div>
-    <div className={styles.ContainerOfAvailableMedicines}>
-      {isLoading ? (
-        <LoadingPage />
-      ) : (
-        <>
-          {/* <h1 className={styles.headerOfMedicineList}>Available Medicines</h1> */}
-          <div className={styles.components}>
-          <div className={styles.radioGroup}>
-            <h3 className={styles.options}> Show Available Medicines </h3>
-            <ToggleSwitch isOn={showAll} handleToggle={handleToggleChange} />
-            <h3 className={styles.options}> Show All Medicines </h3>
-            <br/>
-          </div>
-          <div className={styles.searchBar}>
-            <input
-              type="text"
-              placeholder="Search by name..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              className={styles.searchInput}
-            />
-          </div>
-          <div className={styles.viewAllMedicines}>
-            <h4>click on any row to show the medicine description</h4>
-            <div className={styles.ViewAvailableMedicine}>
-            <div className={styles.tableWrapper}>
-              <Table
-                data={data}
-                columns={columns}
-                clickable={true}
-                onRowClick={(record, rowIndex) => {
-                  handleViewDescription(record.medicine);
-                }}
-              />
+      <div>
+        {role === "pharmacist" ? (
+          <>
+            <HeaderDoctor />
+            <NavBarPharmacist />
+          </>
+        ) : (
+          <>
+            <HeaderAdmin />
+            <NavBarAdmin />
+          </>
+        )}
+      </div>
+      <div className={styles.ContainerOfAvailableMedicines}>
+        {isLoading ? (
+          <LoadingPage />
+        ) : (
+          <>
+            {/* <h1 className={styles.headerOfMedicineList}>Available Medicines</h1> */}
+            <div className={styles.components}>
+              <div className={styles.radioGroup}>
+                <br />
               </div>
-              {showMedicineDescription && (
-                <OverlayWindow
-                  message={medicineToDescribe.description}
-                  onCancel={() => {setShowMedicineDescription(false)}}
-                  cancelLabel={"Close"}
+              <div className={styles.searchBar}>
+                <input
+                  type="text"
+                  placeholder="Search by name..."
+                  value={searchQuery}
+                  onChange={handleSearchChange}
+                  className={styles.searchInput}
                 />
-              )}
+                <h3 className={styles.options}> Show Available Medicines </h3>
+                <ToggleSwitch
+                  isOn={showAll}
+                  handleToggle={handleToggleChange}
+                />
+                <h3 className={styles.options}> Show All Medicines </h3>
+              </div>
+              <div className={styles.viewAllMedicines}>
+                <h4>click on any row to show the medicine description</h4>
+                <div className={styles.ViewAvailableMedicine}>
+                  <div className={styles.tableWrapper}>
+                    <Table
+                      data={data}
+                      columns={columns}
+                      clickable={true}
+                      onRowClick={(record, rowIndex) => {
+                        handleViewDescription(record.medicine);
+                      }}
+                    />
+                  </div>
+                  {showMedicineDescription && (
+                    <OverlayWindow
+                      message={medicineToDescribe.description}
+                      onCancel={() => {
+                        setShowMedicineDescription(false);
+                      }}
+                      cancelLabel={"Close"}
+                    />
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-
-        </>
-      )}
-      
-    </div>
+          </>
+        )}
+      </div>
     </>
   );
 };

@@ -28,6 +28,7 @@ const Header = (patient = null) => {
   const initialized = useRef(false);
   const { role } = useAuth();
   console.log(patient);
+  const [currentPatient, setCurrentPatient] = useState(patient);
 
   useEffect(() => {
     axios
@@ -49,6 +50,34 @@ const Header = (patient = null) => {
       .catch((err) => {
         console.log(err);
       });
+    const fetchCurrentPatient = async () => {
+      try {
+        const response = await fetch(`http://localhost:4002/patients/`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          console.log("Current patient fetched successfully:");
+          console.log(data.data.patients[0]);
+          return data;
+        } else {
+          console.error("Failed to fetch current patient:");
+          console.error(data);
+          return null;
+        }
+      } catch (error) {
+        console.error("Failed to fetch current patient:");
+        console.error(error);
+        return null;
+      }
+    };
+    fetchCurrentPatient().then((data) => {
+      setCurrentPatient(data.data.patients[0]);
+    });
   }, []);
 
   useEffect(() => {
@@ -194,7 +223,7 @@ const Header = (patient = null) => {
           <div className={styles.walletContainer}>
             <img src={WalletImage} alt="Wallet" style={{ width: "35px" }} />
             <p className={styles.walletValue}>
-              EGP {patient.patient.walletValue}
+              EGP {currentPatient.walletValue}
             </p>
           </div>
           <a
