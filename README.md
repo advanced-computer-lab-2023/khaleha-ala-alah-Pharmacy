@@ -847,6 +847,7 @@ JWT_SECRET=Khleeha-Ala-Allah
 
    This should launch the frontend of your application in your default web browser.
 
+
  **Start the Backend Server**
 
    Start the backend server in development mode:
@@ -856,6 +857,93 @@ JWT_SECRET=Khleeha-Ala-Allah
    ```
 
    The backend server should now be running and listening for requests.
+
+ # API Refrences
+
+This section provides a detailed overview of the available API endpoints for our application. The API is structured around REST principles, delivering access to resources such as messages, conversations, admins, patients, pharmacists, and other entities. Authentication is required for most endpoints, ensuring secure access and operations.
+
+## Authentication
+
+POST /login: User login
+POST /validateToken: Validate user token
+POST /verifyUser: Verify user account
+POST /changePassword: Change user password (Authenticated)
+POST /forgotPassword: User forgot password
+POST /resetPassword: Reset user password
+User Management
+POST /register: Register a new user
+GET /getUsers: Get all users (Authenticated)
+GET /getUserID: Get user ID (Authenticated)
+POST /getUser: Get specific user details (Authenticated)
+
+## Messages
+
+GET /notifications: Get message notifications (Authenticated)
+POST /: Create a message
+GET /:conversationId: Get messages for a conversation
+
+## Conversations
+
+POST /: Create a conversation
+GET /: Get all conversations
+POST /deleteMessagesNotification: Delete messages notification
+
+## Admin Management
+
+GET /: Get all admins
+POST /addAdmin: Add a new admin
+DELETE /delAdminpharmacistPatient: Delete admin, pharmacist, or patient
+POST /approveOrRejectDoctor: Approve or reject pharmacist
+GET /getCurrentAdmin: Get current admin details (Authenticated)
+GET /pendingDoctors: View pending pharmacists
+
+## Medicine Management
+
+GET /allmedicinesdyuse: Get medicines by medical use
+GET /available-medicines: Get available medicines
+GET /medicine-sales-report/:year/:month: Get medicine sales report
+
+## Pharmacist Management
+
+GET /:pharmacistId/PharmacistDetails: Get pharmacist details by ID
+GET /allpharmacists: Get all pharmacists
+POST /addMedicine: Add medicine (Authenticated)
+GET /:medicineId/medicine-details: Get medicine details
+PATCH /updatePharmacist: Update pharmacist details (Authenticated)
+PUT /:medicineId/edit-medicine: Edit medicine details
+PATCH /archiveMedicine: Archive medicine
+PATCH /unarchiveMedicine: Unarchive medicine
+
+## Patient Management
+
+POST /checkout: Checkout process (Authenticated)
+GET /: Get all patients
+GET /currentPatient: Get current patient details (Authenticated)
+GET /filterMedicine: Filter medicine
+GET /searchmedicine: Search medicine by name
+GET /myOrders/:status: Get patient orders by status (Authenticated)
+GET /myorderDetails/: Get order details (Authenticated)
+PATCH /cancel-order/:orderID: Cancel order (Authenticated)
+GET /getOrderMedicine: Get order medicine
+GET /allMediciness: Get all medicines
+GET /mydoctors: Get patient's pharmacists (Authenticated)
+GET /:id: Get patient details
+PATCH /add-family-members: Add family members (Authenticated)
+POST /add-amount-Wallet: Add amount to wallet
+POST /remove-from-wallet: Remove amount from wallet
+GET /amount-wallet/:userID: Get wallet amount (Authenticated)
+POST /:userId/add-address: Add address
+DELETE /:userId/delete-address/:addressIndex: Delete address
+GET /:userId/get-all-addresses: Get all addresses for a user
+
+## Cart and Payments
+
+GET /viewcartitems/:id: View cart items (Authenticated)
+POST /save-stripe-token: Process payment for package
+POST /add-to-cart: Add item to cart (Authenticated)
+DELETE /remove-from-cart/:medicineId: Remove item from cart (Authenticated)
+PUT /change-item-quantity/:medicineId: Change item quantity in cart (Authenticated)
+
 
 
 
