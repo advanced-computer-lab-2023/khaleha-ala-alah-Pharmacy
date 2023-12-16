@@ -214,7 +214,7 @@ The interface is straightforward and user-friendly, consisting of three main fie
 
 Once the necessary fields are filled, the 'Change Password' button at the bottom, highlighted in blue, is designed to be prominent and easily clickable, finalizing the password change process. This system not only upholds security standards but also empowers administrators to regularly update their passwords, thereby enhancing the overall security of the platform.
 
-##### **Tech/Framework Used**
+#**Tech/Framework Used**
 
 **Frontend:**
 
