@@ -15,7 +15,8 @@ The code style is enforced using eslint and prettier. The code style is enforced
 
 #### Screenshots/How to use.
 
-![](RackMultipart20231216-1-ujqva1_html_bcc3128ce04135b8.jpg)
+![App Screenshot](https://drive.google.com/file/d/1_kvtrgBqwbq5HMMxjFPbsz6npENw11ud/view?usp=sharing)
+
 
 The image above presents the initial user authentication gateway of Khaleeha Ala Allah online pharmacy platform. This secure login portal is designed to provide a straightforward yet secure access point for both patients and pharmacists.
 
@@ -314,7 +315,7 @@ Once the necessary fields are filled, the 'Change Password' button at the bottom
 - View a pharmacist's information.
 - View a patient's basic information.
 
-####### **Code Examples:**
+ **Code Examples:**
 
 **Example 1 (Log in):**
 
@@ -751,7 +752,7 @@ exports.viewCartItems = async function (req, res) {
   }
 };
 ```
-######## Installation
+**Installation**
 
 Follow these steps to set up and run the frontend and backend of the project.
 
@@ -813,7 +814,7 @@ Follow these steps to set up and run the frontend and backend of the project.
 
    The backend server should now be running and listening for requests.
 
-######### How to Use
+**How to Use**
 
 In this section, you'll find step-by-step instructions on how to use and configure the project using the provided environment variables.
 
