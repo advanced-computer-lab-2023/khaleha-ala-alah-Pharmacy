@@ -995,6 +995,31 @@ DELETE /remove-from-cart/:medicineId: Remove item from cart (Authenticated)
 
 PUT /change-item-quantity/:medicineId: Change item quantity in cart (Authenticated)
 
+# Tests
+
+Throughout the development of our API, we extensively utilized Postman for testing and validating our endpoints. Postman, a popular API client, enabled us to efficiently test each API route for functionality, error handling, and response accuracy. This tool proved invaluable in ensuring that our API met the expected standards of performance and reliability. By leveraging Postman’s user-friendly interface and comprehensive testing capabilities, we were able to simulate client requests and fine-tune our API responses, ensuring a robust and dependable service for our users. In the following sections, we will provide some examples of these Postman tests to demonstrate how our API endpoints can be interacted with and tested effectively.
+
+![TestpharmacyPatientLogIn](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/b7758845-4e9f-4a9c-95af-68c580ea156f)
+
+The screenshot illustrates a successful login attempt using the Postman application. A POST request was sent to the '/users/login' endpoint with a JSON payload containing a username and password. The server responded with a 200 OK status, indicating that the login was successful. The response body contains a message confirming the successful login and a JWT token, which is used for authenticating subsequent requests. Additionally, the role of the logged-in user is identified as "patient" within the response payload.
+
+![TestviewCart](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/edc0304f-aa0d-4c40-80ca-1c3e8bcc90cea
+
+The image shows a successful GET request made to the /patients/viewcartitems/{patientId} endpoint using Postman. The response, with a 200 OK status, indicates a successful retrieval of cart details for a patient. The JSON payload in the response body includes a success flag set to true, and a cart object containing the ID of the cart, the associated user ID, and an array of items. Each item in the array details a medicine's ID, name, image URL, price, description, sales count, available quantity, active ingredients, medical use, archival status, user ID, prescription requirement, and version number. This demonstrates the API's capability to provide detailed information about items in a patient's cart.
+
+![TestaddToCart](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/7166c3ac-6121-4eb0-9b8b-5f28a472ec0e)
+
+The provided image displays a POST request to the /patients/add-to-cart endpoint using Postman. The request body includes a medicineId and a quantity, indicating the intent to add a specific number of a medicine item to a patient's cart. The response returned a 200 OK status with a message stating "Medicine added to cart successfully," confirming the successful addition of the item to the patient's shopping cart. This showcases the API's functionality for updating cart contents in real-time.
+
+![TestmyOrders](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/e8bc0e27-23f3-4f43-9573-8bdb9000683b)
+
+The image depicts a GET request to the /patients/myOrders/Pending endpoint using Postman, which retrieves the details of pending orders for a patient. The response has a 200 OK status, suggesting a successful fetch. The JSON payload shows an order with an array of items, each including details of the medicine such as its ID, name, picture URL, price, description, quantity, and the total price. The itemized data clearly shows the order's contents, including the active ingredients and medical use, indicating the API's capability to provide comprehensive order details to the patient.
+
+![TestcheckOut](https://github.com/advanced-computer-lab-2023/khaleha-ala-alah-Pharmacy/assets/126784831/78d2927b-a03e-4553-98bd-c678dd55a549)
+
+The provided image showcases a POST request to the /patients/checkout endpoint made via Postman, indicating the completion of a purchase. The request payload includes the details of cart items, such as the medicine ID, quantity, and total price. The server responded with a 200 OK status, and the response body contains a confirmation message "Order placed successfully." This indicates that the checkout process was completed successfully and the order has been registered in the system.
+
+
 
 
 
