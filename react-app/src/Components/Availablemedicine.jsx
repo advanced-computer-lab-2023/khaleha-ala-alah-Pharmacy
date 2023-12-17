@@ -144,7 +144,7 @@ const AvailableMedicines = () => {
       key: "action",
       className: styles.tableHeader,
       render: (text, record) =>
-        role === "pharmacists" &&
+        role === "pharmacist" &&
         (record.medicine.isArchived ? (
           <button
             className={styles.Unarchivebutton}
