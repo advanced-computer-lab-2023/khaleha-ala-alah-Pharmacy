@@ -31,16 +31,22 @@
   }
   
   .stripePaymentButton {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    margin: 10px 0;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    background-image: linear-gradient(rgb(125, 197, 238), rgb(0, 140, 221) 85%, rgb(48, 162, 228));
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    position: relative;
+    padding: 0px 12px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    box-shadow: rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+    text-shadow: rgba(0, 0, 0, 0.25) 0px -1px 0px;
+    border-radius: 4px;
     width: 80%; /* Adjust as per design */
+    margin-top: 10px;
+    border: none;
   }
   
   .stripePaymentButton:hover {

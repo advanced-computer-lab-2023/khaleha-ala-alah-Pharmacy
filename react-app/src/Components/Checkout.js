@@ -16,6 +16,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
   const amount22 = location.state?.totalPrice;
   const cartItems = location.state?.cartItems;
   const [patientt, setPatient] = useState(null);
+
   useEffect(() => {
     fetchCurrentPatient();
   }, []); // Fetch available medicines when the component mounts
