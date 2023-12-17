@@ -22,9 +22,9 @@ To maintain the quality and readability of our code, we adhere to a set of codin
 
 - **Comments and Documentation**: Code is adequately commented to explain complex logic or decisions. Comments are concise and relevant. We also use JSDoc (or relevant documentation tool) for function and class documentation.
 
-- **Code Linting**: We use [ESLint](https://eslint.org/) for JavaScript linting to ensure our code meets the best practices and standards. The linting rules are defined in the `.eslintrc` file in our repository.
+- **Code Linting**: We use [ESLint](https://eslint.org/) for JavaScript linting to ensure our code meets the best practices and standards.
 
-- **Code Formatting**: [Prettier](https://prettier.io/) is used for code formatting. You can find the configuration settings in the `.prettierrc` file. Please ensure your code is formatted according to these settings before submitting.
+- **Code Formatting**: [Prettier](https://prettier.io/) is used for code formatting.
 
 - **Testing Conventions**: Tests are written for new features and bug fixes. We aim for high test coverage and meaningful test cases.
 
