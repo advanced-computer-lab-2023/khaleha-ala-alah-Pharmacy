@@ -2,6 +2,40 @@
 
 The Khaleeha Ala Allah Pharmacy Management System is a comprehensive web application designed to streamline pharmacy operations for administrators, patients, and pharmacists. This project aims to enhance efficiency in medication management, order processing, and inventory control. By providing a user-friendly interface, the system ensures seamless communication between different user roles, ultimately improving the overall pharmacy experience. Join us in modernizing pharmacy management for a more connected and efficient healthcare environment.
 
+# Build Status
+
+In the ever-evolving world of software development, each line of code is a step towards progress, and every bug is an opportunity for improvement. The Khaleeha Ala Allah Pharmacy Management System is designed with the vision of revolutionizing pharmacy operations. However, as with any complex system, it's natural for unexpected issues to arise as the software evolves and adapts to real-world use.
+
+We believe in facing these challenges head-on and with full transparency. In this section, we shed light on the known bugs that have been identified in our current build. It is a gesture of our honesty and dedication to excellence, serving as a live testament to our ongoing efforts to perfect the system.
+
+By acknowledging the imperfections, we not only provide our users with a clear picture of what to expect but also open the doors to collaborative problem-solving. We encourage our vibrant community of users, developers, and enthusiasts to join us in refining the system. Each bug, when addressed, is a stride towards a more efficient, reliable, and user-friendly pharmacy management experience.
+
+Together, let's enhance the Khaleeha Ala Allah Pharmacy Management System, making it a paragon of technological advancement in the healthcare industry.
+
+**1- Lag in Displaying Pharmacy Data**
+
+We have noticed a performance issue in the pharmacy module of our system, where data such as inventory counts or prescription details appear to take an unexpectedly long time to display. Users may observe a delay where the information displays as 'zero' before suddenly updating to the correct values. This issue could lead to confusion or misinterpretation of data, potentially impacting pharmacy operations.
+
+The suspected cause of this problem may be related to asynchronous data fetching, where the user interface renders before the data retrieval from the backend server is complete. We are currently investigating whether this is due to network latency, database performance, or frontend rendering optimizations that are required.
+
+To address this, we are reviewing our data loading and rendering processes to introduce loaders or placeholder content that more accurately represents the data fetching state. This will provide a visual indication that data is being loaded, which should alleviate the confusion caused by the current sudden change in displayed information.
+
+Our team is committed to providing a seamless experience, and resolving this lag is one of our top priorities. We are working diligently to optimize our system's performance and appreciate your patience as we work to enhance the responsiveness of our platform.
+
+**2- Backward Navigation Loop Due to Browser History**
+
+A navigational issue has come to our attention where users experience a looping effect due to the browser's history navigation. This anomaly manifests when users attempt to navigate backwards through the browser's history, expecting to return to a previous page, but find themselves caught in a loop between the current and the immediate last page.
+
+This looping is indicative of a discrepancy in the way the browser history stack is being managed within our application. Typically, such a problem may arise from the improper handling of URL state or redirection logic that inadvertently pushes additional entries onto the history stack. It could also be due to the misuse of certain navigation functions which, instead of moving back in history, add a new state that resembles the current one, causing the loop.
+
+Our team is scrutinizing the application's routing logic and state management to identify the cause of this issue. We aim to ensure that each navigation action correctly modifies the history stack, allowing for intuitive backward and forward navigation that aligns with user expectations.
+
+Resolving this is crucial for us as it impacts the overall usability and user experience of our system. We are exploring solutions such as refining our push/replace state usage, adjusting our redirection flows, and enhancing the way we handle routing to prevent unwanted history entries.
+
+We apologize for any inconvenience this may cause to our users and are committed to resolving this promptly. User experience is paramount, and we are dedicated to ensuring that navigation within our platform is seamless and reliable.
+
+
+
 # Motivation
 
 The inspiration for the Khaleeha Ala Allah Pharmacy Management System stemmed from the need to revolutionize and enhance the efficiency of pharmacy operations. In today's dynamic healthcare landscape, a seamless and well-integrated platform is essential for both healthcare providers and patients.
