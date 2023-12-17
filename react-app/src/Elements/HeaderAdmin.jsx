@@ -91,7 +91,7 @@ const Header = () => {
   };
 
   const toggleDropdownforNotification = () => {
-    setDropdownVisibleAlert(!dropdownVisibleAlert);
+    navigate("/notification");
   };
   const toggleDropdownforMessages = () => {
     setDropdownVisibleMessages(!dropdownVisibleMessages);
