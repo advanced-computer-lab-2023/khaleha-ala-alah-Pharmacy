@@ -2,6 +2,14 @@
 
 The Khaleeha Ala Allah Pharmacy Management System is a comprehensive web application designed to streamline pharmacy operations for administrators, patients, and pharmacists. This project aims to enhance efficiency in medication management, order processing, and inventory control. By providing a user-friendly interface, the system ensures seamless communication between different user roles, ultimately improving the overall pharmacy experience. Join us in modernizing pharmacy management for a more connected and efficient healthcare environment.
 
+# Motivation
+
+The inspiration for the Khaleeha Ala Allah Pharmacy Management System stemmed from the need to revolutionize and enhance the efficiency of pharmacy operations. In today's dynamic healthcare landscape, a seamless and well-integrated platform is essential for both healthcare providers and patients.
+
+We recognized the challenges faced by administrators, patients, and pharmacists in managing pharmacy-related tasks efficiently. The aim of this project is to bridge these gaps by providing a user-friendly, centralized system that streamlines processes, enhances communication, and ultimately improves the overall pharmacy experience.
+
+By developing the Khaleeha Ala Allah platform, we aspire to contribute to the modernization of pharmacy management, empowering healthcare professionals, and ensuring that patients receive the best possible care. Our commitment lies in creating a solution that not only meets current needs but also anticipates future challenges in the ever-evolving healthcare landscape.
+
 # Build Status
 
 In the ever-evolving world of software development, each line of code is a step towards progress, and every bug is an opportunity for improvement. The Khaleeha Ala Allah Pharmacy Management System is designed with the vision of revolutionizing pharmacy operations. However, as with any complex system, it's natural for unexpected issues to arise as the software evolves and adapts to real-world use.
@@ -33,16 +41,6 @@ Our team is scrutinizing the application's routing logic and state management to
 Resolving this is crucial for us as it impacts the overall usability and user experience of our system. We are exploring solutions such as refining our push/replace state usage, adjusting our redirection flows, and enhancing the way we handle routing to prevent unwanted history entries.
 
 We apologize for any inconvenience this may cause to our users and are committed to resolving this promptly. User experience is paramount, and we are dedicated to ensuring that navigation within our platform is seamless and reliable.
-
-
-
-# Motivation
-
-The inspiration for the Khaleeha Ala Allah Pharmacy Management System stemmed from the need to revolutionize and enhance the efficiency of pharmacy operations. In today's dynamic healthcare landscape, a seamless and well-integrated platform is essential for both healthcare providers and patients.
-
-We recognized the challenges faced by administrators, patients, and pharmacists in managing pharmacy-related tasks efficiently. The aim of this project is to bridge these gaps by providing a user-friendly, centralized system that streamlines processes, enhances communication, and ultimately improves the overall pharmacy experience.
-
-By developing the Khaleeha Ala Allah platform, we aspire to contribute to the modernization of pharmacy management, empowering healthcare professionals, and ensuring that patients receive the best possible care. Our commitment lies in creating a solution that not only meets current needs but also anticipates future challenges in the ever-evolving healthcare landscape.
 
 # Code Style
 
