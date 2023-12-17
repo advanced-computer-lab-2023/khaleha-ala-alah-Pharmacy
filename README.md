@@ -598,16 +598,6 @@ Follow these steps to set up and run the frontend and backend of the project.
    npm i
    ```
 
-4. **Start the Frontend**
-
-   Start the frontend application:
-
-   ```bash
-   npm start
-   ```
-
-   This should launch the frontend of your application in your default web browser.
-
  **Backend Installation**
 
 1. **Install Backend Dependencies**
@@ -618,7 +608,6 @@ Follow these steps to set up and run the frontend and backend of the project.
    cd server
    npm i
    ```
-
 2. **Start the Backend Server**
 
    Start the backend server in development mode:
@@ -638,6 +627,7 @@ In this section, you'll find step-by-step instructions on how to use and configu
 Before you begin, make sure you have the following prerequisites:
 
 - [Node.js](https://nodejs.org/): Ensure you have Node.js installed to run the project.
+- [React](https://reactjs.org/): Ensure you have React installed to run the project.
 
 Create an .env file in the root of the project and add the following environment variables:
 
