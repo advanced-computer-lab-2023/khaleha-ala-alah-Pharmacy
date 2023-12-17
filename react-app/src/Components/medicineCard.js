@@ -201,7 +201,7 @@ const Department = ({
             </div>
             <div className="button-box">
               <br />
-              {(role === "patient" || role === "pharmacist") && (
+              {(role === "patient") && (
                 <button
                   onClick={() => {
                     call_add_to_cart(medicine._id, 1);

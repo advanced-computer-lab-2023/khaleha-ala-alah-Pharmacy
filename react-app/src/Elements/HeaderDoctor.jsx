@@ -77,7 +77,7 @@ const Header = () => {
   };
 
   const toggleDropdownforNotification = () => {
-    setDropdownVisibleAlert(!dropdownVisibleAlert);
+    navigate("/notification");
   };
 
   const toggleDropdownforMessages = () => {
@@ -161,13 +161,6 @@ const Header = () => {
             </span>
             <img src={alertIcon} alt="Alerts" />
           </a>
-          {dropdownVisibleAlert && (
-            <div className={styles.dropdownMenu}>
-              <button className={styles.dropdownItem}>Notification 1</button>
-              <button className={styles.dropdownItem}>Notification 2</button>
-              <button className={styles.dropdownItem}>Notification 3</button>
-            </div>
-          )}
           <a
             href="#settings"
             className={styles.navbarLink}
