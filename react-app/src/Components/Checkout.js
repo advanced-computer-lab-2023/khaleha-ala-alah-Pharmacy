@@ -234,15 +234,21 @@ const StripePaymentButton = ({ amount, patientId }) => {
     <>
     <Header/>
     <NavBar/>
-    <div className="stripePaymentContainer" >
-      <AddressList />
-      <div className="ButtonsForCheckout">
-      <button className="stripePaymentButton" onClick={handleCashOnDelivery}>
-        Cash on Delivery
-      </button>
-      <button className="stripePaymentButton" onClick={handlePayWithWallet}>
-        Pay with Wallet
-      </button>
+    <div className="checkoutContainer">
+      <div className="checkoutStep">
+        <h2 className="stepTitle">Choose Your Address</h2>
+        <AddressList />
+      </div>
+
+      <div className="checkoutStep">
+        <h2 className="stepTitle">Select Payment Method</h2>
+        <div className="paymentButtons">
+          <button className="stripePaymentButton" onClick={handleCashOnDelivery}>
+            Cash on Delivery
+          </button>
+          <button className="stripePaymentButton" onClick={handlePayWithWallet}>
+            Pay with Wallet
+          </button>
         <StripeCheckout
           className="stripePaymentButton"
           token={onToken}
@@ -252,6 +258,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
           amount={amount * 100} // Convert amount to cents
           stripeKey="pk_test_51LYdhJF0BL68bZ9bNouUaO2Cutn6GjQUDsc7Q1JQRXRAZd4mSRqV3d5G3On4SlM44iWnXlorkDELEGGVF7nBgGpX00buYL644E"
         />
+     </div>
       </div>
     </div>
     </>
