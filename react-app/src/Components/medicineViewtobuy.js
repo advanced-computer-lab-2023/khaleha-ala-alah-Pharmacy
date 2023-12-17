@@ -43,7 +43,7 @@ const PatientHomePagebuy = () => {
   const [prescriptions, setPrescriptions] = useState([]);
   const [showCartAlert, setShowCartAlert] = useState(false);
   const navigate = useNavigate();
-  const {role} = useAuth();
+  const { role } = useAuth();
   const handlePageChange = (page) => {
     console.log(page);
     console.log(filteredMedicines);
@@ -73,7 +73,7 @@ const PatientHomePagebuy = () => {
       const medsQuantities = {};
       let medicineFromDB = response.data;
       let filteredMedicinees = medicineFromDB.filter(
-        (medicine) => medicine.availableQuantity > 0
+        (medicine) => medicine.availableQuantity > 0 && !medicine.isArchived
       );
       setFilteredMedicines(filteredMedicinees);
       const indexOfLastMedicinee = currentPage * medicinesPerPage;
