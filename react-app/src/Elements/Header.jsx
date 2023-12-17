@@ -19,7 +19,7 @@ const Header = (patient = null) => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [dropdownVisibleAlert, setDropdownVisibleAlert] = useState(false);
-  const [numOfNotifications, setnumOfNotifications] = useState(8);
+  const [numOfNotifications, setnumOfNotifications] = useState(3);
   const [searchValue, setSearchValue] = useState("");
   const [dropdownVisibleMessages, setDropdownVisibleMessages] = useState(false);
   const [hasNewMessages, setHasNewMessages] = useState(false);
@@ -254,7 +254,7 @@ const Header = (patient = null) => {
             </div>
           )}
           <a
-            href="#notifications"
+            href=""
             className={styles.navbarLink}
             onClick={toggleDropdownforNotification}
           >
