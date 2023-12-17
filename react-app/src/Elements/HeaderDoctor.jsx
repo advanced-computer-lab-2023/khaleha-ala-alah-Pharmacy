@@ -9,9 +9,10 @@ import { BellOutlined, MessageOutlined } from "@ant-design/icons";
 import { Badge } from "antd";
 import axios from "axios";
 import { useEffect, useRef } from "react";
-import { useWebSocket } from '../WebSocketContext';
+import { useWebSocket } from "../WebSocketContext";
 import { useAuth } from "../AuthContext";
 import searchIcon from "../Images/searchIcon.png";
+import WalletImage from "../Images/wallet.png";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -22,12 +23,13 @@ const Header = () => {
   const [dropdownVisibleMessages, setDropdownVisibleMessages] = useState(false);
   const [hasNewMessages, setHasNewMessages] = useState(false);
   const [messages, setMessages] = useState([]);
-  const socket=useWebSocket();
-  const initialized = useRef(false)
+  const socket = useWebSocket();
+  const initialized = useRef(false);
   const { role } = useAuth();
+  const [currentPharmacist, setCurrentPharmacist] = useState(null);
 
   useEffect(() => {
-      axios
+    axios
       .get("http://localhost:4002/messages/notifications", {
         headers: {
           authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -43,36 +45,54 @@ const Header = () => {
       .catch((err) => {
         console.log(err);
       });
+
+    axios
+      .get("http://localhost:4002/pharmacists/1234", {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data.Pharmacist);
+        setCurrentPharmacist(res.data.data.Pharmacist);
+      })
+      .catch((err) => {});
   }, []);
 
   useEffect(() => {
-    if (!initialized.current){
-      if(socket){
-        initialized.current = true
+    if (!initialized.current) {
+      if (socket) {
+        initialized.current = true;
         socket.on("getMessage", (data) => {
-          axios.post("http://localhost:4002/users/getUser", {
-            userID: data.senderId,
-          }, {
-            headers: {
-              authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }).then((res) => {
-            const message = {
-              senderId: data.senderId,
-              senderName: res.data.user.name,
-              senderRole: res.data.user.role,
-              receiverId:res.data.myID
-            }
-            setMessages((prev) => [...prev, message]);
-            setHasNewMessages(true);
-          }).catch((err) => {
-            console.log(err);
-          });
+          axios
+            .post(
+              "http://localhost:4002/users/getUser",
+              {
+                userID: data.senderId,
+              },
+              {
+                headers: {
+                  authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            )
+            .then((res) => {
+              const message = {
+                senderId: data.senderId,
+                senderName: res.data.user.name,
+                senderRole: res.data.user.role,
+                receiverId: res.data.myID,
+              };
+              setMessages((prev) => [...prev, message]);
+              setHasNewMessages(true);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
         });
       }
-    };
-}, [role]);
-
+    }
+  }, [role]);
 
   const toggleDropdownforSettings = () => {
     setDropdownVisible(!dropdownVisible);
@@ -92,9 +112,8 @@ const Header = () => {
     );
     setMessages(updatedMessages);
     const senderId = message.senderId;
-    navigate(`/messenger`, { state: {senderId} });
+    navigate(`/messenger`, { state: { senderId } });
     setDropdownVisibleMessages(false);
-
   };
 
   const handleLogout = () => {
@@ -105,16 +124,15 @@ const Header = () => {
   const handlePassword = () => {
     navigate("/changePassword");
   };
-  
+
   const handleUserProfile = () => {
     navigate("/pharmUserProfile");
   };
 
-  const handleEditAccount = () =>{
+  const handleEditAccount = () => {
     navigate("/pharmEditAcc");
-  }
+  };
 
-  
   const handleSearchChange = (e) => {
     setSearchValue(e.target.value);
   };
@@ -131,7 +149,6 @@ const Header = () => {
           <img src={logopng} alt="Logo" />
         </div>
 
-          
         <div className={styles.navbarSearch}>
           <div
             className={styles.searchInputWrapper}
@@ -152,6 +169,15 @@ const Header = () => {
         </div>
 
         <div className={styles.navbarRight}>
+          <div className={styles.walletContainer}>
+            <img src={WalletImage} alt="Wallet" style={{ width: "35px" }} />
+            <p className={styles.walletValue}>
+              EGP{" "}
+              {currentPharmacist
+                ? currentPharmacist.walletValue
+                : "Loading ..."}
+            </p>
+          </div>
           <a
             href="#messages"
             className={styles.navbarLink}
@@ -159,15 +185,11 @@ const Header = () => {
           >
             {hasNewMessages && (
               <Badge dot>
-                <MessageOutlined
-                  style={{ fontSize: "20px" }}
-                />
+                <MessageOutlined style={{ fontSize: "20px" }} />
               </Badge>
             )}
             {!hasNewMessages && (
-              <MessageOutlined
-                style={{ fontSize: "20px" }}
-              />
+              <MessageOutlined style={{ fontSize: "20px" }} />
             )}
           </a>
           {dropdownVisibleMessages && (
@@ -203,10 +225,16 @@ const Header = () => {
           </a>
           {dropdownVisible && (
             <div className={styles.dropdownMenu}>
-              <button className={styles.dropdownItem} onClick={handleEditAccount}>
+              <button
+                className={styles.dropdownItem}
+                onClick={handleEditAccount}
+              >
                 Edit Account
               </button>
-            <button className={styles.dropdownItem} onClick={handleUserProfile}>
+              <button
+                className={styles.dropdownItem}
+                onClick={handleUserProfile}
+              >
                 User Profile
               </button>
               <button className={styles.dropdownItem} onClick={handlePassword}>

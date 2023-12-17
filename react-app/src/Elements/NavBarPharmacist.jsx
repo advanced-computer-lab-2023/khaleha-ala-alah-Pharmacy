@@ -86,22 +86,11 @@ const NavBar = ({ selectedSection, selectedSubSection = "", patient }) => {
             }
             onMouseEnter={() => handleSectionMouseEnter("medicines")}
             onMouseLeave={() => handleSectionMouseLeave()}
-            onClick={(e) => handleSectionClick(e, "medicines", "/viewMedicines")}
+            onClick={(e) =>
+              handleSectionClick(e, "medicines", "/viewMedicines")
+            }
           >
             Manage Medicines {hasSubsections("medicines")}
-          </div>
-
-          <div
-            className={
-              selectedSection === "wallet"
-                ? styles.navbarLinkSelected
-                : styles.navbarLinkSection
-            }
-            onMouseEnter={() => handleSectionMouseEnter("wallet")}
-            onMouseLeave={() => handleSectionMouseLeave()}
-            onClick={(e) => handleSectionClick(e, "wallet", "/wallet")}
-          >
-            Wallet {hasSubsections("wallet")}
           </div>
 
           <div
