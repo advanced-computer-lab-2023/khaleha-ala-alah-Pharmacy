@@ -467,215 +467,6 @@ const Login = () => {
   );
 };
 
-
-**Example 2 ( Add to cart ) :**
-
-exports.addToCart = async function (req, res) {
-
-const medicineId = req.body.medicineId;
-
-const quantity = parseInt(req.body.quantity);
-
-if (isNaN(quantity) || quantity \<= 0) {
-
-return res
-
-.status(400)
-
-.json({ error: "Quantity must be a positive number." });
-
-}
-
-console.log("ALLL");
-
-try {
-
-const patientId = req.user.\_id; // Accept patient ID as input
-
-console.log(patientId);
-
-if (!patientId) {
-
-return res.status(404).json({
-
-status: "fail",
-
-message: "Patient not found",
-
-});
-
-}
-
-console.log("patient found");
-
-// Find the patient by ID (replace this with your actual patient model and field)
-
-console.log(patientId);
-
-const patient = await Patient.findOne({ userID: patientId });
-
-//console.log(patient);
-
-if (!patient) {
-
-return res.status(404).json({ error: "Patient not found." });
-
-}
-
-// Find the medicine by ID
-
-const medicine = await Medicine.findById(medicineId);
-
-console.log(medicine);
-
-if (!medicine) {
-
-return res.status(404).json({ error: "Medicine not found." });
-
-}
-
-// Check if the medicine is available
-
-if (medicine.availableQuantity === 0) {
-
-return res.status(400).json({ error: "Medicine is not available." });
-
-} else if (medicine.availableQuantity \< quantity) {
-
-return res
-
-.status(400)
-
-.json({ error: "Medicine Quantity is not available." });
-
-}
-
-// Calculate the total price for the cart item
-
-const totalItemPrice = medicine.price \* quantity;
-
-// Check if the patient already has a cart
-
-let cart = await Cart.findOne({ user: patientId });
-
-if (!cart) {
-
-// Create a new cart if the patient doesn't have one
-
-cart = new Cart({
-
-user: patientId,
-
-items: [],
-
-totalAmount: 0,
-
-});
-
-}
-
-// Check if the medicine is already in the cart
-
-const existingCartItem = cart.items.find(
-
-(item) =\> item.medicine.toString() === medicineId
-
-);
-
-if (existingCartItem) {
-
-// Update the quantity and total price
-
-existingCartItem.quantity += quantity;
-
-existingCartItem.totalPrice += medicine.price \* quantity;
-
-} else {
-
-// Add the medicine as a new item
-
-const totalItemPrice = medicine.price \* quantity;
-
-const cartItem = {
-
-medicine: medicineId,
-
-quantity: quantity,
-
-totalPrice: totalItemPrice,
-
-};
-
-cart.items.push(cartItem);
-
-}
-
-// Update the totalAmount in the cart
-
-cart.totalAmount = cart.items.reduce(
-
-(total, item) =\> total + item.totalPrice,
-
-0
-
-);
-
-// Save the cart
-
-await cart.save();
-
-res.status(200).json({ message: "Medicine added to cart successfully." });
-
-} catch (error) {
-
-res
-
-.status(500)
-
-.json({ error: "An error occurred while adding medicine to the cart." });
-
-}
-
-};
-
-exports.viewCartItems = async function (req, res) {
-
-try {
-
-const patientId = req.params.id;
-
-const patient = await Patient.findOne({ userID: patientId });
-
-if (!patient) {
-
-return res.status(404).json({ error: "Patient not found." });
-
-}
-
-const cart = await Cart.findOne({ user: patientId }).populate(
-
-"items.medicine"
-
-);
-
-if (!cart) {
-
-return res.status(404).json({ error: "Cart not found." });
-
-}
-
-res.status(200).json({ success: true, cart: cart });
-
-} catch (error) {
-
-console.error("Error fetching cart items:", error);
-
-res.status(500).json({ success: false, error: "Internal server error." });
-
-}
-
-};
-
 ```
 **Example 2 (Add to Cart and View Cart Items):**
 
@@ -807,16 +598,6 @@ Follow these steps to set up and run the frontend and backend of the project.
    npm i
    ```
 
-4. **Start the Frontend**
-
-   Start the frontend application:
-
-   ```bash
-   npm start
-   ```
-
-   This should launch the frontend of your application in your default web browser.
-
  **Backend Installation**
 
 1. **Install Backend Dependencies**
@@ -827,7 +608,6 @@ Follow these steps to set up and run the frontend and backend of the project.
    cd server
    npm i
    ```
-
 2. **Start the Backend Server**
 
    Start the backend server in development mode:
@@ -847,6 +627,7 @@ In this section, you'll find step-by-step instructions on how to use and configu
 Before you begin, make sure you have the following prerequisites:
 
 - [Node.js](https://nodejs.org/): Ensure you have Node.js installed to run the project.
+- [React](https://reactjs.org/): Ensure you have React installed to run the project.
 
 Create an .env file in the root of the project and add the following environment variables:
 
