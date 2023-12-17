@@ -1,22 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { useContext } from 'react';
-import { CartContext } from './cart-context';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useContext } from "react";
+import { CartContext } from "./cart-context";
+import "./address.css";
 
 const AddressList = ({ userId }) => {
   const [addresses, setAddresses] = useState([]);
-  const [newAddress, setNewAddress] = useState('');
-    const {address , updateAddress} = useContext(CartContext);
+  const [newAddress, setNewAddress] = useState("");
+  const { address, updateAddress } = useContext(CartContext);
   const [selectedAddressIndex, setSelectedAddressIndex] = useState(-1);
-  const id = '652b512450d1b797fa0a42ef';
+  const id = "652b512450d1b797fa0a42ef";
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:4002/patients/${id}/get-all-addresses`);
+        const response = await axios.get(
+          `http://localhost:4002/patients/${id}/get-all-addresses`
+        );
         setAddresses(response.data.addresses);
       } catch (error) {
-        console.error('Error fetching addresses:', error);
+        console.error("Error fetching addresses:", error);
       }
     };
 
@@ -31,28 +34,34 @@ const AddressList = ({ userId }) => {
       });
 
       // Fetch updated addresses after adding a new address
-      const response = await axios.get(`http://localhost:4002/patients/${id}/get-all-addresses`);
+      const response = await axios.get(
+        `http://localhost:4002/patients/${id}/get-all-addresses`
+      );
       setAddresses(response.data.addresses);
-      setNewAddress(''); // Clear the input field
+      setNewAddress(""); // Clear the input field
     } catch (error) {
-      console.error('Error adding address:', error);
+      console.error("Error adding address:", error);
     }
   };
 
   const handleDeleteAddress = async (index) => {
     try {
       // Make a DELETE request to delete the address at the specified index
-      await axios.delete(`http://localhost:4002/patients/${id}/delete-address/${index}`);
+      await axios.delete(
+        `http://localhost:4002/patients/${id}/delete-address/${index}`
+      );
 
       // Fetch updated addresses after deleting an address
-      const response = await axios.get(`http://localhost:4002/patients/${id}/get-all-addresses`);
+      const response = await axios.get(
+        `http://localhost:4002/patients/${id}/get-all-addresses`
+      );
       setAddresses(response.data.addresses);
       // Clear the selected address if the deleted address was selected
       if (index === selectedAddressIndex) {
         setSelectedAddressIndex(-1);
       }
     } catch (error) {
-      console.error('Error deleting address:', error);
+      console.error("Error deleting address:", error);
     }
   };
 
@@ -62,7 +71,7 @@ const AddressList = ({ userId }) => {
   };
 
   return (
-    <div>
+    <div className="addressSection">
       <h2>Addresses for User ID: {userId}</h2>
       <div>
         <input
@@ -77,13 +86,13 @@ const AddressList = ({ userId }) => {
         {addresses.map((address, index) => (
           <li key={index}>
             <span>{address}</span>
-            <button onClick={() => handleDeleteAddress(index)}>Delete</button>
             <input
               type="radio"
               name="selectedAddress"
               checked={index === selectedAddressIndex}
               onChange={() => handleSelectAddress(index)}
             />
+             <button onClick={() => handleDeleteAddress(index)}>Delete</button>
           </li>
         ))}
       </ul>
