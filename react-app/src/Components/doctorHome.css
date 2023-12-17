@@ -54,3 +54,18 @@
   }
   
   
+  .recharts-cartesian-axis-tick {
+    fill: #666; /* Change tick color */
+  }
+  
+  .recharts-legend-item {
+    font-size: 14px; /* Adjust legend font size */
+  }
+  
+  .recharts-tooltip {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  

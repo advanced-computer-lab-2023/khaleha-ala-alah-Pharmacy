@@ -126,6 +126,7 @@ function App() {
                 <Route path="/notification" element={<Notification />} />
                 <Route path="/searchResults" element={<SearchResults />} />
                 <Route path="/messenger" element={<Messenger />} />
+                <Route path="/notification" element={<Notification />} />
 
               </>
             )}

@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Alert, Avatar, Button, Card } from "antd";
+import React, { useRef,useState,useEffect } from "react";
+import { Alert, Avatar, Button, Card,Select,Modal } from "antd";
 import { FileDoneOutlined, PlusOutlined } from "@ant-design/icons/lib";
 import axios from "axios";
 import "./medicineCard.css";
 import { useAuth } from "../AuthContext";
+const { Option } = Select;
 
 const Department = ({
   medicine,
@@ -22,6 +23,33 @@ const Department = ({
   const hideAlert = () => {
     setCartAlert(false);
   };
+  const selectedPrescription=useRef(null);
+
+   const addToCart = (medicine) => {
+     if (medicine.isPrescription === true ) {
+       if (!selectedPrescription.current) {
+         Modal.error({
+           title: "Prescription required",
+           content: "Please select a valid prescription to add this medicine to your cart",
+         });
+         return;
+       }else{
+        const medications = prescriptions.find((prescription) => prescription._id === selectedPrescription.current).medications;
+        const medicines = medications.map((medication) => medication.medicine);
+        if(!medicines.find((med) => med.toLowerCase() === medicine.name.toLowerCase())){
+         Modal.error({
+           title: "medicine not found in prescription",
+           content: "Please select a valid prescription to add this medicine to your cart",
+         });
+         return;
+        }else{
+         handleAddToCart(medicine);
+        }
+       }
+     } else {
+      handleAddToCart(medicine);
+     }
+   };
 
   const fetchPatientId = async () => {
     try {
@@ -140,6 +168,25 @@ const Department = ({
             <label style={{ color: "rgb(128, 128, 128)" }}>
               Sale: {medicine.sales}%{" "}
             </label>
+            {medicine.isPrescription === true && (
+               <>
+               <label style={{ color: 'rgb(128, 128, 128)'}}>Prescription required </label>
+               <Select
+               placeholder="Select Prescription"
+               style={{ width: "100%" }}
+               onChange={(value) => {
+                 selectedPrescription.current = value;
+                 console.log("Selected Prescription:", value);
+               }}
+             >
+               {prescriptions.map((prescription) => (
+                 <Option key={prescription._id} value={prescription._id}>
+                   {"Dr. " + prescription.doctorName + " " + new Date(prescription.date).toLocaleDateString("en-GB")}
+                 </Option>
+               ))}
+             </Select>
+             </>
+             )}
           </div>
           <div className="button-container">
             <div className="button-box">
@@ -154,11 +201,11 @@ const Department = ({
             </div>
             <div className="button-box">
               <br />
-              {(role === "patient" || role === "pharmacist") && (
+              {(role === "patient") && (
                 <button
                   onClick={() => {
                     call_add_to_cart(medicine._id, 1);
-                    handleAddToCart(medicine);
+                    addToCart(medicine);
                   }}
                 >
                   Add to Cart

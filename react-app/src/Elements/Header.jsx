@@ -19,7 +19,7 @@ const Header = (patient = null) => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [dropdownVisibleAlert, setDropdownVisibleAlert] = useState(false);
-  const [numOfNotifications, setnumOfNotifications] = useState(8);
+  const [numOfNotifications, setnumOfNotifications] = useState(3);
   const [searchValue, setSearchValue] = useState("");
   const [dropdownVisibleMessages, setDropdownVisibleMessages] = useState(false);
   const [hasNewMessages, setHasNewMessages] = useState(false);
@@ -28,6 +28,7 @@ const Header = (patient = null) => {
   const initialized = useRef(false);
   const { role } = useAuth();
   console.log(patient);
+  const [currentPatient, setCurrentPatient] = useState(patient);
 
   useEffect(() => {
     axios
@@ -49,6 +50,34 @@ const Header = (patient = null) => {
       .catch((err) => {
         console.log(err);
       });
+    const fetchCurrentPatient = async () => {
+      try {
+        const response = await fetch(`http://localhost:4002/patients/`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        const data = await response.json();
+        if (response.ok) {
+          console.log("Current patient fetched successfully:");
+          console.log(data.data.patients[0]);
+          return data;
+        } else {
+          console.error("Failed to fetch current patient:");
+          console.error(data);
+          return null;
+        }
+      } catch (error) {
+        console.error("Failed to fetch current patient:");
+        console.error(error);
+        return null;
+      }
+    };
+    fetchCurrentPatient().then((data) => {
+      setCurrentPatient(data.data.patients[0]);
+    });
   }, []);
 
   useEffect(() => {
@@ -119,7 +148,7 @@ const Header = (patient = null) => {
   };
 
   const toggleDropdownforNotification = () => {
-    setDropdownVisibleAlert(!dropdownVisibleAlert);
+    navigate("/notification")
   };
   const toggleDropdownforMessages = () => {
     setDropdownVisibleMessages(!dropdownVisibleMessages);
@@ -194,7 +223,7 @@ const Header = (patient = null) => {
           <div className={styles.walletContainer}>
             <img src={WalletImage} alt="Wallet" style={{ width: "35px" }} />
             <p className={styles.walletValue}>
-              EGP {patient.patient.walletValue}
+              EGP {currentPatient.walletValue}
             </p>
           </div>
           <a
@@ -225,7 +254,7 @@ const Header = (patient = null) => {
             </div>
           )}
           <a
-            href="#notifications"
+            href=""
             className={styles.navbarLink}
             onClick={toggleDropdownforNotification}
           >
@@ -234,13 +263,6 @@ const Header = (patient = null) => {
             </span>
             <img src={alertIcon} alt="Alerts" />
           </a>
-          {dropdownVisibleAlert && (
-            <div className={styles.dropdownMenu}>
-              <button className={styles.dropdownItem}>Notification 1</button>
-              <button className={styles.dropdownItem}>Notification 2</button>
-              <button className={styles.dropdownItem}>Notification 3</button>
-            </div>
-          )}
           <a
             href="#settings"
             className={styles.navbarLink}

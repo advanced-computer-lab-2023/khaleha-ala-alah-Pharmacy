@@ -134,7 +134,7 @@ const PatientHomePagebuy = () => {
   const fetchCurrentPatient = async () => {
     try {
       const response = await fetch(
-        "http://localhost:4002/patients/thisPatient",
+        "http://localhost:4002/patients/currentPatient",
         {
           method: "GET", // Method is optional because GET is the default value
           headers: {

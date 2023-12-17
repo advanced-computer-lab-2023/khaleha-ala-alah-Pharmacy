@@ -11,12 +11,14 @@ import axios from "axios";
 import { useEffect, useRef } from "react";
 import { useWebSocket } from '../WebSocketContext';
 import { useAuth } from "../AuthContext";
+import searchIcon from "../Images/searchIcon.png";
 
 const Header = () => {
   const navigate = useNavigate();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const [dropdownVisibleAlert, setDropdownVisibleAlert] = useState(false);
-  const [numOfNotifications, setnumOfNotifications] = useState(8);
+  const [numOfNotifications, setnumOfNotifications] = useState(2);
+  const [searchValue, setSearchValue] = useState("");
   const [dropdownVisibleMessages, setDropdownVisibleMessages] = useState(false);
   const [hasNewMessages, setHasNewMessages] = useState(false);
   const [messages, setMessages] = useState([]);
@@ -77,7 +79,7 @@ const Header = () => {
   };
 
   const toggleDropdownforNotification = () => {
-    setDropdownVisibleAlert(!dropdownVisibleAlert);
+    navigate("/notification");
   };
 
   const toggleDropdownforMessages = () => {
@@ -112,12 +114,43 @@ const Header = () => {
     navigate("/pharmEditAcc");
   }
 
+  
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/searchResults?query=${searchValue}`);
+  };
+
   return (
     <nav className={styles.navbar}>
       <div className={styles.navbarContainer}>
         <div className={styles.navbarLogo}>
           <img src={logopng} alt="Logo" />
         </div>
+
+          
+        <div className={styles.navbarSearch}>
+          <div
+            className={styles.searchInputWrapper}
+            style={{ width: "35%", marginLeft: "-40px" }}
+          >
+            <input
+              type="text"
+              placeholder="Search for Medicine ...."
+              value={searchValue}
+              onChange={handleSearchChange}
+              className={styles.searchInput}
+            />
+            <div className={styles.searchIcon} onClick={handleSearchSubmit}>
+              {/* Place your search icon here */}
+              <img src={searchIcon} alt="Search" />
+            </div>
+          </div>
+        </div>
+
         <div className={styles.navbarRight}>
           <a
             href="#messages"
@@ -161,13 +194,6 @@ const Header = () => {
             </span>
             <img src={alertIcon} alt="Alerts" />
           </a>
-          {dropdownVisibleAlert && (
-            <div className={styles.dropdownMenu}>
-              <button className={styles.dropdownItem}>Notification 1</button>
-              <button className={styles.dropdownItem}>Notification 2</button>
-              <button className={styles.dropdownItem}>Notification 3</button>
-            </div>
-          )}
           <a
             href="#settings"
             className={styles.navbarLink}
