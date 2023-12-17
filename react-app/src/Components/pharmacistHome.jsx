@@ -169,7 +169,13 @@ export const DoctorHome = () => {
       {
         <div className="all-containers-doctorH">
           <div className="titleofPAGE-doctorH">
-            <MyLineChart />
+            <div
+              style={{
+                transform: "translateX(0px) translateY(-150px)",
+              }}
+            >
+              <MyLineChart />
+            </div>
             <h1> To cure sometimes, to relieve often, to comfort always. </h1>
           </div>
           <div className="services-container-doctorH">
