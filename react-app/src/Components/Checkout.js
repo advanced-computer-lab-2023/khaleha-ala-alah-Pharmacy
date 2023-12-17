@@ -5,6 +5,9 @@ import AddressList from "./address";
 import { CartContext } from "./cart-context";
 import { useContext } from "react";
 import { useEffect } from "react";
+import "./Checkout.css";
+import Header from "../Elements/Header";
+import NavBar from "../Elements/NavBar";
 
 const StripePaymentButton = ({ amount, patientId }) => {
   const location = useLocation();
@@ -228,12 +231,20 @@ const StripePaymentButton = ({ amount, patientId }) => {
   };
 
   return (
-    <div>
+    <>
+    <Header/>
+    <NavBar/>
+    <div className="stripePaymentContainer" >
       <AddressList />
-      <div>
-        <button onClick={handleCashOnDelivery}>Cash on Delivery</button>
-        <button onClick={handlePayWithWallet}>Pay with Wallet</button>
+      <div className="ButtonsForCheckout">
+      <button className="stripePaymentButton" onClick={handleCashOnDelivery}>
+        Cash on Delivery
+      </button>
+      <button className="stripePaymentButton" onClick={handlePayWithWallet}>
+        Pay with Wallet
+      </button>
         <StripeCheckout
+          className="stripePaymentButton"
           token={onToken}
           onClose={onCancel}
           name="Package Subscription"
@@ -243,6 +254,7 @@ const StripePaymentButton = ({ amount, patientId }) => {
         />
       </div>
     </div>
+    </>
   );
 };
 

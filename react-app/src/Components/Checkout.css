@@ -1,0 +1,56 @@
+/* Overall container styling */
+.stripePaymentContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #f4f4f4; /* Light background for the container */
+    margin-top: 50px;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+  
+  /* Styling for buttons */
+  .stripePaymentButton {
+    background-image: linear-gradient(rgb(125, 197, 238), rgb(0, 140, 221) 85%, rgb(48, 162, 228));
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    position: relative;
+    padding: 0px 12px;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+    box-shadow: rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+    text-shadow: rgba(0, 0, 0, 0.25) 0px -1px 0px;
+    border-radius: 4px;
+    margin-right: 10px;
+    margin-top: 10px;
+    border: none;
+  }
+  
+  .stripePaymentButton:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+    transform: scale(1.05); /* Slightly increase size on hover */
+  }
+  
+  .stripePaymentButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  /* Stripe Checkout specific styles, if needed */
+  .StripeCheckout {
+    /* Your custom styles for Stripe Checkout button */
+  }
+  
+  .ButtonsForCheckout{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
