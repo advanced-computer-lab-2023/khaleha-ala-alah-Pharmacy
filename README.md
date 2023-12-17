@@ -870,6 +870,10 @@ Our gratitude extends to the following resources and communities that have been 
 
 Each of these resources has played a pivotal role in our project's success, and we wholeheartedly recommend them to any aspiring or established developers looking to delve into full-stack development.
 
+# License 
+
+This project is licensed under the [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0) and [MIT License](https://opensource.org/licenses/MIT).
+
 
 
 
