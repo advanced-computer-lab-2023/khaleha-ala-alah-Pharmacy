@@ -36,6 +36,26 @@ const CartPage = () => {
           },
         }
       );
+      currentQuantity = currentQuantity-1;
+      if(currentQuantity ==0 ){
+        try{
+          fetch('http://localhost:4000/notifications', {
+            headers: {
+              "Authorization": "Bearer " + localStorage.getItem("token"),
+              "Content-Type": "application/json",
+            },
+            method: 'POST',
+            body: JSON.stringify({
+              title: "Medicine is outofstock",
+              text: "your medicine is outofstock" ,
+            }),
+          });
+        }
+        catch(error){
+          console.error("notficaion is not saved yet", error);
+        }
+
+      }
 
       console.log(totalPrice);
 
